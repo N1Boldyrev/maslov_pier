@@ -134,7 +134,12 @@ canvas{
 
 		this.camera = new Camera(0,0,this);
 		this.player = new Player(150,300,this);
-		this.monster = new Player(896,128,this);
+		this.monster = new Player(300,400,this);
+		this.monster.type = "monster";
+		this.monster.status = "walking";
+		this.monster2 = new Player(300,450,this);
+		this.monster2.type = "monster";
+		this.monster2.status = "walking";
 		
 		this.sounds = {};
 		this.sounds['arrow'] = new Sound('assets/arrow.wav');
@@ -213,6 +218,7 @@ canvas{
 
 		this.player.update(time);
 		this.monster.update(time);
+		this.monster2.update(time);
 		this.camera.update(time);
 
 
@@ -220,6 +226,9 @@ canvas{
  	 this.ctx.drawImage(this.imgs['orc'],
  									 this.monster.j*64,this.monster.i*64,64,64,
  												 ( this.monster.x )-this.camera.x,(this.monster.y) - this.camera.y ,64,64);
+	this.ctx.drawImage(this.imgs['sceleton'],
+ 									 this.monster2.j*64,this.monster2.i*64,64,64,
+ 												 ( this.monster2.x )-this.camera.x,(this.monster2.y) - this.camera.y ,64,64);
 
 		//render player
 		this.ctx.drawImage(this.imgs['player'],
@@ -253,7 +262,7 @@ canvas{
 		this.render_bg(time);
 		this.render_sprites(time);
 
-		if((this.monster.dead) &&
+		if((this.monster.dead) && (this.monster2.dead) &&
 		   (this.player.x > 1152) &&
 			 (this.player.y > 1100)) {
 				 	return "win";
@@ -361,6 +370,13 @@ if((pos_x > this.scene.monster.x) &&
 	 (pos_y > this.scene.monster.y) &&
 	(pos_y < (this.scene.monster.y + 64))) {
 		this.scene.monster.set_action("down","dead");
+		return true;
+	}
+	if((pos_x > this.scene.monster2.x) &&
+   (pos_x < (this.scene.monster2.x + 64)) &&
+	 (pos_y > this.scene.monster2.y) &&
+	(pos_y < (this.scene.monster2.y + 64))) {
+		this.scene.monster2.set_action("down","dead");
 		return true;
 	}
 	return	!this.scene.tiles[this.scene.map[i][j]].walk;
@@ -682,15 +698,7 @@ if((pos_x > this.scene.monster.x) &&
    			this.scene.player.y < this.y + 64 &&
    			64 + this.scene.player.y > this.y)) {
 		  //тактический прыжок
-			if(this.x > this.scene.player.x) {
-				this.direction = "left";
-				this.y = this.scene.player.y;
-				this.x = this.scene.player.x + 32;
-			} else {
-				this.direction = "right";
-				this.y = this.scene.player.y;
-				this.x = this.scene.player.x - 32;
-			}
+			
 			this.attack();
 			this.scene.sounds['sword'].play();
 			this.scene.player.set_action("down","dead");
