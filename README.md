@@ -1,1 +1,1 @@
-n1boldyrev.github.io/maslov_pier
+https://n1boldyrev.github.io/maslov_pier
