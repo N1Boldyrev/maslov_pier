@@ -134,7 +134,6 @@ canvas{
 
 		this.camera = new Camera(0,0,this);
 		this.player = new Player(150,300,this,100);
-		this.monster = new Player(300,400,this,50,10);
 		this.monster.type = "monster";
 		this.monster.status = "walking";
 		this.monster2 = new Player(300,450,this,20,10);
@@ -492,7 +491,6 @@ if((pos_x > this.scene.monster.x) &&
 		};
 	};
 
-
 	Player.prototype.animate = function () {
 
 		var frame = this.sprites[this.status][this.direction];
@@ -701,21 +699,36 @@ if((pos_x > this.scene.monster.x) &&
 
 	Player.prototype.monster_ai_controll = function (time) {
 
-
+		
 		if((this.scene.player.dead == false) &&
-			(this.scene.player.x < this.x + 30 &&
-   			this.scene.player.x + 30 > this.x &&
-   			this.scene.player.y < this.y + 30 &&
-   			30 + this.scene.player.y > this.y)) {
+			(this.scene.player.x < this.x + 150 &&
+   			this.scene.player.x + 150 > this.x &&
+   			this.scene.player.y < this.y + 150 &&
+   			150 + this.scene.player.y > this.y)){
+				    if(this.scene.player.y-this.y>0) {this.current_action=this.move_down;}
+				  else if(this.scene.player.x-this.x>30) {this.current_action=this.move_right;}
+				   else if(this.scene.player.y-this.y<0) {this.current_action=this.move_up;}
+				   else if(this.scene.player.x-this.x<30) {this.current_action=this.move_left;}
+					
+			else if((this.scene.player.dead == false) &&
+			(this.scene.player.x < this.x + 50 &&
+   			this.scene.player.x + 50 > this.x &&
+   			this.scene.player.y < this.y + 50 &&
+   			50 + this.scene.player.y > this.y)) {
+				
 		  //тактический прыжок
+		  this.set_action("right","attack");
 			this.attack();
 			this.scene.player.hp-=this.damage/20;
 			
 			if(this.scene.player.hp<0){
 				this.scene.player.set_action("down","dead");
+			   }
+			   
+			   return true;
 				
 			}
-			return true;
+		
 		}
 
 
