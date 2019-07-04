@@ -133,11 +133,11 @@ canvas{
 		Scene.apply(this, arguments);
 
 		this.camera = new Camera(0,0,this);
-		this.player = new Player(150,300,this);
-		this.monster = new Player(300,400,this);
+		this.player = new Player(150,300,this,100, 10);
+		this.monster = new Player(300,400,this,50,10);
 		this.monster.type = "monster";
 		this.monster.status = "walking";
-		this.monster2 = new Player(300,450,this);
+		this.monster2 = new Player(300,450,this,20,10);
 		this.monster2.type = "monster";
 		this.monster2.status = "walking";
 		
@@ -148,12 +148,12 @@ canvas{
 			     [4 ,4,4,4 ,12 ,9 ,13,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,5,6 ,7 ,8 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,10,11 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,5,6 ,7 ,8 ,13 ,14 ,15 ,15 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,10,11 ,12 ,9 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,4,4,4 ,12,9 ,13,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,0,0,0 ,12,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,0,0,0 ,12,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
@@ -184,6 +184,9 @@ canvas{
 			{j:2,i:1,walk: false}, //11 boat 2-nd part
 			{j:4,i:0,walk: true}, //12 sand+water
 			{j:4,i:1,walk: true}, //13 grass+sand
+			{j:4,i:2,walk: true}, //14 trail start 1 _h
+			{j:5,i:2,walk: true}, //15 trail 2 _h
+			{j:6,i:2,walk: true}, //16 trail 3 _|
 
 		];
 
@@ -369,20 +372,29 @@ if((pos_x > this.scene.monster.x) &&
    (pos_x < (this.scene.monster.x + 64)) &&
 	 (pos_y > this.scene.monster.y) &&
 	(pos_y < (this.scene.monster.y + 64))) {
-		this.scene.monster.set_action("down","dead");
-		return true;
+		console.log(this.scene.monster.hp);
+		this.scene.monster.hp -= this.scene.player.damage;
+		if(this.scene.monster.hp <= 0){
+			this.scene.monster.set_action("down","dead");
+			return true;
+		}
+		
 	}
 	if((pos_x > this.scene.monster2.x) &&
    (pos_x < (this.scene.monster2.x + 64)) &&
 	 (pos_y > this.scene.monster2.y) &&
 	(pos_y < (this.scene.monster2.y + 64))) {
-		this.scene.monster2.set_action("down","dead");
-		return true;
+		this.scene.monster2.hp -= this.scene.player.damage;
+		if(this.scene.monster2.hp <= 0){
+			this.scene.monster2.set_action("down","dead");
+			return true;
+		}
+		
 	}
 	return	!this.scene.tiles[this.scene.map[i][j]].walk;
 }
 
-	function Player(x,y,scene) {
+	function Player(x,y,scene,hp,damage) {
 		this.x = x;
 		this.y = y;
 		this.i = 0;
@@ -398,6 +410,8 @@ if((pos_x > this.scene.monster.x) &&
 		this.current_animation_frame = 0;
 		this.current_action = this.move_down;
 		this.got_obstacle = false;
+		this.hp=hp;
+		this.damage=damage;
 		this.sprites = {
 			standing: {
 				right: {
@@ -467,20 +481,20 @@ if((pos_x > this.scene.monster.x) &&
 			},
 			attack: {
 				right: {
-					total: 6,
-					frames: [[0,15],[1,15],[2,15],[3,15],[4,15],[5,15]]
+					total: 20,
+					frames: [[0,15],[1,15],[2,15],[3,15],[4,15],[5,15],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3]]
 				},
 				left: {
-					total: 6,
-					frames: [[0,13],[1,13],[2,13],[3,13],[4,13],[5,13]]
+					total: 20,
+					frames: [[0,13],[1,13],[2,13],[3,13],[4,13],[5,13],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1]]
 				},
 				up: {
-					total: 6,
-					frames: [[0,12],[1,12],[2,12],[3,12],[4,12],[5,12]]
+					total: 20,
+					frames: [[0,12],[1,12],[2,12],[3,12],[4,12],[5,12],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]
 				},
 				down: {
-					total: 6,
-					frames: [[0,14],[1,14],[2,14],[3,14],[4,14],[5,14]]
+					total: 20,
+					frames: [[0,14],[1,14],[2,14],[3,14],[4,14],[5,14],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2]]
 				}
 			}
 
@@ -505,6 +519,10 @@ if((pos_x > this.scene.monster.x) &&
 				if( (this.current_animation_frame + 1) == frame.total ) {
 					if((this.status == "start") || (this.status == "walking") || (this.status == "attack")) {
 						this.current_animation_frame = 0;
+					}
+
+					if(this.status=="attack"){
+						this.scene.sounds['sword'].play();
 					}
 
 					if(this.status == "dead") {
@@ -692,16 +710,20 @@ if((pos_x > this.scene.monster.x) &&
 
 	Player.prototype.monster_ai_controll = function (time) {
 
+
 		if((this.scene.player.dead == false) &&
-			(this.scene.player.x < this.x + 64 &&
-   			this.scene.player.x + 64 > this.x &&
-   			this.scene.player.y < this.y + 64 &&
-   			64 + this.scene.player.y > this.y)) {
+			(this.scene.player.x < this.x + 30 &&
+   			this.scene.player.x + 30 > this.x &&
+   			this.scene.player.y < this.y + 30 &&
+   			30 + this.scene.player.y > this.y)) {
 		  //тактический прыжок
-			
 			this.attack();
-			this.scene.sounds['sword'].play();
-			this.scene.player.set_action("down","dead");
+			this.scene.player.hp-=this.damage/20;
+			
+			if(this.scene.player.hp<0){
+				this.scene.player.set_action("down","dead");
+				
+			}
 			return true;
 		}
 
@@ -799,3 +821,4 @@ if((pos_x > this.scene.monster.x) &&
 	</script>
 </body>
 </html>
+
