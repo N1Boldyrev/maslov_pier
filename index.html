@@ -133,10 +133,7 @@ canvas{
 		Scene.apply(this, arguments);
 
 		this.camera = new Camera(0,0,this);
-		this.player = new Player(150,300,this,100);
-		this.monster = new Player(300,400,this,50,10);
-		this.monster.type = "monster";
-		this.monster.status = "walking";
+		this.player = new Player(150,300,this,100,10);
 		this.monster2 = new Player(300,450,this,20,10);
 		this.monster2.type = "monster";
 		this.monster2.status = "walking";
@@ -145,7 +142,7 @@ canvas{
 		this.sounds['arrow'] = new Sound('assets/arrow.wav');
 		this.sounds['sword'] = new Sound('assets/sword.wav');
 		this.level_1=[
-				 [4 ,4,4,4 ,12 ,9 ,13,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+			     [4 ,4,4,4 ,12 ,9 ,13,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,4,4,4 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
@@ -219,15 +216,12 @@ canvas{
 
 
 		this.player.update(time);
-		this.monster.update(time);
 		this.monster2.update(time);
 		this.camera.update(time);
 
 
 		//render monster
- 	 this.ctx.drawImage(this.imgs['orc'],
- 									 this.monster.j*64,this.monster.i*64,64,64,
- 												 ( this.monster.x )-this.camera.x,(this.monster.y) - this.camera.y ,64,64);
+
 	this.ctx.drawImage(this.imgs['sceleton'],
  									 this.monster2.j*64,this.monster2.i*64,64,64,
  												 ( this.monster2.x )-this.camera.x,(this.monster2.y) - this.camera.y ,64,64);
@@ -264,7 +258,7 @@ canvas{
 		this.render_bg(time);
 		this.render_sprites(time);
 
-		if((this.monster.dead) && (this.monster2.dead) &&
+		if((this.monster2.dead) &&
 		   (this.player.x > 1152) &&
 			 (this.player.y > 1100)) {
 				 	return "win";
@@ -367,19 +361,16 @@ if((pos_x < 0) || (pos_x > 1280) || (pos_y < 0) || (pos_y > 1280)) {
 var j = Math.floor(pos_x / 64);
 var i = Math.floor(pos_y / 64);
 
-if((pos_x > this.scene.monster.x) &&
-   (pos_x < (this.scene.monster.x + 64)) &&
-	 (pos_y > this.scene.monster.y) &&
-	(pos_y < (this.scene.monster.y + 64))) {
-		this.scene.monster.set_action("down","dead");
-		return true;
-	}
 	if((pos_x > this.scene.monster2.x) &&
    (pos_x < (this.scene.monster2.x + 64)) &&
 	 (pos_y > this.scene.monster2.y) &&
 	(pos_y < (this.scene.monster2.y + 64))) {
-		this.scene.monster2.set_action("down","dead");
-		return true;
+		this.scene.monster2.hp -= this.scene.player.damage;
+		if(this.scene.monster2.hp <= 0){
+			this.scene.monster2.set_action("down","dead");
+			return true;
+		}
+		
 	}
 	return	!this.scene.tiles[this.scene.map[i][j]].walk;
 }
@@ -490,7 +481,6 @@ if((pos_x > this.scene.monster.x) &&
 
 		};
 	};
-
 
 	Player.prototype.animate = function () {
 
@@ -700,21 +690,36 @@ if((pos_x > this.scene.monster.x) &&
 
 	Player.prototype.monster_ai_controll = function (time) {
 
-
+		
 		if((this.scene.player.dead == false) &&
-			(this.scene.player.x < this.x + 30 &&
-   			this.scene.player.x + 30 > this.x &&
-   			this.scene.player.y < this.y + 30 &&
-   			30 + this.scene.player.y > this.y)) {
+			(this.scene.player.x < this.x + 150 &&
+   			this.scene.player.x + 150 > this.x &&
+   			this.scene.player.y < this.y + 150 &&
+   			150 + this.scene.player.y > this.y)){
+				    if(this.scene.player.y-this.y>0) {this.current_action=this.move_down;}
+				  else if(this.scene.player.x-this.x>30) {this.current_action=this.move_right;}
+				   else if(this.scene.player.y-this.y<0) {this.current_action=this.move_up;}
+				   else if(this.scene.player.x-this.x<30) {this.current_action=this.move_left;}
+					
+			else if((this.scene.player.dead == false) &&
+			(this.scene.player.x < this.x + 50 &&
+   			this.scene.player.x + 50 > this.x &&
+   			this.scene.player.y < this.y + 50 &&
+   			50 + this.scene.player.y > this.y)) {
+				
 		  //тактический прыжок
+		  this.set_action("right","attack");
 			this.attack();
 			this.scene.player.hp-=this.damage/20;
 			
 			if(this.scene.player.hp<0){
 				this.scene.player.set_action("down","dead");
+			   }
+			   
+			   return true;
 				
 			}
-			return true;
+		
 		}
 
 
