@@ -133,9 +133,7 @@ canvas{
 		Scene.apply(this, arguments);
 
 		this.camera = new Camera(0,0,this);
-		this.player = new Player(150,300,this,100);
-		this.monster.type = "monster";
-		this.monster.status = "walking";
+		this.player = new Player(150,300,this,100,10);
 		this.monster2 = new Player(300,450,this,20,10);
 		this.monster2.type = "monster";
 		this.monster2.status = "walking";
@@ -219,15 +217,12 @@ canvas{
 
 
 		this.player.update(time);
-		this.monster.update(time);
 		this.monster2.update(time);
 		this.camera.update(time);
 
 
 		//render monster
- 	 this.ctx.drawImage(this.imgs['orc'],
- 									 this.monster.j*64,this.monster.i*64,64,64,
- 												 ( this.monster.x )-this.camera.x,(this.monster.y) - this.camera.y ,64,64);
+
 	this.ctx.drawImage(this.imgs['sceleton'],
  									 this.monster2.j*64,this.monster2.i*64,64,64,
  												 ( this.monster2.x )-this.camera.x,(this.monster2.y) - this.camera.y ,64,64);
@@ -264,7 +259,7 @@ canvas{
 		this.render_bg(time);
 		this.render_sprites(time);
 
-		if((this.monster.dead) && (this.monster2.dead) &&
+		if((this.monster2.dead) &&
 		   (this.player.x > 1152) &&
 			 (this.player.y > 1100)) {
 				 	return "win";
@@ -367,18 +362,6 @@ if((pos_x < 0) || (pos_x > 1280) || (pos_y < 0) || (pos_y > 1280)) {
 var j = Math.floor(pos_x / 64);
 var i = Math.floor(pos_y / 64);
 
-if((pos_x > this.scene.monster.x) &&
-   (pos_x < (this.scene.monster.x + 64)) &&
-	 (pos_y > this.scene.monster.y) &&
-	(pos_y < (this.scene.monster.y + 64))) {
-		console.log(this.scene.monster.hp);
-		this.scene.monster.hp -= this.scene.player.damage;
-		if(this.scene.monster.hp <= 0){
-			this.scene.monster.set_action("down","dead");
-			return true;
-		}
-		
-	}
 	if((pos_x > this.scene.monster2.x) &&
    (pos_x < (this.scene.monster2.x + 64)) &&
 	 (pos_y > this.scene.monster2.y) &&
