@@ -371,15 +371,24 @@ if((pos_x > this.scene.monster.x) &&
    (pos_x < (this.scene.monster.x + 64)) &&
 	 (pos_y > this.scene.monster.y) &&
 	(pos_y < (this.scene.monster.y + 64))) {
-		this.scene.monster.set_action("down","dead");
-		return true;
+		console.log(this.scene.monster.hp);
+		this.scene.monster.hp -= this.scene.player.damage;
+		if(this.scene.monster.hp <= 0){
+			this.scene.monster.set_action("down","dead");
+			return true;
+		}
+		
 	}
 	if((pos_x > this.scene.monster2.x) &&
    (pos_x < (this.scene.monster2.x + 64)) &&
 	 (pos_y > this.scene.monster2.y) &&
 	(pos_y < (this.scene.monster2.y + 64))) {
-		this.scene.monster2.set_action("down","dead");
-		return true;
+		this.scene.monster2.hp -= this.scene.player.damage;
+		if(this.scene.monster2.hp <= 0){
+			this.scene.monster2.set_action("down","dead");
+			return true;
+		}
+		
 	}
 	return	!this.scene.tiles[this.scene.map[i][j]].walk;
 }
