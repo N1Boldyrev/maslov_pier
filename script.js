@@ -1,3 +1,10 @@
+	var hp  = document.getElementById('hp');
+	var innerHp = document.getElementById('hp__front');
+	var innerHpText = document.getElementById('hp__text');
+
+	var newHp = 100;
+	innerHpText.innerText = newHp + " " + "/ 100";
+
 
 	function Scene(screen, controls) {
 		this.canvas = screen.canvas;
@@ -666,6 +673,7 @@ if((pos_x > this.scene.monster1.x) &&
 	return	!this.scene.tiles[this.scene.map[i][j]].walk;
 }
 
+	
 	function Player(x,y,scene,hp,damage) {
 		this.x = x;
 		this.y = y;
@@ -917,7 +925,105 @@ if((pos_x > this.scene.monster1.x) &&
 	}
 
 	Player.prototype.attack = function () {
-		this.set_action(this.direction,"attack");
+		if(this.type == "monster"){
+			this.set_action(this.direction,"attack");
+		}
+		if(this.type == "player"){
+			this.set_action(this.direction,"attack");
+			
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster1.x), 2) + Math.pow((this.y - this.scene.monster1.y), 2)) <= 50){
+				this.scene.monster1.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster1.hp <= 0){
+					this.scene.monster1.set_action("down", "dead");
+				}
+			}
+
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster2.x), 2) + Math.pow((this.y - this.scene.monster2.y), 2)) <= 50){
+				this.scene.monster2.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster2.hp <= 0){
+					this.scene.monster2.set_action("down", "dead");
+				}
+			}
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster3.x), 2) + Math.pow((this.y - this.scene.monster3.y), 2)) <= 50){
+				this.scene.monster3.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster3.hp <= 0){
+					this.scene.monster3.set_action("down", "dead");
+				}
+			}
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster4.x), 2) + Math.pow((this.y - this.scene.monster4.y), 2)) <= 50){
+				this.scene.monster4.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster4.hp <= 0){
+					this.scene.monster4.set_action("down", "dead");
+				}
+			}
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster5.x), 2) + Math.pow((this.y - this.scene.monster5.y), 2)) <= 50){
+				this.scene.monster5.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster5.hp <= 0){
+					this.scene.monster5.set_action("down", "dead");
+				}
+			}
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster6.x), 2) + Math.pow((this.y - this.scene.monster6.y), 2)) <= 50){
+				this.scene.monster6.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster6.hp <= 0){
+					this.scene.monster6.set_action("down", "dead");
+				}
+			}
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster7.x), 2) + Math.pow((this.y - this.scene.monster7.y), 2)) <= 50){
+				this.scene.monster7.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster7.hp <= 0){
+					this.scene.monster7.set_action("down", "dead");
+				}
+			}
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster8.x), 2) + Math.pow((this.y - this.scene.monster8.y), 2)) <= 50){
+				this.scene.monster8.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster8.hp <= 0){
+					this.scene.monster8.set_action("down", "dead");
+				}
+			}
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster9.x), 2) + Math.pow((this.y - this.scene.monster9.y), 2)) <= 50){
+				this.scene.monster9.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster9.hp <= 0){
+					this.scene.monster9.set_action("down", "dead");
+				}
+			}
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster10.x), 2) + Math.pow((this.y - this.scene.monster10.y), 2)) <= 50){
+				this.scene.monster10.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster10.hp <= 0){
+					this.scene.monster10.set_action("down", "dead");
+				}
+			}
+		}
+
 	}
 
 	Player.prototype.start = function () {
@@ -940,6 +1046,9 @@ if((pos_x > this.scene.monster1.x) &&
 			if(this.status == "fire") {
 				return true;
 			}
+			if(this.status == "melee") {
+				return true;
+			}
 
 			if(this.status == "dead") {
 				return true;
@@ -951,6 +1060,11 @@ if((pos_x > this.scene.monster1.x) &&
 
 			if(this.scene.controls.states['fire']) {
 				this.fire();
+				return true;
+			}
+			if(this.scene.controls.states['melee']) {
+				this.attack();
+				
 				return true;
 			}
 
@@ -978,7 +1092,6 @@ if((pos_x > this.scene.monster1.x) &&
 
 
 	}
-
 	Player.prototype.monster_ai_controll = function (time) {
 
 		
@@ -1002,7 +1115,14 @@ if((pos_x > this.scene.monster1.x) &&
 		  this.set_action("right","attack");
 			this.attack();
 			this.scene.player.hp-=this.damage/20;
+
+			newHp = this.scene.player.hp;
+			if(newHp >= 0){
+				innerHpText.innerText = newHp - (newHp%2) + " " + "/ 100";
+				innerHp.style.width = (200 - ((100 - newHp) * 2)) + 'px';
+			} 
 			
+		
 			if(this.scene.player.hp<0){
 				this.scene.player.set_action("down","dead");
 			   }
@@ -1011,6 +1131,14 @@ if((pos_x > this.scene.monster1.x) &&
 				
 			}
 		
+			if(this.scene.player.x == this.x &&
+				 this.scene.player.y == this.y && this.scene.controls.states['melee']){
+
+					this.hp -= this.scene.player.damage;
+					if(this.hp <= 0){
+						this.set_action("down", "dead");
+					}
+			}
 		}
 
 
@@ -1044,8 +1172,8 @@ if((pos_x > this.scene.monster1.x) &&
 	};
 
 	function Controls() {
-        this.codes  = { 37: 'left', 39: 'right', 38: 'forward', 40: 'backward', 32: 'fire' };
-        this.states = { 'left': false, 'right': false, 'forward': false, 'backward': false, 'fire' : false };
+        this.codes  = { 37: 'left', 39: 'right', 38: 'forward', 40: 'backward', 32: 'fire', 69: 'melee' };
+        this.states = { 'left': false, 'right': false, 'forward': false, 'backward': false, 'fire' : false, 'melee' : false };
         document.addEventListener('keydown', this.onKey.bind(this, true), false);
         document.addEventListener('keyup', this.onKey.bind(this, false), false);
      }
