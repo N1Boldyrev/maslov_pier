@@ -3,17 +3,41 @@
 <head>
 	<meta charset="utf-8">
 	<title>2d game</title>
+	<link rel="stylesheet" href="base.css">
 <style>
-canvas{
+/* canvas{
 	padding-left: 0;
 	padding-right: 0;
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
-}
+} */
 </style>
 </head>
 <body>
+	<div class="wrapper">
+		<div class="container">
+				<div class="header">
+					<div class="hp">
+						<div class="hp__logo">
+							<img src="img/fff.png" alt="" srcset="" class="hp__img">
+						</div>
+						<div class="hp__content">
+							<div class="hp__back"></div>
+							<div id="hp__front"></div>
+							<div id="hp__text"></div>
+						</div>
+					</div>
+					
+					<div class="score">
+						счет
+					</div>
+				</div>
+				<div class="content">
+					<canvas id='screen' style='width: 700px; height: 700px;' />
+				</div>
+		</div>
+	</div>
 	<canvas id='screen' style='width: 700px; height: 700px;' />
 
 <script src="script.js"></script>

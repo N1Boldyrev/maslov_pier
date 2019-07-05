@@ -1,3 +1,10 @@
+	var hp  = document.getElementById('hp');
+	var innerHp = document.getElementById('hp__front');
+	var innerHpText = document.getElementById('hp__text');
+
+	var newHp = 100;
+	innerHpText.innerText = newHp + " " + "/ 100";
+
 
 	function Scene(screen, controls) {
 		this.canvas = screen.canvas;
@@ -191,6 +198,35 @@
 		this.monster5_x=0;
 		this.monster5_y=100;
 		
+
+        }
+        
+        if(this.level=="level 3")
+		{
+			this.map=[
+			     [4 ,4,4,4 ,12 ,9 ,13,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,5,6 ,7 ,8 ,13 ,14 ,15 ,15 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,10,11 ,12 ,16 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12,9 ,13,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,12,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,12,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+		];
+		this.player_x=150;
+		this.player_y=300;
 
 		}
 	}
@@ -393,7 +429,7 @@ this.ctx.drawImage(this.imgs['sceleton'],
 				this.ctx.drawImage(this.imgs['title'],
 				0,0,640,640,
 				0,0,640,640);
-				 	this.new_level="level 2";
+                     this.new_level="level 2";
 				 	return 'level 2';
 			 } else {
 					return 'level 1';
@@ -401,19 +437,25 @@ this.ctx.drawImage(this.imgs['sceleton'],
 		}
 
 		if(this.new_level=="level 2"){
-			if((this.player.x>400)&&
-			(this.player.y>400))
-			{
-				this.ctx.drawImage(this.imgs['title'],
-				0,0,640,640,
-				0,0,640,640);
-				 	this.new_level="level 2";
-				 	return 'level 1';
-			 } else {
-					return 'level 2';
-			 }
-			}
-		};
+            if((this.player.x > 300) &&
+                 (this.player.y > 300)) {
+                    this.ctx.drawImage(this.imgs['title'],
+                    0,0,640,640,
+                    0,0,640,640);
+                         this.new_level="level 3";
+                         return 'level 3';
+                 } else {
+                        return 'level 2';
+                 }
+            }
+
+         if(this.new_level=="level 3"){
+             return "level 3";
+         }
+            
+
+        };
+        
 
 
 
@@ -641,6 +683,7 @@ if((pos_x > this.scene.monster1.x) &&
 	return	!this.scene.tiles[this.scene.map[i][j]].walk;
 }
 
+	
 	function Player(x,y,scene,hp,damage) {
 		this.x = x;
 		this.y = y;
@@ -1082,7 +1125,6 @@ if((pos_x > this.scene.monster1.x) &&
 
 
 	}
-
 	Player.prototype.monster_ai_controll = function (time) {
 
 		
@@ -1106,10 +1148,18 @@ if((pos_x > this.scene.monster1.x) &&
 		  this.set_action("right","attack");
 			this.attack();
 			this.scene.player.hp-=this.damage/20;
-				if(this.scene.player.hp<0){
-					this.scene.player.set_action("down","dead");
-				}
+
+			newHp = this.scene.player.hp;
+			if(newHp >= 0){
+				innerHpText.innerText = newHp - (newHp%2) + " " + "/ 100";
+				innerHp.style.width = (200 - ((100 - newHp) * 2)) + 'px';
+			} 
 			
+		
+			if(this.scene.player.hp<0){
+				this.scene.player.set_action("down","dead");
+			   }
+			   
 			   return true;
 				
 			}
@@ -1205,7 +1255,8 @@ if((pos_x > this.scene.monster1.x) &&
     scenes['lib'] = new Lib(screen, controls);
     scenes['menu'] = new Menu(screen, controls);
     scenes['level 1'] = new Game(screen, controls,"level 1");
-	scenes['level 2'] = new Game(screen, controls, "level 2");
+    scenes['level 2'] = new Game(screen, controls, "level 2");
+    scenes['level 3'] = new Game(screen,controls,'level 3');
 	scenes['win'] = new Win(screen, controls);
 
     var current_scene = 'lib';
