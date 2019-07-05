@@ -1,3 +1,10 @@
+	var hp  = document.getElementById('hp');
+	var innerHp = document.getElementById('hp__front');
+	var innerHpText = document.getElementById('hp__text');
+
+	var newHp = 100;
+	innerHpText.innerText = newHp + " " + "/ 100";
+
 
 	function Scene(screen, controls) {
 		this.canvas = screen.canvas;
@@ -631,6 +638,7 @@ if((pos_x > this.scene.monster1.x) &&
 	return	!this.scene.tiles[this.scene.map[i][j]].walk;
 }
 
+	
 	function Player(x,y,scene,hp,damage) {
 		this.x = x;
 		this.y = y;
@@ -1049,7 +1057,6 @@ if((pos_x > this.scene.monster1.x) &&
 
 
 	}
-
 	Player.prototype.monster_ai_controll = function (time) {
 
 		
@@ -1073,10 +1080,18 @@ if((pos_x > this.scene.monster1.x) &&
 		  this.set_action("right","attack");
 			this.attack();
 			this.scene.player.hp-=this.damage/20;
-				if(this.scene.player.hp<0){
-					this.scene.player.set_action("down","dead");
-				}
+
+			newHp = this.scene.player.hp;
+			if(newHp >= 0){
+				innerHpText.innerText = newHp - (newHp%2) + " " + "/ 100";
+				innerHp.style.width = (200 - ((100 - newHp) * 2)) + 'px';
+			} 
 			
+		
+			if(this.scene.player.hp<0){
+				this.scene.player.set_action("down","dead");
+			   }
+			   
 			   return true;
 				
 			}
