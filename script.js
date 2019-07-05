@@ -701,6 +701,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.current_action = this.move_down;
 		this.got_obstacle = false;
 		this.hp=hp;
+		this.maxhp = hp;
 		this.damage=damage;
 		this.level = 1;
 		
@@ -945,7 +946,7 @@ if((pos_x > this.scene.monster1.x) &&
 		if(this.type == "player"){
 			console.log(this.level);
 			
-			console.log(this.damage);
+			console.log(this.hp);
 			this.set_action(this.direction,"attack");
 			
 			if(Math.sqrt(
@@ -1068,6 +1069,14 @@ if((pos_x > this.scene.monster1.x) &&
 			if(this.exp >= need_to_levelup){
 				this.level++;
 				this.damage *= 2;
+				this.maxhp += 10;
+				this.hp = this.maxhp;
+				newHp = this.scene.player.hp;
+				if(newHp >= 0){
+					innerHpText.innerText = newHp - (newHp%2) + " " + "/ " + String(this.maxhp);
+					innerHp.style.width = (200 - ((100 - newHp) * 2)) + 'px';
+				} 
+				
 			}
 			if(this.status == "start") {
 				this.start();
@@ -1151,7 +1160,7 @@ if((pos_x > this.scene.monster1.x) &&
 
 			newHp = this.scene.player.hp;
 			if(newHp >= 0){
-				innerHpText.innerText = newHp - (newHp%2) + " " + "/ 100";
+				innerHpText.innerText = newHp - (newHp%2) + " " + "/ " + String(this.scene.player.maxhp);
 				innerHp.style.width = (200 - ((100 - newHp) * 2)) + 'px';
 			} 
 			
