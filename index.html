@@ -122,26 +122,19 @@ canvas{
 			this.ctx.font="22px Arial";
 			this.ctx.fillText("Нажмите пробел",250,500);
 		if(this.controls.states['fire']) {
-			return "game";
+			return "level 1";
 		} else {
 			return "menu";
 		}
 	};
 
+	
 
-	function Game(screen, controls) {
-		Scene.apply(this, arguments);
-
-		this.camera = new Camera(0,0,this);
-		this.player = new Player(150,300,this,100,10);
-		this.monster2 = new Player(300,450,this,20,10);
-		this.monster2.type = "monster";
-		this.monster2.status = "walking";
-		
-		this.sounds = {};
-		this.sounds['arrow'] = new Sound('assets/arrow.wav');
-		this.sounds['sword'] = new Sound('assets/sword.wav');
-		this.level_1=[
+	function Level(level){
+		this.level=level;
+		if(this.level=="level 1")
+		{
+			this.map=[
 			     [4 ,4,4,4 ,12 ,9 ,13,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
@@ -163,8 +156,120 @@ canvas{
 				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 		];
+		this.player_x=150;
+		this.player_y=300;
+
+		this.monster1_x=0;
+		this.monster1_y=0;
+
+		this.monster2_x=300;
+		this.monster2_y=450;
+
+		this.monster3_x=0;
+		this.monster3_y=100;
+		}
+
+		if(this.level=="level 2"){
+			this.map=[
+			     [4 ,4,4,4 ,12 ,9 ,13,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,5,6 ,7 ,8 ,13 ,14 ,15 ,15 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,10,11 ,0 ,9 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12,9 ,13,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,12,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,12,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+		];
+
 		
-		this.map = this.level_1;
+		this.player_x=150;
+		this.player_y=300;
+
+		this.monster2_x=300;
+		this.monster2_y=450;
+/*
+		this.monster1_x=300;
+		this.monster1_y=300;
+
+		this.monster2_x=300;
+		this.monster2_y=450;
+
+		this.monster8_x=0;
+		this.monster8_y=0;
+
+		this.monster5_x=0;
+		this.monster5_y=100;
+		
+		*/
+		}
+	}
+
+
+	function Game(screen, controls,new_level) {
+		Scene.apply(this, arguments);
+		Level.apply(this,arguments);
+		this.new_level=new_level;
+		this.current_level=new Level(new_level);
+		this.camera = new Camera(0,0,this);
+		this.player = new Player(this.current_level.player_x,this.current_level.player_y,this,100,10);
+
+		this.monster1 = new Player(this.current_level.monster1_x,this.current_level.monster1_y,this,20,10);
+		this.monster1.type = "monster";
+		this.monster1.status = "walking";
+		this.monster2 = new Player(this.current_level.monster2_x,this.current_level.monster2_y,this,20,10);
+		this.monster2.type = "monster";
+		this.monster2.status = "walking";
+
+		this.monster3 = new Player(this.current_level.monster3_x,this.current_level.monster3_y,this,20,10);
+		this.monster3.type = "monster";
+		this.monster3.status = "walking";
+
+		this.monster4 = new Player(this.current_level.monster4_x,this.current_level.monster4_y,this,20,10);
+		this.monster4.type = "monster";
+		this.monster4.status = "walking";
+
+		this.monster5 = new Player(this.current_level.monster5_x,this.current_level.monster5_y,this,20,10);
+		this.monster5.type = "monster";
+		this.monster5.status = "walking";
+
+		this.monster6 = new Player(this.current_level.monster6_x,this.current_level.monster6_y,this,20,10);
+		this.monster6.type = "monster";
+		this.monster6.status = "walking";
+
+		this.monster7 = new Player(this.current_level.monster7_x,this.current_level.monster7_y,this,20,10);
+		this.monster7.type = "monster";
+		this.monster7.status = "walking";
+
+		this.monster8 = new Player(this.current_level.monster8_x,this.current_level.monster8_y,this,20,10);
+		this.monster8.type = "monster";
+		this.monster8.status = "walking";
+
+		this.monster9 = new Player(this.current_level.monster9_x,this.current_level.monster9_y,this,20,10);
+		this.monster9.type = "monster";
+		this.monster9.status = "walking";
+		
+		this.monster10 = new Player(this.current_level.monster10_x,this.current_level.monster10_y,this,20,10);
+		this.monster10.type = "monster";
+		this.monster10.status = "walking";
+
+		this.sounds = {};
+		this.sounds['arrow'] = new Sound('assets/arrow.wav');
+		this.sounds['sword'] = new Sound('assets/sword.wav');
+		
+		this.map=this.current_level.map;
+		
 
 		this.tiles = [
 			{j:0,i:0,walk: true},  //0 - grass
@@ -184,8 +289,8 @@ canvas{
 			{j:4,i:2,walk: true}, //14 trail start 1 _h
 			{j:5,i:2,walk: true}, //15 trail 2 _h
 			{j:6,i:2,walk: true}, //16 trail 3 _|
-		];
 
+		];
 
 		this.arrows = [];
 
@@ -216,15 +321,60 @@ canvas{
 
 
 		this.player.update(time);
+		this.monster1.update(time);
 		this.monster2.update(time);
+		this.monster3.update(time);
+		this.monster4.update(time);
+		this.monster5.update(time);
+		this.monster6.update(time);
+		this.monster7.update(time);
+		this.monster8.update(time);
+		this.monster9.update(time);
+		this.monster10.update(time);
 		this.camera.update(time);
 
 
 		//render monster
 
+		this.ctx.drawImage(this.imgs['sceleton'],
+ 									 this.monster1.j*64,this.monster1.i*64,64,64,
+ 												 ( this.monster1.x )-this.camera.x,(this.monster1.y) - this.camera.y ,64,64);
+
 	this.ctx.drawImage(this.imgs['sceleton'],
  									 this.monster2.j*64,this.monster2.i*64,64,64,
  												 ( this.monster2.x )-this.camera.x,(this.monster2.y) - this.camera.y ,64,64);
+
+	this.ctx.drawImage(this.imgs['sceleton'],
+ 									 this.monster3.j*64,this.monster3.i*64,64,64,
+ 												 ( this.monster3.x )-this.camera.x,(this.monster3.y) - this.camera.y ,64,64);		
+
+	this.ctx.drawImage(this.imgs['sceleton'],
+ 									 this.monster4.j*64,this.monster4.i*64,64,64,
+ 												 ( this.monster4.x )-this.camera.x,(this.monster4.y) - this.camera.y ,64,64);
+												  
+	this.ctx.drawImage(this.imgs['sceleton'],
+ 									 this.monster5.j*64,this.monster5.i*64,64,64,
+ 												 ( this.monster5.x )-this.camera.x,(this.monster5.y) - this.camera.y ,64,64);
+
+	this.ctx.drawImage(this.imgs['sceleton'],
+ 									 this.monster6.j*64,this.monster6.i*64,64,64,
+ 												 ( this.monster6.x )-this.camera.x,(this.monster6.y) - this.camera.y ,64,64);
+
+	this.ctx.drawImage(this.imgs['sceleton'],
+ 									 this.monster7.j*64,this.monster7.i*64,64,64,
+ 												 ( this.monster7.x )-this.camera.x,(this.monster7.y) - this.camera.y ,64,64);
+
+	this.ctx.drawImage(this.imgs['sceleton'],
+ 									 this.monster8.j*64,this.monster8.i*64,64,64,
+ 												 ( this.monster8.x )-this.camera.x,(this.monster8.y) - this.camera.y ,64,64);
+
+		this.ctx.drawImage(this.imgs['sceleton'],
+ 									 this.monster9.j*64,this.monster9.i*64,64,64,
+ 												 ( this.monster9.x )-this.camera.x,(this.monster9.y) - this.camera.y ,64,64);
+
+this.ctx.drawImage(this.imgs['sceleton'],
+ 									 this.monster10.j*64,this.monster10.i*64,64,64,
+ 												 ( this.monster10.x )-this.camera.x,(this.monster10.y) - this.camera.y ,64,64);												  
 
 		//render player
 		this.ctx.drawImage(this.imgs['player'],
@@ -257,14 +407,23 @@ canvas{
 
 		this.render_bg(time);
 		this.render_sprites(time);
-
-		if((this.monster2.dead) &&
-		   (this.player.x > 1152) &&
-			 (this.player.y > 1100)) {
-				 	return "win";
+		
+		if(this.new_level=="level 1"){
+		if((this.player.x > 200) &&
+			 (this.player.y > 300)) {
+				this.ctx.drawImage(this.imgs['title'],
+				0,0,640,640,
+				0,0,640,640);
+				 	this.new_level="level 2";
+				 	return 'level 2';
 			 } else {
-					return "game";
+					return 'level 1';
 			 }
+		}
+
+		if(this.new_level=="level 2"){return "level 2"};
+
+
 	};
 
 
@@ -361,6 +520,18 @@ if((pos_x < 0) || (pos_x > 1280) || (pos_y < 0) || (pos_y > 1280)) {
 var j = Math.floor(pos_x / 64);
 var i = Math.floor(pos_y / 64);
 
+if((pos_x > this.scene.monster1.x) &&
+   (pos_x < (this.scene.monster1.x + 64)) &&
+	 (pos_y > this.scene.monster1.y) &&
+	(pos_y < (this.scene.monster1.y + 64))) {
+		this.scene.monster1.hp -= this.scene.player.damage;
+		if(this.scene.monster1.hp <= 0){
+			this.scene.monster1.set_action("down","dead");
+			return true;
+		}
+		
+	}
+
 	if((pos_x > this.scene.monster2.x) &&
    (pos_x < (this.scene.monster2.x + 64)) &&
 	 (pos_y > this.scene.monster2.y) &&
@@ -368,6 +539,102 @@ var i = Math.floor(pos_y / 64);
 		this.scene.monster2.hp -= this.scene.player.damage;
 		if(this.scene.monster2.hp <= 0){
 			this.scene.monster2.set_action("down","dead");
+			return true;
+		}
+		
+	}
+
+	if((pos_x > this.scene.monster3.x) &&
+   (pos_x < (this.scene.monster3.x + 64)) &&
+	 (pos_y > this.scene.monster3.y) &&
+	(pos_y < (this.scene.monster3.y + 64))) {
+		this.scene.monster3.hp -= this.scene.player.damage;
+		if(this.scene.monster3.hp <= 0){
+			this.scene.monster3.set_action("down","dead");
+			return true;
+		}
+		
+	}
+
+	if((pos_x > this.scene.monster4.x) &&
+   (pos_x < (this.scene.monster4.x + 64)) &&
+	 (pos_y > this.scene.monster4.y) &&
+	(pos_y < (this.scene.monster4.y + 64))) {
+		this.scene.monster4.hp -= this.scene.player.damage;
+		if(this.scene.monster4.hp <= 0){
+			this.scene.monster4.set_action("down","dead");
+			return true;
+		}
+		
+	}
+
+	if((pos_x > this.scene.monster5.x) &&
+   (pos_x < (this.scene.monster5.x + 64)) &&
+	 (pos_y > this.scene.monster5.y) &&
+	(pos_y < (this.scene.monster5.y + 64))) {
+		this.scene.monster5.hp -= this.scene.player.damage;
+		if(this.scene.monster5.hp <= 0){
+			this.scene.monster5.set_action("down","dead");
+			return true;
+		}
+		
+	}
+
+	if((pos_x > this.scene.monster6.x) &&
+   (pos_x < (this.scene.monster6.x + 64)) &&
+	 (pos_y > this.scene.monster6.y) &&
+	(pos_y < (this.scene.monster6.y + 64))) {
+		this.scene.monster6.hp -= this.scene.player.damage;
+		if(this.scene.monster6.hp <= 0){
+			this.scene.monster6.set_action("down","dead");
+			return true;
+		}
+		
+	}
+
+	if((pos_x > this.scene.monster7.x) &&
+   (pos_x < (this.scene.monster7.x + 64)) &&
+	 (pos_y > this.scene.monster7.y) &&
+	(pos_y < (this.scene.monster7.y + 64))) {
+		this.scene.monster7.hp -= this.scene.player.damage;
+		if(this.scene.monster7.hp <= 0){
+			this.scene.monster7.set_action("down","dead");
+			return true;
+		}
+		
+	}
+
+	if((pos_x > this.scene.monster8.x) &&
+   (pos_x < (this.scene.monster8.x + 64)) &&
+	 (pos_y > this.scene.monster8.y) &&
+	(pos_y < (this.scene.monster8.y + 64))) {
+		this.scene.monster8.hp -= this.scene.player.damage;
+		if(this.scene.monster8.hp <= 0){
+			this.scene.monster8.set_action("down","dead");
+			return true;
+		}
+		
+	}
+
+	if((pos_x > this.scene.monster9.x) &&
+   (pos_x < (this.scene.monster9.x + 64)) &&
+	 (pos_y > this.scene.monster9.y) &&
+	(pos_y < (this.scene.monster9.y + 64))) {
+		this.scene.monster9.hp -= this.scene.player.damage;
+		if(this.scene.monster9.hp <= 0){
+			this.scene.monster9.set_action("down","dead");
+			return true;
+		}
+		
+	}
+
+	if((pos_x > this.scene.monster10.x) &&
+   (pos_x < (this.scene.monster10.x + 64)) &&
+	 (pos_y > this.scene.monster10.y) &&
+	(pos_y < (this.scene.monster10.y + 64))) {
+		this.scene.monster10.hp -= this.scene.player.damage;
+		if(this.scene.monster10.hp <= 0){
+			this.scene.monster10.set_action("down","dead");
 			return true;
 		}
 		
@@ -802,7 +1069,8 @@ var i = Math.floor(pos_y / 64);
     var scenes = {};
     scenes['lib'] = new Lib(screen, controls);
     scenes['menu'] = new Menu(screen, controls);
-    scenes['game'] = new Game(screen, controls);
+    scenes['level 1'] = new Game(screen, controls,"level 1");
+	scenes['level 2'] = new Game(screen, controls, "level 2");
 	scenes['win'] = new Win(screen, controls);
 
     var current_scene = 'lib';
