@@ -201,8 +201,8 @@
 				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,4,4,4 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,5,6 ,7 ,8 ,13 ,14 ,15 ,15 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,17 ,18 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,5,6 ,7 ,8 ,13 ,14 ,19 ,20 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,4,10,11 ,12 ,16 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,4,4,4 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
@@ -297,7 +297,10 @@
 			{j:4,i:2,walk: true}, //14 trail start 1 _h
 			{j:5,i:2,walk: true}, //15 trail 2 _h
 			{j:6,i:2,walk: true}, //16 trail 3 _|
-
+			{j:0,i:3,walk: false}, //17 house-top-1
+			{j:1,i:3,walk: false}, //18 house-top-2
+			{j:0,i:4,walk: false}, //19 house-bot-1
+			{j:1,i:4,walk: false}, //20 house-bot-2
 		];
 
 		this.arrows = [];
@@ -872,8 +875,11 @@ if((pos_x > this.scene.monster1.x) &&
 
 	Player.prototype.move_left = function () {
 		this.set_action("left","walking");
-
 		if(this.is_walkable(this.x - this.speed,this.y)) {
+			
+			if(this.type=="player"){
+				this.x = this.x - this.speed-1;
+			}
 			this.x = this.x - this.speed;
 			if(this.x < 0) {
 				this.x = 0;
@@ -884,6 +890,11 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.move_right = function () {
 		this.set_action("right","walking");
 		if(this.is_walkable(this.x + this.speed,this.y)) {
+
+			if(this.type=="player"){
+				this.x = this.x + this.speed+1;
+			}
+
 			this.x = this.x + this.speed;
 			if(this.x > 1216) {
 				this.x =1216;
@@ -894,6 +905,11 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.move_up = function () {
 		this.set_action("up","walking");
 		if(this.is_walkable(this.x ,this.y - this.speed)) {
+
+			if(this.type=="player"){
+				this.y = this.y - this.speed-1;
+			}
+
 			this.y = this.y - this.speed;
 			if(this.y < 0) {
 				this.y =0;
@@ -904,6 +920,11 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.move_down = function () {
 		this.set_action("down","walking");
 		if(this.is_walkable(this.x,this.y + this.speed)) {
+
+			if(this.type=="player"){
+				this.y = this.y + this.speed+1;
+			}
+
 			this.y = this.y + this.speed;
 			if(this.y > 1216) {
 				this.y =1216;
