@@ -1,4 +1,4 @@
-	var hp  = document.getElementById('hp');
+  var hp  = document.getElementById('hp');
 	var innerHp = document.getElementById('hp__front');
 	var innerHpText = document.getElementById('hp__text');
 
@@ -314,6 +314,11 @@
 			{j:4,i:2,walk: true}, //14 trail start 1 _h
 			{j:5,i:2,walk: true}, //15 trail 2 _h
 			{j:6,i:2,walk: true}, //16 trail 3 _|
+			{j:0,i:3,walk: false}, //17 house-top-1
+			{j:1,i:3,walk: false}, //18 house-top-2
+			{j:0,i:4,walk: false}, //19 house-bot-1
+			{j:1,i:4,walk: false}, //20 house-bot-2
+
 
 		];
 
@@ -447,17 +452,8 @@ this.ctx.drawImage(this.imgs['sceleton'],
 		}
 
 		if(this.new_level=="level 2"){
-            if((this.player.x > 300) &&
-                 (this.player.y > 300)) {
-                    this.ctx.drawImage(this.imgs['title'],
-                    0,0,640,640,
-                    0,0,640,640);
-                         this.new_level="level 3";
-                         return 'level 3';
-                 } else {
                         return 'level 2';
                  }
-            }
 
          if(this.new_level=="level 3"){
              return "level 3";
@@ -568,7 +564,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster1.hp -= this.scene.player.damage;
 		if(this.scene.monster1.hp <= 0){
 			this.scene.monster1.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -581,7 +577,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster2.hp -= this.scene.player.damage;
 		if(this.scene.monster2.hp <= 0){
 			this.scene.monster2.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -594,7 +590,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster3.hp -= this.scene.player.damage;
 		if(this.scene.monster3.hp <= 0){
 			this.scene.monster3.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -607,7 +603,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster4.hp -= this.scene.player.damage;
 		if(this.scene.monster4.hp <= 0){
 			this.scene.monster4.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -620,7 +616,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster5.hp -= this.scene.player.damage;
 		if(this.scene.monster5.hp <= 0){
 			this.scene.monster5.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -633,7 +629,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster6.hp -= this.scene.player.damage;
 		if(this.scene.monster6.hp <= 0){
 			this.scene.monster6.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -646,7 +642,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster7.hp -= this.scene.player.damage;
 		if(this.scene.monster7.hp <= 0){
 			this.scene.monster7.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -659,7 +655,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster8.hp -= this.scene.player.damage;
 		if(this.scene.monster8.hp <= 0){
 			this.scene.monster8.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -672,7 +668,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster9.hp -= this.scene.player.damage;
 		if(this.scene.monster9.hp <= 0){
 			this.scene.monster9.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -685,7 +681,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster10.hp -= this.scene.player.damage;
 		if(this.scene.monster10.hp <= 0){
 			this.scene.monster10.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -716,7 +712,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.level = 1;
 		
 		this.exp = 1;
-		
+
 		this.sprites = {
 			standing: {
 				right: {
@@ -907,6 +903,10 @@ if((pos_x > this.scene.monster1.x) &&
 		this.set_action("left","walking");
 
 		if(this.is_walkable(this.x - this.speed,this.y)) {
+			
+			if(this.type=="player"){
+				this.x = this.x - this.speed-1;
+			}
 			this.x = this.x - this.speed;
 			if(this.x < 0) {
 				this.x = 0;
@@ -917,6 +917,10 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.move_right = function () {
 		this.set_action("right","walking");
 		if(this.is_walkable(this.x + this.speed,this.y)) {
+
+			if(this.type=="player"){
+				this.x = this.x + this.speed+1;
+			}
 			this.x = this.x + this.speed;
 			if(this.x > 1216) {
 				this.x =1216;
@@ -927,6 +931,11 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.move_up = function () {
 		this.set_action("up","walking");
 		if(this.is_walkable(this.x ,this.y - this.speed)) {
+
+			if(this.type=="player"){
+				this.y = this.y - this.speed-1;
+			}
+
 			this.y = this.y - this.speed;
 			if(this.y < 0) {
 				this.y =0;
@@ -937,6 +946,11 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.move_down = function () {
 		this.set_action("down","walking");
 		if(this.is_walkable(this.x,this.y + this.speed)) {
+
+			if(this.type=="player"){
+				this.y = this.y + this.speed+1;
+			}
+   
 			this.y = this.y + this.speed;
 			if(this.y > 1216) {
 				this.y =1216;
@@ -1062,7 +1076,6 @@ console.dir(Player);
 				}
 			}
 		}
-
 	}
 
 	Player.prototype.start = function () {
@@ -1076,6 +1089,7 @@ console.dir(Player);
 
 	Player.prototype.update = function (time) {
 			this.animate();
+    
 			var need_to_levelup = (this.level + 1) * this.level / 2 ;
 			if(player_exp >= need_to_levelup){
 				this.level++;
@@ -1098,10 +1112,11 @@ console.dir(Player);
 			if(this.status == "fire") {
 				return true;
 			}
+
 			if(this.status == "melee") {
 				return true;
 			}
-
+    
 			if(this.status == "dead") {
 				player_exp += this.exp;
 				innerExp.innerText = this.scene.player.level;
@@ -1120,6 +1135,7 @@ console.dir(Player);
 				this.fire();
 				return true;
 			}
+
 			if(this.scene.controls.states['melee']) {
 				this.attack();
 				
@@ -1150,6 +1166,7 @@ console.dir(Player);
 
 
 	}
+
 	Player.prototype.monster_ai_controll = function (time) {
 
 		
@@ -1158,19 +1175,34 @@ console.dir(Player);
    			this.scene.player.x + 150 > this.x &&
    			this.scene.player.y < this.y + 150 &&
    			150 + this.scene.player.y > this.y)){
-				    if(this.scene.player.y-this.y>0) {this.current_action=this.move_down;}
-				  else if(this.scene.player.x-this.x>30) {this.current_action=this.move_right;}
-				   else if(this.scene.player.y-this.y<0) {this.current_action=this.move_up;}
-				   else if(this.scene.player.x-this.x<30) {this.current_action=this.move_left;}
-					
+                  
+				    if(this.scene.player.y-this.y>=30 && this.scene.player.y-this.y>=40 && this.scene.player.y-this.y>=-30 && this.scene.player.y-this.y>=-40) {this.current_action=this.move_down;}
+				  else if(this.scene.player.x-this.x>=30 && this.scene.player.x-this.x>=40 && this.scene.player.x-this.x>=-30 && this.scene.player.x-this.x>=-40) {this.current_action=this.move_right;}
+				   else if(this.scene.player.y-this.y<=30 && this.scene.player.y-this.y<=40 && this.scene.player.y-this.y<=-30 && this.scene.player.y-this.y<=-40) {this.current_action=this.move_up;}
+				   else if(this.scene.player.x-this.x<30 && this.scene.player.x-this.x<=40 && this.scene.player.x-this.x<-30 && this.scene.player.x-this.x<=-40) {this.current_action=this.move_left;}
+		
 			else if((this.scene.player.dead == false) &&
 			(this.scene.player.x < this.x + 50 &&
    			this.scene.player.x + 50 > this.x &&
    			this.scene.player.y < this.y + 50 &&
    			50 + this.scene.player.y > this.y)) {
+				console.log(this.scene.player.y-this.y);
+
+				if(this.scene.player.y-this.y>=20){
+					this.set_action("down","attack");
+				}
+
+				else if(this.scene.player.y-this.y<20 && this.scene.player.x-this.x<0){
+					this.set_action("left","attack");
+				}
+
+				else if(this.scene.player.y-this.y<20 && this.scene.player.x-this.x>0){
+					this.set_action("right","attack");
+				}
 				
-		  //тактический прыжок
-		  this.set_action("right","attack");
+
+
+		  //this.set_action("right","attack");
 			this.attack();
 			this.scene.player.hp-=this.damage/20;
 			if(score > 0){
@@ -1183,7 +1215,6 @@ console.dir(Player);
 				innerHp.style.width = (200 - ((100 - newHp) * 2)) + 'px';
 			} 
 			
-		
 			if(this.scene.player.hp<0){
 				this.scene.player.set_action("down","dead");
 			   }
