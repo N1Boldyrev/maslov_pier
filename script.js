@@ -1,3 +1,10 @@
+  var hp  = document.getElementById('hp');
+	var innerHp = document.getElementById('hp__front');
+	var innerHpText = document.getElementById('hp__text');
+
+	var newHp = 100;
+	innerHpText.innerText = newHp + " " + "/ 100";
+
 
 	function Scene(screen, controls) {
 		this.canvas = screen.canvas;
@@ -192,6 +199,35 @@
 		this.monster5_y=100;
 		
 
+        }
+        
+        if(this.level=="level 3")
+		{
+			this.map=[
+			     [4 ,4,4,4 ,12 ,9 ,13,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,5,6 ,7 ,8 ,13 ,14 ,15 ,15 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,10,11 ,12 ,16 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,4,4,4 ,12,9 ,13,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,12,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,12,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+		];
+		this.player_x=150;
+		this.player_y=300;
+
 		}
 	}
 
@@ -202,7 +238,7 @@
 		this.new_level=new_level;
 		this.current_level=new Level(new_level);
 		this.camera = new Camera(0,0,this);
-		this.player = new Player(this.current_level.player_x,this.current_level.player_y,this,100,10);
+		this.player = new Player(this.current_level.player_x,this.current_level.player_y,this,newHp,10);
 
 		this.monster1 = new Player(this.current_level.monster1_x,this.current_level.monster1_y,this,20,10);
 		this.monster1.type = "monster";
@@ -268,6 +304,11 @@
 			{j:4,i:2,walk: true}, //14 trail start 1 _h
 			{j:5,i:2,walk: true}, //15 trail 2 _h
 			{j:6,i:2,walk: true}, //16 trail 3 _|
+			{j:0,i:3,walk: false}, //17 house-top-1
+			{j:1,i:3,walk: false}, //18 house-top-2
+			{j:0,i:4,walk: false}, //19 house-bot-1
+			{j:1,i:4,walk: false}, //20 house-bot-2
+
 
 		];
 
@@ -393,7 +434,7 @@ this.ctx.drawImage(this.imgs['sceleton'],
 				this.ctx.drawImage(this.imgs['title'],
 				0,0,640,640,
 				0,0,640,640);
-				 	this.new_level="level 2";
+                     this.new_level="level 2";
 				 	return 'level 2';
 			 } else {
 					return 'level 1';
@@ -401,19 +442,16 @@ this.ctx.drawImage(this.imgs['sceleton'],
 		}
 
 		if(this.new_level=="level 2"){
-			if((this.player.x>400)&&
-			(this.player.y>400))
-			{
-				this.ctx.drawImage(this.imgs['title'],
-				0,0,640,640,
-				0,0,640,640);
-				 	this.new_level="level 2";
-				 	return 'level 1';
-			 } else {
-					return 'level 2';
-			 }
-			}
-		};
+                        return 'level 2';
+                 }
+
+         if(this.new_level=="level 3"){
+             return "level 3";
+         }
+            
+
+        };
+        
 
 
 
@@ -516,6 +554,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster1.hp -= this.scene.player.damage;
 		if(this.scene.monster1.hp <= 0){
 			this.scene.monster1.set_action("down","dead");
+
 			return true;
 		}
 		
@@ -528,6 +567,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster2.hp -= this.scene.player.damage;
 		if(this.scene.monster2.hp <= 0){
 			this.scene.monster2.set_action("down","dead");
+
 			return true;
 		}
 		
@@ -540,6 +580,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster3.hp -= this.scene.player.damage;
 		if(this.scene.monster3.hp <= 0){
 			this.scene.monster3.set_action("down","dead");
+
 			return true;
 		}
 		
@@ -552,6 +593,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster4.hp -= this.scene.player.damage;
 		if(this.scene.monster4.hp <= 0){
 			this.scene.monster4.set_action("down","dead");
+
 			return true;
 		}
 		
@@ -564,6 +606,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster5.hp -= this.scene.player.damage;
 		if(this.scene.monster5.hp <= 0){
 			this.scene.monster5.set_action("down","dead");
+
 			return true;
 		}
 		
@@ -576,6 +619,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster6.hp -= this.scene.player.damage;
 		if(this.scene.monster6.hp <= 0){
 			this.scene.monster6.set_action("down","dead");
+
 			return true;
 		}
 		
@@ -588,6 +632,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster7.hp -= this.scene.player.damage;
 		if(this.scene.monster7.hp <= 0){
 			this.scene.monster7.set_action("down","dead");
+
 			return true;
 		}
 		
@@ -600,6 +645,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster8.hp -= this.scene.player.damage;
 		if(this.scene.monster8.hp <= 0){
 			this.scene.monster8.set_action("down","dead");
+
 			return true;
 		}
 		
@@ -612,6 +658,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster9.hp -= this.scene.player.damage;
 		if(this.scene.monster9.hp <= 0){
 			this.scene.monster9.set_action("down","dead");
+
 			return true;
 		}
 		
@@ -624,12 +671,14 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster10.hp -= this.scene.player.damage;
 		if(this.scene.monster10.hp <= 0){
 			this.scene.monster10.set_action("down","dead");
+
 			return true;
 		}
 		
 	}
 	return	!this.scene.tiles[this.scene.map[i][j]].walk;
 }
+
 
 	function Player(x,y,scene,hp,damage) {
 		this.x = x;
@@ -648,7 +697,12 @@ if((pos_x > this.scene.monster1.x) &&
 		this.current_action = this.move_down;
 		this.got_obstacle = false;
 		this.hp=hp;
+		this.maxhp = hp;
 		this.damage=damage;
+		this.level = 1;
+		
+		this.exp = 1;
+
 		this.sprites = {
 			standing: {
 				right: {
@@ -839,6 +893,10 @@ if((pos_x > this.scene.monster1.x) &&
 		this.set_action("left","walking");
 
 		if(this.is_walkable(this.x - this.speed,this.y)) {
+			
+			if(this.type=="player"){
+				this.x = this.x - this.speed-1;
+			}
 			this.x = this.x - this.speed;
 			if(this.x < 0) {
 				this.x = 0;
@@ -849,6 +907,10 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.move_right = function () {
 		this.set_action("right","walking");
 		if(this.is_walkable(this.x + this.speed,this.y)) {
+
+			if(this.type=="player"){
+				this.x = this.x + this.speed+1;
+			}
 			this.x = this.x + this.speed;
 			if(this.x > 1216) {
 				this.x =1216;
@@ -859,6 +921,11 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.move_up = function () {
 		this.set_action("up","walking");
 		if(this.is_walkable(this.x ,this.y - this.speed)) {
+
+			if(this.type=="player"){
+				this.y = this.y - this.speed-1;
+			}
+
 			this.y = this.y - this.speed;
 			if(this.y < 0) {
 				this.y =0;
@@ -869,6 +936,11 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.move_down = function () {
 		this.set_action("down","walking");
 		if(this.is_walkable(this.x,this.y + this.speed)) {
+
+			if(this.type=="player"){
+				this.y = this.y + this.speed+1;
+			}
+   
 			this.y = this.y + this.speed;
 			if(this.y > 1216) {
 				this.y =1216;
@@ -882,7 +954,118 @@ if((pos_x > this.scene.monster1.x) &&
 	}
 
 	Player.prototype.attack = function () {
-		this.set_action(this.direction,"attack");
+		
+		if(this.type == "monster"){
+			this.set_action(this.direction,"attack");
+		}
+		if(this.type == "player"){
+			console.log(this.level);
+			
+			console.log(this.hp);
+			this.set_action(this.direction,"attack");
+			
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster1.x), 2) + Math.pow((this.y - this.scene.monster1.y), 2)) <= 50){
+				this.scene.monster1.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster1.hp <= 0){
+					this.scene.monster1.set_action("down", "dead");
+					
+				}
+			}
+
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster2.x), 2) + Math.pow((this.y - this.scene.monster2.y), 2)) <= 50){
+				this.scene.monster2.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster2.hp <= 0){
+					this.scene.monster2.set_action("down", "dead");
+					
+				}
+			}
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster3.x), 2) + Math.pow((this.y - this.scene.monster3.y), 2)) <= 50){
+				this.scene.monster3.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster3.hp <= 0){
+					this.scene.monster3.set_action("down", "dead");
+					
+				}
+			}
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster4.x), 2) + Math.pow((this.y - this.scene.monster4.y), 2)) <= 50){
+				this.scene.monster4.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster4.hp <= 0){
+					this.scene.monster4.set_action("down", "dead");
+					
+				}
+			}
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster5.x), 2) + Math.pow((this.y - this.scene.monster5.y), 2)) <= 50){
+				this.scene.monster5.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster5.hp <= 0){
+					this.scene.monster5.set_action("down", "dead");
+					
+				}
+			}
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster6.x), 2) + Math.pow((this.y - this.scene.monster6.y), 2)) <= 50){
+				this.scene.monster6.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster6.hp <= 0){
+					this.scene.monster6.set_action("down", "dead");
+					
+				}
+			}
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster7.x), 2) + Math.pow((this.y - this.scene.monster7.y), 2)) <= 50){
+				this.scene.monster7.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster7.hp <= 0){
+					this.scene.monster7.set_action("down", "dead");
+					
+				}
+			}
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster8.x), 2) + Math.pow((this.y - this.scene.monster8.y), 2)) <= 50){
+				this.scene.monster8.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster8.hp <= 0){
+					this.scene.monster8.set_action("down", "dead");
+					
+				}
+			}
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster9.x), 2) + Math.pow((this.y - this.scene.monster9.y), 2)) <= 50){
+				this.scene.monster9.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster9.hp <= 0){
+					this.scene.monster9.set_action("down", "dead");
+					
+				}
+			}
+			if(Math.sqrt(
+				Math.pow((this.x - this.scene.monster10.x), 2) + Math.pow((this.y - this.scene.monster10.y), 2)) <= 50){
+				this.scene.monster10.hp -= this.damage/20;
+				
+				
+				if (this.scene.monster10.hp <= 0){
+					this.scene.monster10.set_action("down", "dead");
+					
+				}
+			}
+		}
 	}
 
 	Player.prototype.start = function () {
@@ -897,6 +1080,19 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.update = function (time) {
 			this.animate();
 
+			var need_to_levelup = (this.level + 1) * this.level / 2 + 1;
+			if(this.exp >= need_to_levelup){
+				this.level++;
+				this.damage *= 2;
+				this.maxhp += 10;
+				this.hp = this.maxhp;
+				newHp = this.scene.player.hp;
+				if(newHp >= 0){
+					innerHpText.innerText = newHp - (newHp%2) + " " + "/ " + String(this.maxhp);
+					innerHp.style.width = (200 - ((100 - newHp) * 2)) + 'px';
+				} 
+				
+			}
 			if(this.status == "start") {
 				this.start();
 				return true;
@@ -906,7 +1102,13 @@ if((pos_x > this.scene.monster1.x) &&
 				return true;
 			}
 
+			if(this.status == "melee") {
+				return true;
+			}
+    
 			if(this.status == "dead") {
+				this.scene.player.exp += this.exp;
+				this.exp = 0;
 				return true;
 			}
 
@@ -916,6 +1118,12 @@ if((pos_x > this.scene.monster1.x) &&
 
 			if(this.scene.controls.states['fire']) {
 				this.fire();
+				return true;
+			}
+
+			if(this.scene.controls.states['melee']) {
+				this.attack();
+				
 				return true;
 			}
 
@@ -952,21 +1160,26 @@ if((pos_x > this.scene.monster1.x) &&
    			this.scene.player.x + 150 > this.x &&
    			this.scene.player.y < this.y + 150 &&
    			150 + this.scene.player.y > this.y)){
-				    if(this.scene.player.y-this.y>0) {this.current_action=this.move_down;}
-				  else if(this.scene.player.x-this.x>30) {this.current_action=this.move_right;}
-				   else if(this.scene.player.y-this.y<0) {this.current_action=this.move_up;}
-				   else if(this.scene.player.x-this.x<30) {this.current_action=this.move_left;}
+                   console.log(this.scene.player.y-this.y);
+				    if(this.scene.player.y-this.y>=0 && this.scene.player.y-this.y>=5) {this.current_action=this.move_down;}
+				  else if(this.scene.player.x-this.x>=30 && this.scene.player.x-this.x>=40) {this.current_action=this.move_right;}
+				   else if(this.scene.player.y-this.y<=0 && this.scene.player.y-this.y<=5) {this.current_action=this.move_up;}
+				   else if(this.scene.player.x-this.x<30 && this.scene.player.x-this.x<=40) {this.current_action=this.move_left;}
 					
 			else if((this.scene.player.dead == false) &&
 			(this.scene.player.x < this.x + 50 &&
    			this.scene.player.x + 50 > this.x &&
    			this.scene.player.y < this.y + 50 &&
    			50 + this.scene.player.y > this.y)) {
-				
-		  //тактический прыжок
 		  this.set_action("right","attack");
 			this.attack();
 			this.scene.player.hp-=this.damage/20;
+
+			newHp = this.scene.player.hp;
+			if(newHp >= 0){
+				innerHpText.innerText = newHp - (newHp%2) + " " + "/ " + String(this.scene.player.maxhp);
+				innerHp.style.width = (200 - ((100 - newHp) * 2)) + 'px';
+			} 
 			
 			if(this.scene.player.hp<0){
 				this.scene.player.set_action("down","dead");
@@ -976,6 +1189,14 @@ if((pos_x > this.scene.monster1.x) &&
 				
 			}
 		
+			if(this.scene.player.x == this.x &&
+				 this.scene.player.y == this.y && this.scene.controls.states['melee']){
+
+					this.hp -= this.scene.player.damage;
+					if(this.hp <= 0){
+						this.set_action("down", "dead");
+					}
+			}
 		}
 
 
@@ -1009,8 +1230,8 @@ if((pos_x > this.scene.monster1.x) &&
 	};
 
 	function Controls() {
-        this.codes  = { 37: 'left', 39: 'right', 38: 'forward', 40: 'backward', 32: 'fire' };
-        this.states = { 'left': false, 'right': false, 'forward': false, 'backward': false, 'fire' : false };
+        this.codes  = { 37: 'left', 39: 'right', 38: 'forward', 40: 'backward', 32: 'fire', 69: 'melee' };
+        this.states = { 'left': false, 'right': false, 'forward': false, 'backward': false, 'fire' : false, 'melee' : false };
         document.addEventListener('keydown', this.onKey.bind(this, true), false);
         document.addEventListener('keyup', this.onKey.bind(this, false), false);
      }
@@ -1059,7 +1280,8 @@ if((pos_x > this.scene.monster1.x) &&
     scenes['lib'] = new Lib(screen, controls);
     scenes['menu'] = new Menu(screen, controls);
     scenes['level 1'] = new Game(screen, controls,"level 1");
-	scenes['level 2'] = new Game(screen, controls, "level 2");
+    scenes['level 2'] = new Game(screen, controls, "level 2");
+    scenes['level 3'] = new Game(screen,controls,'level 3');
 	scenes['win'] = new Win(screen, controls);
 
     var current_scene = 'lib';
