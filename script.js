@@ -238,7 +238,7 @@
 		this.new_level=new_level;
 		this.current_level=new Level(new_level);
 		this.camera = new Camera(0,0,this);
-		this.player = new Player(this.current_level.player_x,this.current_level.player_y,this,100,10);
+		this.player = new Player(this.current_level.player_x,this.current_level.player_y,this,newHp,10);
 
 		this.monster1 = new Player(this.current_level.monster1_x,this.current_level.monster1_y,this,20,10);
 		this.monster1.type = "monster";
@@ -442,17 +442,8 @@ this.ctx.drawImage(this.imgs['sceleton'],
 		}
 
 		if(this.new_level=="level 2"){
-            if((this.player.x > 300) &&
-                 (this.player.y > 300)) {
-                    this.ctx.drawImage(this.imgs['title'],
-                    0,0,640,640,
-                    0,0,640,640);
-                         this.new_level="level 3";
-                         return 'level 3';
-                 } else {
                         return 'level 2';
                  }
-            }
 
          if(this.new_level=="level 3"){
              return "level 3";
@@ -1169,19 +1160,17 @@ if((pos_x > this.scene.monster1.x) &&
    			this.scene.player.x + 150 > this.x &&
    			this.scene.player.y < this.y + 150 &&
    			150 + this.scene.player.y > this.y)){
-                console.log(this.scene.player.x-this.x);
-				    if(this.scene.player.y-this.y>0) {this.current_action=this.move_down;}
-				  else if(this.scene.player.x-this.x>30 && this.scene.player.x-this.x>40) {this.current_action=this.move_right;}
-				   else if(this.scene.player.y-this.y<0) {this.current_action=this.move_up;}
-				   else if(this.scene.player.x-this.x<30 && this.scene.player.x-this.x<40) {this.current_action=this.move_left;}
+                   console.log(this.scene.player.y-this.y);
+				    if(this.scene.player.y-this.y>=0 && this.scene.player.y-this.y>=5) {this.current_action=this.move_down;}
+				  else if(this.scene.player.x-this.x>=30 && this.scene.player.x-this.x>=40) {this.current_action=this.move_right;}
+				   else if(this.scene.player.y-this.y<=0 && this.scene.player.y-this.y<=5) {this.current_action=this.move_up;}
+				   else if(this.scene.player.x-this.x<30 && this.scene.player.x-this.x<=40) {this.current_action=this.move_left;}
 					
 			else if((this.scene.player.dead == false) &&
 			(this.scene.player.x < this.x + 50 &&
    			this.scene.player.x + 50 > this.x &&
    			this.scene.player.y < this.y + 50 &&
    			50 + this.scene.player.y > this.y)) {
-				console.log("pizdec");
-		  //тактический прыжок
 		  this.set_action("right","attack");
 			this.attack();
 			this.scene.player.hp-=this.damage/20;
