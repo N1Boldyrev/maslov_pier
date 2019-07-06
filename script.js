@@ -6,6 +6,12 @@
 	innerHpText.innerText = newHp + " " + "/ 100";
 	//счет игрока обновляется при перезоде на уровень, выносим в глобальную
 	var score = 0;
+	var innerScore = document.getElementById('score__content')
+	innerScore.innerText = "0";
+	//exp
+	var player_exp = 0;
+	var innerExp = document.getElementById('exp__status');
+	innerExp.innerText = '1';
 
 	function Scene(screen, controls) {
 		this.canvas = screen.canvas;
@@ -949,7 +955,7 @@ console.dir(Player);
 			this.set_action(this.direction,"attack");
 		}
 		if(this.type == "player"){
-			console.log(score);
+			console.log('exp ='+player_exp,'score'+ score,'level'+ this.scene.player.level, 'hp ' + this.scene.player.hp, 'max hp ' + this.scene.player.maxhp);
 			
 			
 			this.set_action(this.direction,"attack");
@@ -1070,16 +1076,16 @@ console.dir(Player);
 
 	Player.prototype.update = function (time) {
 			this.animate();
-			var need_to_levelup = (this.level + 1) * this.level / 2 + 1;
-			if(this.exp >= need_to_levelup){
+			var need_to_levelup = (this.level + 1) * this.level / 2 ;
+			if(player_exp >= need_to_levelup){
 				this.level++;
 				this.damage *= 2;
 				this.maxhp += 10;
 				this.hp = this.maxhp;
-				cur_l_hp = this.hp;
-				newHp = this.hp;
+				console.log(this.maxhp)
+				newHp = this.scene.player.hp;
 				if(newHp >= 0){
-					innerHpText.innerText = newHp - (newHp%2) + " " + "/ " + String(this.maxhp);
+					innerHpText.innerText = newHp - (newHp%2) + " " + "/ " + String(this.scene.player.maxhp);
 					innerHp.style.width = (200 - ((100 - newHp) * 2)) + 'px';
 				} 
 				
@@ -1097,10 +1103,12 @@ console.dir(Player);
 			}
 
 			if(this.status == "dead") {
-				this.scene.player.exp += this.exp;
+				player_exp += this.exp;
+				innerExp.innerText = this.scene.player.level;
+				// this.scene.player.exp += this.exp;
 				score += this.exp * 100;
 				this.exp = 0;
-				 
+				innerScore.innerText = score;
 				return true;
 			}
 
