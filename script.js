@@ -4,7 +4,8 @@
 
 	var newHp = 100;
 	innerHpText.innerText = newHp + " " + "/ 100";
-
+	//счет игрока обновляется при перезоде на уровень, выносим в глобальную
+	var score = 0;
 
 	function Scene(screen, controls) {
 		this.canvas = screen.canvas;
@@ -116,10 +117,11 @@
 		}
 	};
 
-	
+	var cur_l_hp = 100;
 
 	function Level(level){
 		this.level=level;
+		
 		if(this.level=="level 1")
 		{
 			this.map=[
@@ -144,6 +146,7 @@
 				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
 		];
+		
 		this.player_x=150;
 		this.player_y=300;
 
@@ -184,6 +187,7 @@
 		
 		this.player_x=150;
 		this.player_y=300;
+		
 
 		this.monster2_x=300;
 		this.monster2_y=450;
@@ -238,7 +242,7 @@
 		this.new_level=new_level;
 		this.current_level=new Level(new_level);
 		this.camera = new Camera(0,0,this);
-		this.player = new Player(this.current_level.player_x,this.current_level.player_y,this,100,10);
+		this.player = new Player(this.current_level.player_x,this.current_level.player_y,this,cur_l_hp,10);
 
 		this.monster1 = new Player(this.current_level.monster1_x,this.current_level.monster1_y,this,20,10);
 		this.monster1.type = "monster";
@@ -683,7 +687,7 @@ if((pos_x > this.scene.monster1.x) &&
 	return	!this.scene.tiles[this.scene.map[i][j]].walk;
 }
 
-	
+
 	function Player(x,y,scene,hp,damage) {
 		this.x = x;
 		this.y = y;
@@ -706,6 +710,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.level = 1;
 		
 		this.exp = 1;
+		
 		this.sprites = {
 			standing: {
 				right: {
@@ -937,16 +942,16 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.fire = function () {
 		this.set_action(this.direction,"fire");
 	}
-
+console.dir(Player);
 	Player.prototype.attack = function () {
 		
 		if(this.type == "monster"){
 			this.set_action(this.direction,"attack");
 		}
 		if(this.type == "player"){
-			console.log(this.level);
+			console.log(score);
 			
-			console.log(this.hp);
+			
 			this.set_action(this.direction,"attack");
 			
 			if(Math.sqrt(
@@ -1071,7 +1076,8 @@ if((pos_x > this.scene.monster1.x) &&
 				this.damage *= 2;
 				this.maxhp += 10;
 				this.hp = this.maxhp;
-				newHp = this.scene.player.hp;
+				cur_l_hp = this.hp;
+				newHp = this.hp;
 				if(newHp >= 0){
 					innerHpText.innerText = newHp - (newHp%2) + " " + "/ " + String(this.maxhp);
 					innerHp.style.width = (200 - ((100 - newHp) * 2)) + 'px';
@@ -1092,7 +1098,9 @@ if((pos_x > this.scene.monster1.x) &&
 
 			if(this.status == "dead") {
 				this.scene.player.exp += this.exp;
+				score += this.exp * 100;
 				this.exp = 0;
+				 
 				return true;
 			}
 
@@ -1157,7 +1165,10 @@ if((pos_x > this.scene.monster1.x) &&
 		  this.set_action("right","attack");
 			this.attack();
 			this.scene.player.hp-=this.damage/20;
-
+			if(score > 0){
+				score -= 1;
+			}
+			
 			newHp = this.scene.player.hp;
 			if(newHp >= 0){
 				innerHpText.innerText = newHp - (newHp%2) + " " + "/ " + String(this.scene.player.maxhp);
