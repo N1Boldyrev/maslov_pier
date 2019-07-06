@@ -123,7 +123,6 @@
 		}
 	};
 
-	var cur_l_hp = 100;
 
 	function Level(level){
 		this.level=level;
@@ -248,7 +247,7 @@
 		this.new_level=new_level;
 		this.current_level=new Level(new_level);
 		this.camera = new Camera(0,0,this);
-		this.player = new Player(this.current_level.player_x,this.current_level.player_y,this,cur_l_hp,10);
+		this.player = new Player(this.current_level.player_x,this.current_level.player_y,this,newHp,10);
 
 		this.monster1 = new Player(this.current_level.monster1_x,this.current_level.monster1_y,this,20,10);
 		this.monster1.type = "monster";
@@ -905,7 +904,7 @@ if((pos_x > this.scene.monster1.x) &&
 		if(this.is_walkable(this.x - this.speed,this.y)) {
 			
 			if(this.type=="player"){
-				this.x = this.x - this.speed-1;
+				this.x = this.x - this.speed;
 			}
 			this.x = this.x - this.speed;
 			if(this.x < 0) {
@@ -919,7 +918,7 @@ if((pos_x > this.scene.monster1.x) &&
 		if(this.is_walkable(this.x + this.speed,this.y)) {
 
 			if(this.type=="player"){
-				this.x = this.x + this.speed+1;
+				this.x = this.x + this.speed;
 			}
 			this.x = this.x + this.speed;
 			if(this.x > 1216) {
@@ -933,7 +932,7 @@ if((pos_x > this.scene.monster1.x) &&
 		if(this.is_walkable(this.x ,this.y - this.speed)) {
 
 			if(this.type=="player"){
-				this.y = this.y - this.speed-1;
+				this.y = this.y - this.speed;
 			}
 
 			this.y = this.y - this.speed;
@@ -948,7 +947,7 @@ if((pos_x > this.scene.monster1.x) &&
 		if(this.is_walkable(this.x,this.y + this.speed)) {
 
 			if(this.type=="player"){
-				this.y = this.y + this.speed+1;
+				this.y = this.y + this.speed;
 			}
    
 			this.y = this.y + this.speed;
@@ -962,7 +961,6 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.fire = function () {
 		this.set_action(this.direction,"fire");
 	}
-console.dir(Player);
 	Player.prototype.attack = function () {
 		
 		if(this.type == "monster"){
@@ -1186,7 +1184,7 @@ console.dir(Player);
    			this.scene.player.x + 50 > this.x &&
    			this.scene.player.y < this.y + 50 &&
    			50 + this.scene.player.y > this.y)) {
-				console.log(this.scene.player.y-this.y);
+				
 
 				if(this.scene.player.y-this.y>=20){
 					this.set_action("down","attack");
