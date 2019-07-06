@@ -1,4 +1,4 @@
-	var hp  = document.getElementById('hp');
+  var hp  = document.getElementById('hp');
 	var innerHp = document.getElementById('hp__front');
 	var innerHpText = document.getElementById('hp__text');
 
@@ -304,6 +304,11 @@
 			{j:4,i:2,walk: true}, //14 trail start 1 _h
 			{j:5,i:2,walk: true}, //15 trail 2 _h
 			{j:6,i:2,walk: true}, //16 trail 3 _|
+			{j:0,i:3,walk: false}, //17 house-top-1
+			{j:1,i:3,walk: false}, //18 house-top-2
+			{j:0,i:4,walk: false}, //19 house-bot-1
+			{j:1,i:4,walk: false}, //20 house-bot-2
+
 
 		];
 
@@ -558,7 +563,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster1.hp -= this.scene.player.damage;
 		if(this.scene.monster1.hp <= 0){
 			this.scene.monster1.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -571,7 +576,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster2.hp -= this.scene.player.damage;
 		if(this.scene.monster2.hp <= 0){
 			this.scene.monster2.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -584,7 +589,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster3.hp -= this.scene.player.damage;
 		if(this.scene.monster3.hp <= 0){
 			this.scene.monster3.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -597,7 +602,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster4.hp -= this.scene.player.damage;
 		if(this.scene.monster4.hp <= 0){
 			this.scene.monster4.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -610,7 +615,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster5.hp -= this.scene.player.damage;
 		if(this.scene.monster5.hp <= 0){
 			this.scene.monster5.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -623,7 +628,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster6.hp -= this.scene.player.damage;
 		if(this.scene.monster6.hp <= 0){
 			this.scene.monster6.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -636,7 +641,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster7.hp -= this.scene.player.damage;
 		if(this.scene.monster7.hp <= 0){
 			this.scene.monster7.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -649,7 +654,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster8.hp -= this.scene.player.damage;
 		if(this.scene.monster8.hp <= 0){
 			this.scene.monster8.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -662,7 +667,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster9.hp -= this.scene.player.damage;
 		if(this.scene.monster9.hp <= 0){
 			this.scene.monster9.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -675,7 +680,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.scene.monster10.hp -= this.scene.player.damage;
 		if(this.scene.monster10.hp <= 0){
 			this.scene.monster10.set_action("down","dead");
-			
+
 			return true;
 		}
 		
@@ -683,7 +688,7 @@ if((pos_x > this.scene.monster1.x) &&
 	return	!this.scene.tiles[this.scene.map[i][j]].walk;
 }
 
-	
+
 	function Player(x,y,scene,hp,damage) {
 		this.x = x;
 		this.y = y;
@@ -706,6 +711,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.level = 1;
 		
 		this.exp = 1;
+
 		this.sprites = {
 			standing: {
 				right: {
@@ -896,6 +902,10 @@ if((pos_x > this.scene.monster1.x) &&
 		this.set_action("left","walking");
 
 		if(this.is_walkable(this.x - this.speed,this.y)) {
+			
+			if(this.type=="player"){
+				this.x = this.x - this.speed-1;
+			}
 			this.x = this.x - this.speed;
 			if(this.x < 0) {
 				this.x = 0;
@@ -906,6 +916,10 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.move_right = function () {
 		this.set_action("right","walking");
 		if(this.is_walkable(this.x + this.speed,this.y)) {
+
+			if(this.type=="player"){
+				this.x = this.x + this.speed+1;
+			}
 			this.x = this.x + this.speed;
 			if(this.x > 1216) {
 				this.x =1216;
@@ -916,6 +930,11 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.move_up = function () {
 		this.set_action("up","walking");
 		if(this.is_walkable(this.x ,this.y - this.speed)) {
+
+			if(this.type=="player"){
+				this.y = this.y - this.speed-1;
+			}
+
 			this.y = this.y - this.speed;
 			if(this.y < 0) {
 				this.y =0;
@@ -926,6 +945,11 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.move_down = function () {
 		this.set_action("down","walking");
 		if(this.is_walkable(this.x,this.y + this.speed)) {
+
+			if(this.type=="player"){
+				this.y = this.y + this.speed+1;
+			}
+   
 			this.y = this.y + this.speed;
 			if(this.y > 1216) {
 				this.y =1216;
@@ -1051,7 +1075,6 @@ if((pos_x > this.scene.monster1.x) &&
 				}
 			}
 		}
-
 	}
 
 	Player.prototype.start = function () {
@@ -1065,6 +1088,7 @@ if((pos_x > this.scene.monster1.x) &&
 
 	Player.prototype.update = function (time) {
 			this.animate();
+
 			var need_to_levelup = (this.level + 1) * this.level / 2 + 1;
 			if(this.exp >= need_to_levelup){
 				this.level++;
@@ -1086,10 +1110,11 @@ if((pos_x > this.scene.monster1.x) &&
 			if(this.status == "fire") {
 				return true;
 			}
+
 			if(this.status == "melee") {
 				return true;
 			}
-
+    
 			if(this.status == "dead") {
 				this.scene.player.exp += this.exp;
 				this.exp = 0;
@@ -1104,6 +1129,7 @@ if((pos_x > this.scene.monster1.x) &&
 				this.fire();
 				return true;
 			}
+
 			if(this.scene.controls.states['melee']) {
 				this.attack();
 				
@@ -1134,6 +1160,7 @@ if((pos_x > this.scene.monster1.x) &&
 
 
 	}
+
 	Player.prototype.monster_ai_controll = function (time) {
 
 		
@@ -1164,7 +1191,6 @@ if((pos_x > this.scene.monster1.x) &&
 				innerHp.style.width = (200 - ((100 - newHp) * 2)) + 'px';
 			} 
 			
-		
 			if(this.scene.player.hp<0){
 				this.scene.player.set_action("down","dead");
 			   }
