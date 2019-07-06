@@ -1,3 +1,10 @@
+@font-face{
+    font-family: 'Press Start 2P';
+    src: url("PressStart2P-Regular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
 .wrapper {
     display: flex;
     width: 100%;
@@ -52,8 +59,9 @@
     position:absolute;
     z-index:10;
     align-items: center;
-    font-weight: bold;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+    font-size: 15px;
+    padding-top: 3px;
+    font-family: 'Press Start 2P';
 }
 
 /* score */
@@ -70,7 +78,8 @@
     background-color: #eabd6bc9;
     color: #151515;
     justify-content: center;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+    padding-top: 3px;
+    font-family: 'Press Start 2P', cursive;
 
 }
 
@@ -87,7 +96,7 @@
     background-color: #5e66cbd9;
     justify-content: center;
     align-items: center;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+    font-family: 'Press Start 2P', cursive;
 
 }
 
