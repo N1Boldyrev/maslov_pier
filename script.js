@@ -1169,17 +1169,18 @@ if((pos_x > this.scene.monster1.x) &&
    			this.scene.player.x + 150 > this.x &&
    			this.scene.player.y < this.y + 150 &&
    			150 + this.scene.player.y > this.y)){
+                console.log(this.scene.player.x-this.x);
 				    if(this.scene.player.y-this.y>0) {this.current_action=this.move_down;}
-				  else if(this.scene.player.x-this.x>30) {this.current_action=this.move_right;}
+				  else if(this.scene.player.x-this.x>30 && this.scene.player.x-this.x>40) {this.current_action=this.move_right;}
 				   else if(this.scene.player.y-this.y<0) {this.current_action=this.move_up;}
-				   else if(this.scene.player.x-this.x<30) {this.current_action=this.move_left;}
+				   else if(this.scene.player.x-this.x<30 && this.scene.player.x-this.x<40) {this.current_action=this.move_left;}
 					
 			else if((this.scene.player.dead == false) &&
 			(this.scene.player.x < this.x + 50 &&
    			this.scene.player.x + 50 > this.x &&
    			this.scene.player.y < this.y + 50 &&
    			50 + this.scene.player.y > this.y)) {
-				
+				console.log("pizdec");
 		  //тактический прыжок
 		  this.set_action("right","attack");
 			this.attack();
