@@ -1,5 +1,5 @@
 @font-face{
-    font-family: 'Press Start 2P';
+    font-family: "PressStart2P";
     src: url("PressStart2P-Regular.ttf") format("truetype");
     font-style: normal;
     font-weight: normal;
@@ -61,7 +61,7 @@
     align-items: center;
     font-size: 15px;
     padding-top: 3px;
-    font-family: 'Press Start 2P';
+    font-family: 'PressStart2P';
 }
 
 /* score */
@@ -79,7 +79,7 @@
     color: #151515;
     justify-content: center;
     padding-top: 3px;
-    font-family: 'Press Start 2P', cursive;
+    font-family: 'PressStart2P', cursive;
 
 }
 
@@ -96,7 +96,7 @@
     background-color: #5e66cbd9;
     justify-content: center;
     align-items: center;
-    font-family: 'Press Start 2P', cursive;
+    font-family: 'PressStart2P', cursive;
 
 }
 

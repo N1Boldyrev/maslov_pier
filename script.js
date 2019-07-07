@@ -2,7 +2,7 @@
 	var innerHp = document.getElementById('hp__front');
 	var innerHpText = document.getElementById('hp__text');
 
-	var newHp = 100;
+    var newHp = 100;
 	innerHpText.innerText = newHp + " " + "/ 100";
 	//счет игрока обновляется при перезоде на уровень, выносим в глобальную
 	var score = 0;
@@ -114,8 +114,8 @@
 				0,0,640,640);
 
 			this.ctx.fillStyle = '#FFFFFF';
-			this.ctx.font="22px Arial";
-			this.ctx.fillText("Нажмите пробел",250,500);
+			this.ctx.font="20px PressStart2P";
+			this.ctx.fillText("Нажмите пробел",190,500);
 		if(this.controls.states['fire']) {
 			return "level 1";
 		} else {
@@ -247,7 +247,7 @@
 		this.new_level=new_level;
 		this.current_level=new Level(new_level);
 		this.camera = new Camera(0,0,this);
-		this.player = new Player(this.current_level.player_x,this.current_level.player_y,this,newHp,10);
+        this.player = new Player(this.current_level.player_x,this.current_level.player_y,this,newHp,10);
 
 		this.monster1 = new Player(this.current_level.monster1_x,this.current_level.monster1_y,this,20,10);
 		this.monster1.type = "monster";
@@ -409,7 +409,6 @@ this.ctx.drawImage(this.imgs['sceleton'],
 		this.ctx.drawImage(this.imgs['player'],
                     this.player.j*64,this.player.i*64,64,64,
                           ( this.player.x )-this.camera.x,(this.player.y) - this.camera.y ,64,64);
-
 
 
 		//render arows
@@ -801,8 +800,7 @@ if((pos_x > this.scene.monster1.x) &&
 		};
 	};
 
-	Player.prototype.animate = function () {
-
+	Player.prototype.animate = function () {       
 		var frame = this.sprites[this.status][this.direction];
 
 		if(this.dead) {
@@ -839,6 +837,15 @@ if((pos_x > this.scene.monster1.x) &&
 			}
 		}
 
+        if(this.scene.player.show_levelup==true){
+            this.scene.ctx.fillStyle = '#FFFFFF';
+            this.scene.ctx.font="15px PressStart2P";
+            this.scene.ctx.fillText("LEVEL UP!",this.scene.player.x-30,this.scene.player.y+10);
+            setTimeout(() => {
+                this.scene.player.show_levelup=false;
+            }, 2000);
+         }
+         
 
 		this.j = frame.frames[this.current_animation_frame][0];
 		this.i = frame.frames[this.current_animation_frame][1];
@@ -929,7 +936,7 @@ if((pos_x > this.scene.monster1.x) &&
 
 	Player.prototype.move_up = function () {
 		this.set_action("up","walking");
-		if(this.is_walkable(this.x ,this.y - this.speed)) {
+		if(this.is_walkable(this.x ,this.y - this.speed-5)) {
 
 			if(this.type=="player"){
 				this.y = this.y - this.speed;
@@ -1087,7 +1094,6 @@ if((pos_x > this.scene.monster1.x) &&
 
 	Player.prototype.update = function (time) {
 			this.animate();
-    
 			var need_to_levelup = (this.level + 1) * this.level / 2 ;
 			if(player_exp >= need_to_levelup){
 				this.level++;
@@ -1095,12 +1101,12 @@ if((pos_x > this.scene.monster1.x) &&
 				this.maxhp += 10;
 				this.hp = this.maxhp;
 				console.log(this.maxhp)
-				newHp = this.scene.player.hp;
+                newHp = this.scene.player.hp;
+                this.show_levelup=true;
 				if(newHp >= 0){
 					innerHpText.innerText = newHp - (newHp%2) + " " + "/ " + String(this.scene.player.maxhp);
-					innerHp.style.width = (200 - ((100 - newHp) * 2)) + 'px';
-				} 
-				
+                    innerHp.style.width = (200 - ((100 - newHp) * 2)) + 'px';
+                }
 			}
 			if(this.status == "start") {
 				this.start();
@@ -1199,15 +1205,13 @@ if((pos_x > this.scene.monster1.x) &&
 				}
 				
 
-
-		  //this.set_action("right","attack");
 			this.attack();
-			this.scene.player.hp-=this.damage/20;
+			newHp-=this.damage/20;
 			if(score > 0){
 				score -= 1;
 			}
 			
-			newHp = this.scene.player.hp;
+			this.scene.player.hp=newHp;
 			if(newHp >= 0){
 				innerHpText.innerText = newHp - (newHp%2) + " " + "/ " + String(this.scene.player.maxhp);
 				innerHp.style.width = (200 - ((100 - newHp) * 2)) + 'px';
