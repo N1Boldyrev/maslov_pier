@@ -28,7 +28,7 @@
 		Scene.apply(this, arguments);
 		this.assets = [
 			{name: 'orc', path: 'assets/orc.png'},
-			{name: 'player', path: 'assets/player.png'},
+			{name: 'player', path: 'assets/player_mace.png'},
             {name: 'sceleton', path: 'assets/sceleton.png'},
             {name: 'npc1', path: 'assets/npc1.png'},
 			{name: 'bg', path: 'assets/tiles.png'},
@@ -130,90 +130,109 @@
 	function Level(level){
 		this.level=level;
 		
-		if(this.level=="level 1")
-		{
+		if(this.level=="level 1"){
 			this.map=[
-			     [4 ,4,4,4 ,12 ,9 ,13,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,4,4 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,5,6 ,7 ,8 ,13 ,14 ,15 ,15 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,10,11 ,12 ,9 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,4,4 ,12 ,9 ,13 ,0 ,0 ,0 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,4,4 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,4,4,4 ,12,9 ,13,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,0,0,0 ,12,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,0,0,0 ,12,9 ,13 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
-				 [4 ,0,0,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0,0 ,0 ,0 ,0 ,0 ,0 ,0,0],
+				[4  ,4	,4	,4 	,12 ,9 ,13	,2 	,17	,18 ,19 ,34	,34 ,34 ,34 ,33 ,3 	,3 	,3	,3],
+				[4  ,4	,4	,4 	,12 ,9 ,13 	,2 	,20	,21	,22 ,38	,37 ,38	,37 ,35	,0 	,0	,0	,3],
+				[4  ,4	,4	,4 	,12 ,9 ,13 	,2 	,23	,24 ,25 ,39	,38 ,39 ,38 ,0	,0 	,0 	,0	,3],
+				[4  ,4	,4	,4 	,12 ,9 ,13 	,2 	,26	,27	,28 ,38	,37 ,29 ,29 ,32  ,0 ,0 	,0	,3],
+				[4  ,4	,4	,4 	,12 ,9 ,13 	,2 	,0 	,15 ,15 ,15	,15 ,16  ,15 ,15 ,15 ,15 ,15,3],
+				[4  ,4	,5	,6 	,7 	,8 ,13 	,14 ,15	,15 ,2 	,3	,3 	,3 	,3 	,3  ,1 ,1 	,15	,3],
+				[4	,4	,10	,11 ,12 ,9 ,13  ,2 	,42 ,34	,34 ,31	,17	,18	,19	,3  ,1 ,1 	,15	,3],
+				[4  ,4	,4	,4 	,12 ,9 ,13 	,3 	,36	,39	,38	,35	,20 ,21	,22	,3 	,3 ,0	,15 ,3],
+				[4  ,4	,4	,4 	,12 ,41 ,1  ,3 	,36	,38	,37	,35	,23	,24	,25 ,15 ,15,15 ,15	,3],
+				[4  ,4	,4	,4 	,12 ,9 ,13	,3 	,33 ,0 ,0 ,0	,26 ,27 ,28 ,15 ,0 ,3 	,3	,3],
+				[4  ,4	,4	,4 	,12 ,9 ,13 	,3 	,3 	,3	,0 	,0	,15	,15 ,15 ,15	,0 	,3	,3	,3],
+				[4  ,4	,4	,4 	,12 ,9 ,13 	,3 	,3	,3 	,3 	,0	,15	,0 	,0 	,0 	,3 	,3 	,3	,3],
+				[4  ,4	,4	,4 	,1 	,1 ,1 	,1 	,3 	,3 	,3 	,0	,15	,0 	,0 	,0 	,3 	,3 	,3	,3],
+				[4  ,4	,4	,4 	,3 ,3 ,3 	,3 	,3 	,3 	,3 	,0	,15	,15	,15 ,15	,3 	,3 	,3	,3],
+				[4  ,4	,5	,6 	,7 	,8 ,13 	,3 ,3	,3  ,3 	,3	,0	,2 	,15 ,15	,2 	,3 	,3	,3],
+				[4	,4	,10	,11 ,3 ,3 ,3 	,3 	,3 	,3 	,3	,3	,3	,43	,15	,15 ,43	,43	,43	,3],
+				[4 ,4	,4	,4 	,3 ,3 ,3 	,3 	,3 	,3 	,3	,3	,3 	,46	,45 ,48	,45	,46	,47	,3],
+				[4 ,4	,4	,4 	,3 	,3 ,3   ,3 	,3 	,3 	,0	,0	,0 	,46	,46	,45	,45	,47	,0	,3],
+				[4 ,4	,4	,4 	,3 ,3 ,3 	,3 	,3 	,0 	,0	,0	,3 	,48 ,46 ,46	,48	,48	,48	,3],
+				[4 ,4	,4	,4 	,3 	,3 ,3 	,3 	,3 	,0 	,0	,3	,3 	,3 	,3 	,3 	,3 	,3 	,3	,3],
+			
 		];
+	
 		
 		this.player_x=150;
 		this.player_y=300;
 
-		this.monster1_x=150;
-		this.monster1_y=300;
+		this.monster10_x=894;
+		this.monster10_y=48;
+		
+		this.monster9_x=894;
+		this.monster9_y=138;
 
-        this.npc1_x=150;
+		this.monster8_x=624;
+		this.monster8_y=486;
+
+		this.monster1_x=1134;
+		this.monster1_y=1068;
+
+		this.monster2_x=1124;
+		this.monster2_y=1058;
+
+		
+		this.monster3_x=1124;
+		this.monster3_y=1058;
+
+		this.npc1_x=150;
         this.npc1_y=300;
-        this.npc1Text="Лодочник: <br> Дарова, иди убивай скелетов ";
-        this.npc1wasDialogText="Лодочник:<br> Ты глухой? Иди убивай скелетов";
+		this.npc1Text="Здарова, бандиты";
+		this.npc1wasDialogText="Хэх";
 		
 		}
 
 		if(this.level=="level 2"){
 			this.map=[
-				[4  ,4	,4	,4 	,12 ,9 ,13	,0 	,17 	,18 	,19 	,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,0 	,20 	,21		,22 	,0	,0 	,0 	,0 	,0 	,0 	,0	,0	,0],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,0 	,23 	,24 	,25 	,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4  ,4	,4	,4 	,1 	,1 ,1 	,0 	,26 	,27		,28 	,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,0 	,0 	,0 	,1 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4  ,4	,5	,6 	,7 	,8 ,13 	,14 ,15 ,15 ,0 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4	,4	,10	,11 ,12 ,16 ,13 ,0 	,0 	,0 	,1 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4 ,4	,4	,4 	,12 ,9 ,13 	,0 	,0 	,0 	,1 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4 ,4	,4	,4 	,1 	,1 ,1 ,	1 	,1 	,1 	,1 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4  ,4	,4	,4 	,12 ,9 ,13	,0 	,0 	,0 	,0 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,0 	,0 	,0	,0 ,0	,0 	,0 	,0 	,0 	,0 	,0	,0	,0],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,0 	,0 	,0 	,0 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4  ,4	,4	,4 	,1 	,1 ,1 	,1 	,1 	,1 	,1 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,0 	,0 	,0 	,1 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4  ,4	,5	,6 	,7 	,8 ,13 	,14 ,15 ,15 ,0 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4	,4	,10	,11 ,12 ,16 ,13 ,0 	,0 	,0 	,1 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4 ,4	,4	,4 	,12 ,9 ,13 	,0 	,0 	,0 	,1 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4 ,4	,4	,4 	,1 	,1 ,1 ,	1 	,1 	,1 	,1 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4 ,4	,4	,4 	,12 ,9 ,13 	,0 	,0 	,0 	,1 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				[4 ,4	,4	,4 	,1 	,1 ,1 ,	1 	,1 	,1 	,1 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-
-			{j:0,i:3,walk: false}, //17 крыша дома-лево-верх
-			{j:1,i:3,walk: false}, //18 крыша дома-право-верх
-			{j:2,i:3,walk: false}, //19 дом-камни около крыши-верх
-			{j:0,i:4,walk: false}, //20 крыша дома-лево-низ
-			{j:1,i:4,walk: false}, //21 крыша дома-право-низ
-			{j:2,i:4,walk: false}, //22 камни около крыши-низ
-			{j:0,i:5,walk: false}, //23 стена дома-лево
-			{j:1,i:5,walk: false}, //24 стена дома-право
-			{j:2,i:5,walk: false}, //25  камни около стены дома
-			{j:0,i:6,walk: true}, //26 фундамент дома-лево
-			{j:1,i:6,walk: true}, //27 фундамент дома-право
-			{j:2,i:6,walk: false} //28 камни около фундамента 
+				[4  ,4	,4	,4 	,12 ,9 ,13	,2 	,17	,18 ,19 ,34	,34 ,34 ,34 ,33 ,3 	,3 	,3	,3],
+				[4  ,4	,4	,4 	,12 ,9 ,13 	,2 	,20	,21	,22 ,38	,37 ,38	,37 ,35	,0 	,0	,0	,3],
+				[4  ,4	,4	,4 	,12 ,9 ,13 	,2 	,23	,24 ,25 ,39	,38 ,39 ,38 ,0	,0 	,0 	,0	,3],
+				[4  ,4	,4	,4 	,12 ,9 ,13 	,2 	,26	,27	,28 ,38	,37 ,29 ,29 ,32  ,0 ,0 	,0	,3],
+				[4  ,4	,4	,4 	,12 ,9 ,13 	,2 	,0 	,15 ,15 ,15	,15 ,16  ,15 ,15 ,15 ,15 ,15,3],
+				[4  ,4	,5	,6 	,7 	,8 ,13 	,14 ,15	,15 ,2 	,3	,3 	,3 	,3 	,3  ,1 ,1 	,15	,3],
+				[4	,4	,10	,11 ,12 ,9 ,13  ,2 	,42 ,34	,34 ,31	,17	,18	,19	,3  ,1 ,1 	,15	,3],
+				[4  ,4	,4	,4 	,12 ,9 ,13 	,3 	,36	,39	,38	,35	,20 ,21	,22	,3 	,3 ,0	,15 ,3],
+				[4  ,4	,4	,4 	,12 ,41 ,1  ,3 	,36	,38	,37	,35	,23	,24	,25 ,15 ,15,15 ,15	,3],
+				[4  ,4	,4	,4 	,12 ,9 ,13	,3 	,33 ,0 ,0 ,0	,26 ,27 ,28 ,15 ,0 ,3 	,3	,3],
+				[4  ,4	,4	,4 	,12 ,9 ,13 	,3 	,3 	,3	,0 	,0	,15	,15 ,15 ,15	,0 	,3	,3	,3],
+				[4  ,4	,4	,4 	,12 ,9 ,13 	,3 	,3	,3 	,3 	,0	,15	,0 	,0 	,0 	,3 	,3 	,3	,3],
+				[4  ,4	,4	,4 	,1 	,1 ,1 	,1 	,3 	,3 	,3 	,0	,15	,0 	,0 	,0 	,3 	,3 	,3	,3],
+				[4  ,4	,4	,4 	,3 ,3 ,3 	,3 	,3 	,3 	,3 	,0	,15	,15	,15 ,15	,3 	,3 	,3	,3],
+				[4  ,4	,5	,6 	,7 	,8 ,13 	,3 ,3	,3  ,3 	,3	,0	,2 	,15 ,15	,2 	,3 	,3	,3],
+				[4	,4	,10	,11 ,12 ,16 ,3 	,3 	,3 	,3 	,3	,3	,3	,43	,15	,15 ,43	,43	,43	,3],
+				[4 ,4	,4	,4 	,12 ,9 ,3 	,3 	,3 	,3 	,3	,3	,3 	,46	,45 ,48	,45	,46	,47	,3],
+				[4 ,4	,4	,4 	,1 	,1 ,3   ,3 	,3 	,3 	,0	,0	,0 	,46	,46	,45	,45	,47	,0	,3],
+				[4 ,4	,4	,4 	,12 ,9 ,3 	,3 	,3 	,0 	,0	,0	,3 	,48 ,46 ,46	,48	,48	,48	,3],
+				[4 ,4	,4	,4 	,1 	,1 ,3 	,3 	,3 	,1 	,3	,3	,3 	,3 	,3 	,3 	,3 	,3 	,3	,3],
+			
 		];
-
+	
 		
 		this.player_x=150;
 		this.player_y=300;
-        this.monster1_x = 350;
-		this.monster1_y = 450;
-		this.monster2_x = 350;
-		this.monster2_y = 550;
-		this.monster3_x = 350;
-		this.monster3_y = 650;
+
+		this.monster10_x=894;
+		this.monster10_y=48;
+		
+		this.monster9_x=894;
+		this.monster9_y=138;
+
+		this.monster8_x=624;
+		this.monster8_y=486;
+
+		this.monster1_x=1134;
+		this.monster1_y=1068;
+
+		this.monster2_x=1124;
+		this.monster2_y=1058;
+
+		
+		this.monster3_x=1124;
+		this.monster3_y=1058;
+
         this.npc1_x=150;
         this.npc1_y=300;
 		this.npc1Text="Здарова, бандиты";
@@ -243,12 +262,17 @@
 				 [4 ,4	,4	,4 	,12 ,9 ,13 	,0 	,0 	,0 	,1 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
 				 [4 ,4	,4	,4 	,1 	,1 ,1 ,	1 	,1 	,1 	,1 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
 				 [4 ,4	,4	,4 	,12 ,9 ,13 	,0 	,0 	,0 	,1 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
-				 [4 ,4	,4	,4 	,1 	,1 ,1 ,	1 	,1 	,1 	,1 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
+				 [4 ,4	,4	,4 	,1 	,1 ,1 , 1 	,1 	,1 	,1 ,0	,0 	,0 	,0 	,0 	,0 	,0 	,0	,0],
 		];
 		this.player_x=150;
         this.player_y=300;
         
-        
+		this.monster10_x=894;
+		this.monster10_y=48
+		
+		this.monster9_x=894;
+		this.monster9_y=138
+
         this.npc1_x=150;
         this.npc1_y=300;
 
@@ -301,7 +325,7 @@
 		
 		this.monster10 = new Player(this.current_level.monster10_x,this.current_level.monster10_y,this,20,10);
 		this.monster10.type = "monster";
-		this.monster10.status = "walking";
+		this.monster10.status = "standing";
 
         this.npc1 = new Player(this.current_level.npc1_x,this.current_level.npc1_y,this,20,10,this.current_level.npc1Text,this.current_level.npc1wasDialogText);
 		this.npc1.type = "npc";
@@ -327,11 +351,11 @@
 			{j:3,i:1,walk: true}, //9 - sand
 			{j:1,i:1,walk: false}, //10 boat 1-st part
 			{j:2,i:1,walk: false}, //11 boat 2-nd part
-			{j:4,i:0,walk: true}, //12 sand+water
+			{j:4,i:0,walk: false}, //12 sand+water
 			{j:4,i:1,walk: true}, //13 grass+sand
 			{j:4,i:2,walk: true}, //14 trail start 1 _h
 			{j:5,i:2,walk: true}, //15 trail 2 _h
-			{j:6,i:2,walk: true}, //16 trail 3 _|
+			{j:6,i:2,walk: false}, //16 trail 3 _|
 			{j:0,i:3,walk: false}, //17 крыша дома-лево-верх
 			{j:1,i:3,walk: false}, //18 крыша дома-право-верх
 			{j:2,i:3,walk: false}, //19 дом-камни около крыши-верх
@@ -343,8 +367,27 @@
 			{j:2,i:5,walk: false}, //25  камни около стены дома
 			{j:0,i:6,walk: true}, //26 фундамент дома-лево
 			{j:1,i:6,walk: true}, //27 фундамент дома-право
-			{j:2,i:6,walk: false} //28 камни около фундамента 
-
+			{j:2,i:6,walk: true}, //28 камни около фундамента 
+			{j:5,i:0,walk: false}, // 29 забор деревянный горизонтально-низ
+			{j:6,i:0,walk: true}, // 30 пугало
+			{j:7,i:0,walk: false},//31 деревянный забор влево-вверх
+			{j:8,i:0,walk: false}, //32 деревянный забор вправо-вверх
+			{j:9,i:0,walk: false}, //33 деревянный забор вправо-вниз
+			{j:8,i:1,walk: false}, //34 забор деревянный горизонтально-верх
+			{j:9,i:1,walk: false}, //35 забор деревянный вертикально-право
+			{j:7,i:1,walk: false},//36 забор деревянный вертикально-лево
+			{j:3,i:4,walk: true}, // 37 овощи 1
+			{j:4,i:4,walk: true}, // 38 овощи 2
+			{j:5,i:4,walk: true},// 39 овощи 3
+			{j:6,i:4,walk: false},//40 песок с камнем 1
+			{j:7,i:4,walk: false},// 41 песок с камнем 2
+			{j:8,i:2,walk: false},// 42 деревянный забор влево-вниз
+			{j:5,i:1,walk: false}, //43 забор кладбище-верх
+			{j:8,i:4,walk: false},//44 забор кладбище-низ
+			{j:3,i:3,walk: true}, // 45 надгробия 1
+			{j:4,i:3,walk: true}, // 46 надгробия 2
+			{j:5,i:3,walk: true}, // 47 надгробия 3
+			{j:6,i:3,walk: true}, // 48 надгробия 4
 
 		];
 
@@ -422,15 +465,15 @@
  									 this.monster7.j*64,this.monster7.i*64,64,64,
  												 ( this.monster7.x )-this.camera.x,(this.monster7.y) - this.camera.y ,64,64);
 
-	this.ctx.drawImage(this.imgs['sceleton'],
+	this.ctx.drawImage(this.imgs['orc'],
  									 this.monster8.j*64,this.monster8.i*64,64,64,
  												 ( this.monster8.x )-this.camera.x,(this.monster8.y) - this.camera.y ,64,64);
 
-		this.ctx.drawImage(this.imgs['sceleton'],
+		this.ctx.drawImage(this.imgs['orc'],
  									 this.monster9.j*64,this.monster9.i*64,64,64,
  												 ( this.monster9.x )-this.camera.x,(this.monster9.y) - this.camera.y ,64,64);
 
-this.ctx.drawImage(this.imgs['sceleton'],
+this.ctx.drawImage(this.imgs['orc'],
  									 this.monster10.j*64,this.monster10.i*64,64,64,
                                                   ( this.monster10.x )-this.camera.x,(this.monster10.y) - this.camera.y ,64,64);		
                                                   
@@ -469,10 +512,29 @@ this.ctx.drawImage(this.imgs['npc1'],
 
 		this.render_bg(time);
 		this.render_sprites(time);
-		
+		console.log(this.monster1.dead);
 		if(this.new_level=="level 1"){
-		if((this.player.x > 200) &&
-			 (this.player.y > 300)) {
+		if(this.monster1.dead==true &&
+			this.monster8.dead==true &&
+			this.monster9.dead==true &&
+			this.monster10.dead==true &&
+			this.monster2.dead==true &&
+			this.monster3.dead==true)
+			{
+				this.npc1.x=582;
+				this.npc1.y=1134;
+				this.npc1.npcText="Лодочник: <br> Да ты просто мясник. Жители этой деревни будут благодарны тебе!";
+			}
+
+
+		if(this.player.x > 590 && this.player.x<620 && 
+			this.player.y>1162 &&
+			this.monster1.dead==true &&
+			this.monster8.dead==true &&
+			this.monster9.dead==true &&
+			this.monster10.dead==true &&
+			this.monster2.dead==true &&
+			this.monster3.dead==true) {
 				this.ctx.drawImage(this.imgs['title'],
 				0,0,640,640,
 				0,0,640,640);
@@ -833,6 +895,30 @@ if((pos_x > this.scene.monster1.x) &&
 					total: 20,
 					frames: [[0,14],[1,14],[2,14],[3,14],[4,14],[5,14],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2]]
 				}
+			},
+
+			attack_sword:{
+				right:
+				{	
+					total: 20,
+					frames:[[1,31],[4,31],[7,31],[10,31],[13,31],[16,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31]]
+				},
+
+				left:{
+					total:20,
+					frames:[[1,25],[4,25],[7,25],[10,25],[13,25],[16,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25]]
+				},
+
+				up:{
+					total:20,
+					frames:[[1,22],[4,22],[7,22],[10,22],[13,22],[16,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22]]
+				},
+
+				down:{
+					total:20,
+					frames:[[1,28],[4,28],[7,28],[10,28],[13,28],[16,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28]]
+				}
+
 			}
 
 		};
@@ -852,7 +938,7 @@ if((pos_x > this.scene.monster1.x) &&
 			if(frame.total > 1) {
 				this.current_animation_frame++;
 				if( (this.current_animation_frame + 1) == frame.total ) {
-					if((this.status == "start") || (this.status == "walking") || (this.status == "attack")) {
+					if((this.status == "start") || (this.status == "walking") || (this.status == "attack")||(this.status == "attack_sword")) {
 						this.current_animation_frame = 0;
 					}
 
@@ -916,10 +1002,10 @@ if((pos_x > this.scene.monster1.x) &&
 		var x1 = x;
 		var x2 = x + 64;
 		var y1 = y;
-		var y2 = y+64;
+		var y2 = y+63;
 
-		x1 = x1 + 20;
-		x2 = x2 - 20;
+		x1 = x1 + 10;
+		x2 = x2 - 1;
 		y1 = y1 +20;
 		y2 = y2 -10;
 
@@ -1014,8 +1100,16 @@ if((pos_x > this.scene.monster1.x) &&
 		if(this.type == "player"){
 			console.log('exp ='+player_exp,'score'+ score,'level'+ this.scene.player.level, 'hp ' + this.scene.player.hp, 'max hp ' + this.scene.player.maxhp);
 			
-			
-			this.set_action(this.direction,"attack");
+			this.scene.assets=[
+				{name: 'orc', path: 'assets/orc.png'},
+				{name: 'player', path: 'assets/player_mace.png'},
+				{name: 'sceleton', path: 'assets/sceleton.png'},
+				{name: 'npc1', path: 'assets/npc1.png'},
+				{name: 'bg', path: 'assets/tiles.png'},
+				{name: 'title', path: 'assets/title.jpg'},
+				{name: 'tile',path:'tile.png'}
+			];
+			this.set_action(this.direction,"attack_sword");
 			
 			if(Math.sqrt(
 				Math.pow((this.x - this.scene.monster1.x), 2) + Math.pow((this.y - this.scene.monster1.y), 2)) <= 50){
@@ -1132,6 +1226,8 @@ if((pos_x > this.scene.monster1.x) &&
 
 	Player.prototype.update = function (time) {
 			this.animate();
+			console.log(this.scene.player.x);
+			console.log(this.scene.player.y);
 			var need_to_levelup = (this.level + 1) * this.level / 2 ;
 			innterTextExp.innerText = player_exp * 100 +' / '+ need_to_levelup * 100;
 			innerFrontProg.style.width = 100 / need_to_levelup * player_exp  + 'px';
@@ -1155,6 +1251,15 @@ if((pos_x > this.scene.monster1.x) &&
 			}
 
 			if(this.status == "fire") {
+				this.scene.assets=[
+					{name: 'orc', path: 'assets/orc.png'},
+					{name: 'player', path: 'assets/player_bow.png'},
+					{name: 'sceleton', path: 'assets/sceleton.png'},
+					{name: 'npc1', path: 'assets/npc1.png'},
+					{name: 'bg', path: 'assets/tiles.png'},
+					{name: 'title', path: 'assets/title.jpg'},
+					{name: 'tile',path:'tile.png'}
+				];
 				return true;
 			}
 
@@ -1225,9 +1330,9 @@ if((pos_x > this.scene.monster1.x) &&
 
 		
 		if((this.scene.player.dead == false) &&
-			(this.scene.player.x < this.x + 150 &&
-   			this.scene.player.x + 150 > this.x &&
-   			this.scene.player.y < this.y + 150 &&
+			(this.scene.player.x < this.x + 70 &&
+   			this.scene.player.x + 70 > this.x &&
+   			this.scene.player.y < this.y + 70 &&
    			150 + this.scene.player.y > this.y)){
                   
 				    if(this.scene.player.y-this.y>=30 && this.scene.player.y-this.y>=40 && this.scene.player.y-this.y>=-30 && this.scene.player.y-this.y>=-40) {this.current_action=this.move_down;}
