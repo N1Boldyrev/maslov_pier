@@ -1,7 +1,7 @@
   var hp  = document.getElementById('hp');
 	var innerHp = document.getElementById('hp__front');
 	var innerHpText = document.getElementById('hp__text');
-
+  	var showHeader = document.getElementById('header');
     var newHp = 100;
 	innerHpText.innerText = newHp + " " + "/ 100";
 	//счет игрока обновляется при перезоде на уровень, выносим в глобальную
@@ -11,6 +11,8 @@
 	//exp
 	var player_exp = 0;
 	var innerExp = document.getElementById('exp__status');
+	var innterTextExp = document.getElementById('progres__text');
+	var innerFrontProg = document.getElementById('progres__front');
 	innerExp.innerText = '1';
 
 	function Scene(screen, controls) {
@@ -206,7 +208,12 @@
 		
 		this.player_x=150;
 		this.player_y=300;
-        
+        this.monster1_x = 350;
+		this.monster1_y = 450;
+		this.monster2_x = 350;
+		this.monster2_y = 550;
+		this.monster3_x = 350;
+		this.monster3_y = 650;
         this.npc1_x=150;
         this.npc1_y=300;
 		this.npc1Text="Здарова, бандиты";
@@ -351,7 +358,7 @@
 	Game.prototype.render_bg = function (time) {
 		var start_col = Math.floor(this.camera.x / 64);
 		var start_row = Math.floor(this.camera.y / 64);
-
+		showHeader.style.display = "flex";
 		for(var i = start_row; i < (start_row + 11); i++) {
 			for(var j = start_col; j < (start_col + 11); j++) {
 				if(( j < 20) && (i < 20)) {
@@ -382,7 +389,7 @@
         this.monster10.update(time);
         this.npc1.update(time);
         this.camera.update(time);
-        console.log(this.camera.y);
+        
 
 
 		//render monster
@@ -720,6 +727,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.y = y;
 		this.i = 0;
 		this.j = 0;
+		this.bow = 1;
 		this.type = "player";
 		this.scene = scene;
 		this.dead = false;
@@ -1125,10 +1133,13 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.update = function (time) {
 			this.animate();
 			var need_to_levelup = (this.level + 1) * this.level / 2 ;
+			innterTextExp.innerText = player_exp * 100 +' / '+ need_to_levelup * 100;
+			innerFrontProg.style.width = 100 / need_to_levelup * player_exp  + 'px';
+			console.log(player_exp)
 			if(player_exp >= need_to_levelup){
 				this.level++;
 				this.damage *= 2;
-				this.maxhp += 10;
+				
 				this.hp = this.maxhp;
 				console.log(this.maxhp)
                 newHp = this.scene.player.hp;
@@ -1170,12 +1181,17 @@ if((pos_x > this.scene.monster1.x) &&
             }
 
 			if(this.scene.controls.states['fire']) {
-				this.fire();
+				if(this.scene.player.bow){
+					this.fire();
+				}
 				return true;
 			}
 
 			if(this.scene.controls.states['melee']) {
+				
 				this.attack();
+				
+				
 				
 				return true;
 			}

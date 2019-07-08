@@ -15,8 +15,8 @@
     display: flex;
     flex-direction: column;
 }
-.header{
-    display: flex;
+#header{
+    display: none;
     height: 20px;
     justify-content: space-around;
     margin-top: 10px;
@@ -97,23 +97,36 @@
     justify-content: center;
     align-items: center;
     font-family: 'PressStart2P', cursive;
-
+    margin-right: 5px;
 }
 
-.exp__progres, .progres__back,.progres__front {
+.exp__progres, .progres__back, #progres__front,#progres__text {
     display: flex;
     width: 100px;
     height: 20px;
     position: relative;
-    background-color: #151515;
+    
     border-radius: 10px;
-}
-.progres__front{
-    display: flex;
-    background-color: red;
-    z-index: 1;
     
 }
+.progres__back{
+    background-color: #7074c58c;
+}
+#progres__front{
+    background-color: #7073c5;
+    z-index: 20;
+    position: absolute;
+    
+    
+}
+#progres__text{
+    position: absolute;
+    z-index: 30;
+    justify-content: center;  
+}
+
+
+/* diLOG */
 
 .dialog{
     display: flex;
