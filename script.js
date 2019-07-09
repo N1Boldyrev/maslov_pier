@@ -183,9 +183,11 @@
 		this.monster3_y=1058;
 
 		this.npc1_x=150;
-        this.npc1_y=300;
+		this.npc1_y=300;
 		this.npc1Text="Здарова, бандиты";
 		this.npc1wasDialogText="Хэх";
+		this.npc1_directioin="right";
+		this.npc1_is_chest=false;
 		}
 
 		if(this.level=="level 2"){
@@ -240,8 +242,9 @@
         this.npc1_y=300;
 		this.npc1Text="Здарова, бандиты";
 		this.npc1wasDialogText="Хэх";
-		
-		
+		this.npc1_directioin="down";
+		this.npc1_is_chest=true;
+
         }
         
         if(this.level=="level 3")
@@ -331,9 +334,11 @@
 		this.monster10.type = "monster";
 		this.monster10.status = "standing";
 
-        this.npc1 = new Player(this.current_level.npc1_x,this.current_level.npc1_y,this,20,10,this.current_level.npc1Text,this.current_level.npc1wasDialogText,true);
+        this.npc1 = new Player(this.current_level.npc1_x,this.current_level.npc1_y,this,20,10,this.current_level.npc1Text,this.current_level.npc1wasDialogText);
 		this.npc1.type = "npc";
 		this.npc1.status = "standing";
+		this.npc1.direction=this.current_level.npc1_directioin;
+		this.npc1.is_chest=this.current_level.npc1_is_chest;
 
 		this.chest = new Player(this.current_level.chest_x,this.current_level.chest_y,this,20,10,this.current_level.chestText,this.current_level.chestwasDialogText);
 		this.chest.type = "npc";
@@ -488,7 +493,7 @@ this.ctx.drawImage(this.imgs['orc'],
                                                   ( this.monster10.x )-this.camera.x,(this.monster10.y) - this.camera.y ,64,64);		
                                                   
 
-this.ctx.drawImage(this.imgs['npc1'],
+this.ctx.drawImage(this.imgs['npc_chest'],
  									 this.npc1.j*64,this.npc1.i*64,64,64,
 												  ( this.npc1.x )-this.camera.x,(this.npc1.y) - this.camera.y ,64,64);	
 												  
@@ -803,7 +808,7 @@ if((pos_x > this.scene.monster1.x) &&
 }
 
 
-	function Player(x,y,scene,hp,damage,npcText,wasDialogText,is_chest) {
+	function Player(x,y,scene,hp,damage,npcText,wasDialogText) {
 		this.x = x;
 		this.y = y;
 		this.i = 0;
@@ -827,7 +832,7 @@ if((pos_x > this.scene.monster1.x) &&
         this.npcText=npcText;
         this.wasDialog=false;
 		this.wasDialogText=wasDialogText;
-		this.is_chest=is_chest;
+		this.is_chest=false;
 		
 		this.exp = 1;
 
@@ -1454,8 +1459,10 @@ if((pos_x > this.scene.monster1.x) &&
                 this.scene.ctx.font="20px PressStart2P";
                 this.scene.ctx.fillText("F",this.x+25-this.scene.camera.x,this.y+10-this.scene.camera.y);
                 if(this.scene.controls.states['interaction']){
+					if(this.is_chest==true){
 					this.set_action("down","open_chest_anim");
 					setTimeout(()=>{this.set_action("down","chest_opened");},200)
+				}
                     document.getElementsByClassName("dialog")[0].style.visibility="visible";
                     this.wasDialog=true;
                 }
