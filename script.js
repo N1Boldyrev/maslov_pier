@@ -8,6 +8,9 @@
 	var score = 0;
 	var innerScore = document.getElementById('score__content')
 	innerScore.innerText = "0";
+
+	//can use bow
+	var bow = 0;
 	//exp
 	var player_exp = 0;
 	var innerExp = document.getElementById('exp__status');
@@ -185,7 +188,6 @@
 		this.npc1wasDialogText="Хэх";
 		this.npc1_directioin="right";
 		this.npc1_is_chest=false;
-		
 		}
 
 		if(this.level=="level 2"){
@@ -338,6 +340,10 @@
 		this.npc1.direction=this.current_level.npc1_directioin;
 		this.npc1.is_chest=this.current_level.npc1_is_chest;
 
+		this.chest = new Player(this.current_level.chest_x,this.current_level.chest_y,this,20,10,this.current_level.chestText,this.current_level.chestwasDialogText);
+		this.chest.type = "npc";
+		this.chest.status = "standing";
+
 		this.sounds = {};
 		this.sounds['arrow'] = new Sound('assets/arrow.wav');
 		this.sounds['sword'] = new Sound('assets/sword.wav');
@@ -436,8 +442,10 @@
 		this.monster7.update(time);
 		this.monster8.update(time);
 		this.monster9.update(time);
-        this.monster10.update(time);
-        this.npc1.update(time);
+		this.monster10.update(time);
+		
+		this.npc1.update(time);
+		
         this.camera.update(time);
         
 
@@ -487,7 +495,11 @@ this.ctx.drawImage(this.imgs['orc'],
 
 this.ctx.drawImage(this.imgs['npc_chest'],
  									 this.npc1.j*64,this.npc1.i*64,64,64,
- 												 ( this.npc1.x )-this.camera.x,(this.npc1.y) - this.camera.y ,64,64);	
+												  ( this.npc1.x )-this.camera.x,(this.npc1.y) - this.camera.y ,64,64);	
+												  
+this.ctx.drawImage(this.imgs['npc_chest'],
+this.chest.j*64,this.chest.i*64,64,64,
+			( this.chest.x )-this.camera.x,(this.chest.y) - this.camera.y ,64,64);	
 
 		//render player
 		this.ctx.drawImage(this.imgs['player'],
@@ -530,7 +542,10 @@ this.ctx.drawImage(this.imgs['npc_chest'],
 			{
 				this.npc1.x=582;
 				this.npc1.y=1134;
-				this.npc1.npcText="Лодочник: <br> Да ты просто мясник. Жители этой деревни будут благодарны тебе!";
+				this.npc1.npcText="Лодочник: <br> Да ты просто мясник. Жители этой деревни будут благодарны тебе! Держи в благодарность модный лук.";
+				if(this.npc1.wasDialog){
+					bow = 1;
+				}
 			}
 
 
@@ -545,11 +560,13 @@ this.ctx.drawImage(this.imgs['npc_chest'],
 				this.ctx.drawImage(this.imgs['title'],
 				0,0,640,640,
 				0,0,640,640);
-                     this.new_level="level 2";
+					 this.new_level="level 2";
+					 
 				 	return 'level 2';
 			 } else {
 					return 'level 1';
 			 }
+			 
 		}
 
 		if(this.new_level=="level 2"){
@@ -796,7 +813,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.y = y;
 		this.i = 0;
 		this.j = 0;
-		this.bow = 1;
+		
 		this.type = "player";
 		this.scene = scene;
 		this.dead = false;
@@ -1272,9 +1289,9 @@ if((pos_x > this.scene.monster1.x) &&
 			console.log(player_exp)
 			if(player_exp >= need_to_levelup){
 				this.level++;
-				this.damage *= 2;
+				this.scene.player.damage *= 1.1;
 				
-				this.hp = this.maxhp;
+				this.scene.player.hp = this.scene.player.maxhp;
 				console.log(this.maxhp)
                 newHp = this.scene.player.hp;
                 this.show_levelup=true;
@@ -1315,7 +1332,7 @@ if((pos_x > this.scene.monster1.x) &&
             }
 
 			if(this.scene.controls.states['fire']) {
-				if(this.scene.player.bow){
+				if(bow){
 					this.fire();
 				}
 				return true;
