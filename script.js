@@ -8,6 +8,9 @@
 	var score = 0;
 	var innerScore = document.getElementById('score__content')
 	innerScore.innerText = "0";
+
+	//can use bow
+	var bow = 0;
 	//exp
 	var player_exp = 0;
 	var innerExp = document.getElementById('exp__status');
@@ -523,7 +526,10 @@ this.ctx.drawImage(this.imgs['npc1'],
 			{
 				this.npc1.x=582;
 				this.npc1.y=1134;
-				this.npc1.npcText="Лодочник: <br> Да ты просто мясник. Жители этой деревни будут благодарны тебе!";
+				this.npc1.npcText="Лодочник: <br> Да ты просто мясник. Жители этой деревни будут благодарны тебе! Держи в благодарность модный лук.";
+				if(this.npc1.wasDialog){
+					bow = 1;
+				}
 			}
 
 
@@ -538,11 +544,13 @@ this.ctx.drawImage(this.imgs['npc1'],
 				this.ctx.drawImage(this.imgs['title'],
 				0,0,640,640,
 				0,0,640,640);
-                     this.new_level="level 2";
+					 this.new_level="level 2";
+					 
 				 	return 'level 2';
 			 } else {
 					return 'level 1';
 			 }
+			 
 		}
 
 		if(this.new_level=="level 2"){
@@ -789,7 +797,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.y = y;
 		this.i = 0;
 		this.j = 0;
-		this.bow = 1;
+		
 		this.type = "player";
 		this.scene = scene;
 		this.dead = false;
@@ -1286,7 +1294,7 @@ if((pos_x > this.scene.monster1.x) &&
             }
 
 			if(this.scene.controls.states['fire']) {
-				if(this.scene.player.bow){
+				if(bow){
 					this.fire();
 				}
 				return true;
