@@ -186,7 +186,6 @@
         this.npc1_y=300;
 		this.npc1Text="Здарова, бандиты";
 		this.npc1wasDialogText="Хэх";
-		
 		}
 
 		if(this.level=="level 2"){
@@ -441,7 +440,7 @@
 		this.monster10.update(time);
 		
 		this.npc1.update(time);
-	
+		
         this.camera.update(time);
         
 
@@ -493,7 +492,7 @@ this.ctx.drawImage(this.imgs['npc1'],
  									 this.npc1.j*64,this.npc1.i*64,64,64,
 												  ( this.npc1.x )-this.camera.x,(this.npc1.y) - this.camera.y ,64,64);	
 												  
-this.ctx.drawImage(this.imgs['npc1'],
+this.ctx.drawImage(this.imgs['npc_chest'],
 this.chest.j*64,this.chest.i*64,64,64,
 			( this.chest.x )-this.camera.x,(this.chest.y) - this.camera.y ,64,64);	
 
@@ -1285,9 +1284,9 @@ if((pos_x > this.scene.monster1.x) &&
 			console.log(player_exp)
 			if(player_exp >= need_to_levelup){
 				this.level++;
-				this.damage *= 2;
+				this.scene.player.damage *= 1.1;
 				
-				this.hp = this.maxhp;
+				this.scene.player.hp = this.scene.player.maxhp;
 				console.log(this.maxhp)
                 newHp = this.scene.player.hp;
                 this.show_levelup=true;
