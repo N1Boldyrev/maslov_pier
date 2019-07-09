@@ -240,7 +240,8 @@
         this.npc1_y=300;
 		this.npc1Text="Здарова, бандиты";
 		this.npc1wasDialogText="Хэх";
-
+		
+		
         }
         
         if(this.level=="level 3")
@@ -333,6 +334,10 @@
         this.npc1 = new Player(this.current_level.npc1_x,this.current_level.npc1_y,this,20,10,this.current_level.npc1Text,this.current_level.npc1wasDialogText);
 		this.npc1.type = "npc";
 		this.npc1.status = "standing";
+
+		this.chest = new Player(this.current_level.chest_x,this.current_level.chest_y,this,20,10,this.current_level.chestText,this.current_level.chestwasDialogText);
+		this.chest.type = "npc";
+		this.chest.status = "standing";
 
 		this.sounds = {};
 		this.sounds['arrow'] = new Sound('assets/arrow.wav');
@@ -432,8 +437,10 @@
 		this.monster7.update(time);
 		this.monster8.update(time);
 		this.monster9.update(time);
-        this.monster10.update(time);
-        this.npc1.update(time);
+		this.monster10.update(time);
+		
+		this.npc1.update(time);
+	
         this.camera.update(time);
         
 
@@ -483,7 +490,11 @@ this.ctx.drawImage(this.imgs['orc'],
 
 this.ctx.drawImage(this.imgs['npc1'],
  									 this.npc1.j*64,this.npc1.i*64,64,64,
- 												 ( this.npc1.x )-this.camera.x,(this.npc1.y) - this.camera.y ,64,64);	
+												  ( this.npc1.x )-this.camera.x,(this.npc1.y) - this.camera.y ,64,64);	
+												  
+this.ctx.drawImage(this.imgs['npc1'],
+this.chest.j*64,this.chest.i*64,64,64,
+			( this.chest.x )-this.camera.x,(this.chest.y) - this.camera.y ,64,64);	
 
 		//render player
 		this.ctx.drawImage(this.imgs['player'],
