@@ -33,9 +33,10 @@
 			{name: 'orc', path: 'assets/orc.png'},
 			{name: 'player', path: 'assets/player_mace.png'},
             {name: 'sceleton', path: 'assets/sceleton.png'},
-            {name: 'npc1', path: 'assets/npc1.png'},
+			{name: 'npc1', path: 'assets/npc1.png'},
+			{name: 'npc_chest', path: 'assets/npc_chest.png'},
 			{name: 'bg', path: 'assets/tiles.png'},
-			{name: 'title', path: 'assets/title.jpg'},
+			{name: 'title', path: 'assets/title.png'},
 			{name: 'tile',path:'tile.png'}
 		];
 
@@ -118,10 +119,10 @@
 	this.ctx.drawImage(this.imgs['title'],
 				0,0,640,640,
 				0,0,640,640);
-
-			this.ctx.fillStyle = '#FFFFFF';
-			this.ctx.font="20px PressStart2P";
-			this.ctx.fillText("Нажмите пробел",190,500);
+				this.ctx.font="30px PressStart2P";
+				this.ctx.fillStyle = '#C70800';
+			this.ctx.fillText("MASLOVA PRISTAN'", 100,200);
+			this.ctx.fillText("Нажмите пробел",115,500);
 		if(this.controls.states['fire']) {
 			return "level 1";
 		} else {
@@ -331,7 +332,7 @@
 		this.monster10.type = "monster";
 		this.monster10.status = "standing";
 
-        this.npc1 = new Player(this.current_level.npc1_x,this.current_level.npc1_y,this,20,10,this.current_level.npc1Text,this.current_level.npc1wasDialogText);
+        this.npc1 = new Player(this.current_level.npc1_x,this.current_level.npc1_y,this,20,10,this.current_level.npc1Text,this.current_level.npc1wasDialogText,true);
 		this.npc1.type = "npc";
 		this.npc1.status = "standing";
 
@@ -803,7 +804,7 @@ if((pos_x > this.scene.monster1.x) &&
 }
 
 
-	function Player(x,y,scene,hp,damage,npcText,wasDialogText) {
+	function Player(x,y,scene,hp,damage,npcText,wasDialogText,is_chest) {
 		this.x = x;
 		this.y = y;
 		this.i = 0;
@@ -826,7 +827,8 @@ if((pos_x > this.scene.monster1.x) &&
         this.level = 1;
         this.npcText=npcText;
         this.wasDialog=false;
-        this.wasDialogText=wasDialogText;
+		this.wasDialogText=wasDialogText;
+		this.is_chest=is_chest;
 		
 		this.exp = 1;
 
@@ -938,6 +940,45 @@ if((pos_x > this.scene.monster1.x) &&
 					frames:[[1,28],[4,28],[7,28],[10,28],[13,28],[16,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28]]
 				}
 
+			},
+
+			open_chest_anim:{
+				right: {
+					total: 1,
+					frames: [[0,3]]
+				},
+				left: {
+					total: 1,
+					frames: [[0,1]]
+				},
+				up: {
+					total: 1,
+					frames: [[0,0]]
+				},
+				down: {
+					total: 8,
+					frames: [[0,2],[1,2],[1,2],[1,2],[2,2],[2,2],[2,2],[2,2]]
+				}
+			},
+
+			chest_opened:{
+
+				right: {
+					total: 1,
+					frames: [[0,3]]
+				},
+				left: {
+					total: 1,
+					frames: [[0,1]]
+				},
+				up: {
+					total: 1,
+					frames: [[0,0]]
+				},
+				down: {
+					total: 1,
+					frames: [[2,2]]
+				}
 			}
 
 		};
@@ -957,7 +998,7 @@ if((pos_x > this.scene.monster1.x) &&
 			if(frame.total > 1) {
 				this.current_animation_frame++;
 				if( (this.current_animation_frame + 1) == frame.total ) {
-					if((this.status == "start") || (this.status == "walking") || (this.status == "attack")||(this.status == "attack_sword")) {
+					if((this.status == "start") || (this.status == "walking") || (this.status == "attack")||(this.status == "attack_sword")||(this.status=="open_chest_anim")||(this.status=="chest_opened")) {
 						this.current_animation_frame = 0;
 					}
 
@@ -1119,15 +1160,6 @@ if((pos_x > this.scene.monster1.x) &&
 		if(this.type == "player"){
 			console.log('exp ='+player_exp,'score'+ score,'level'+ this.scene.player.level, 'hp ' + this.scene.player.hp, 'max hp ' + this.scene.player.maxhp);
 			
-			this.scene.assets=[
-				{name: 'orc', path: 'assets/orc.png'},
-				{name: 'player', path: 'assets/player_mace.png'},
-				{name: 'sceleton', path: 'assets/sceleton.png'},
-				{name: 'npc1', path: 'assets/npc1.png'},
-				{name: 'bg', path: 'assets/tiles.png'},
-				{name: 'title', path: 'assets/title.jpg'},
-				{name: 'tile',path:'tile.png'}
-			];
 			this.set_action(this.direction,"attack_sword");
 			
 			if(Math.sqrt(
@@ -1270,15 +1302,6 @@ if((pos_x > this.scene.monster1.x) &&
 			}
 
 			if(this.status == "fire") {
-				this.scene.assets=[
-					{name: 'orc', path: 'assets/orc.png'},
-					{name: 'player', path: 'assets/player_bow.png'},
-					{name: 'sceleton', path: 'assets/sceleton.png'},
-					{name: 'npc1', path: 'assets/npc1.png'},
-					{name: 'bg', path: 'assets/tiles.png'},
-					{name: 'title', path: 'assets/title.jpg'},
-					{name: 'tile',path:'tile.png'}
-				];
 				return true;
 			}
 
@@ -1432,6 +1455,8 @@ if((pos_x > this.scene.monster1.x) &&
                 this.scene.ctx.font="20px PressStart2P";
                 this.scene.ctx.fillText("F",this.x+25-this.scene.camera.x,this.y+10-this.scene.camera.y);
                 if(this.scene.controls.states['interaction']){
+					this.set_action("down","open_chest_anim");
+					setTimeout(()=>{this.set_action("down","chest_opened");},200)
                     document.getElementsByClassName("dialog")[0].style.visibility="visible";
                     this.wasDialog=true;
                 }
