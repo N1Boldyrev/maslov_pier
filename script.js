@@ -113,11 +113,12 @@
 
 
 	Win.prototype.render = function (time) {
-		this.ctx.fillStyle = '#000000';
-		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height );
-		this.ctx.fillStyle = '#ffffff';
-		this.ctx.font="22px Georgia";
-		this.ctx.fillText("You won!",50,70);
+		this.ctx.drawImage(this.imgs['title'],
+				0,0,640,640,
+				0,0,640,640);
+				this.ctx.font="30px PressStart2P";
+				this.ctx.fillStyle = '#C70800';
+			this.ctx.fillText("MASLOVA PRISTAN'", 100,200);
 		return "win";
 	};
 
@@ -200,8 +201,8 @@
 
 		this.npc1_x=150;
 		this.npc1_y=300;
-		this.npc1Text="Здарова, бандиты";
-		this.npc1wasDialogText="Хэх";
+		this.npc1Text="Лодочник: <br> Вот мы и приплыли,'герой', хах. Тебя наняли очистить деревню от всяких уродцев, так иди и делай свою работу.";
+		this.npc1wasDialogText="Лодочник: <br> Чего уставился? Пока не закончишь-назад я тебя не повезу.";
 		this.npc1_directioin="right";
 		this.npc1_is_chest=false;
 		}
@@ -253,7 +254,7 @@
 
         this.npc1_x=1086;
         this.npc1_y=101;
-		this.npc1Text="В сундуке вы нашли лук.";
+		this.npc1Text="В сундуке вы нашли великий эльфийский лук (Чтобы стрелять нажмите ПРОБЕЛ).";
 		this.npc1wasDialogText="Сундук пуст.";
 		this.npc1_directioin="down";
 		this.npc1_is_chest=true;
@@ -263,41 +264,70 @@
         
         if(this.level=="level 3"){
 			this.map=[
-				[4  ,4	,4	,4 	,12 ,9 ,13	,2 	,17	,18 ,19 ,34	,34 ,34 ,34 ,33 ,3 	,3 	,3	,3],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,2 	,20	,21	,22 ,38	,37 ,38	,37 ,35	,0 	,0	,0	,3],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,2 	,23	,24 ,25 ,39	,38 ,39 ,38 ,0	,0 	,0 	,0	,3],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,2 	,26	,27	,28 ,38	,37 ,29 ,29 ,32  ,0 ,0 	,0	,3],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,2 	,0 	,15 ,15 ,15	,15 ,16  ,15 ,15 ,15 ,15 ,15,3],
-				[4  ,4	,5	,6 	,7 	,8 ,13 	,14 ,15	,15 ,2 	,3	,3 	,3 	,3 	,3  ,1 ,1 	,15	,3],
-				[4	,4	,10	,11 ,12 ,9 ,13  ,2 	,42 ,34	,34 ,31	,17	,18	,19	,3  ,1 ,1 	,15	,3],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,3 	,36	,39	,38	,35	,20 ,21	,22	,3 	,3 ,0	,15 ,3],
-				[4  ,4	,4	,4 	,12 ,41 ,1  ,3 	,36	,38	,37	,35	,23	,24	,25 ,15 ,15,15 ,15	,3],
-				[4  ,4	,4	,4 	,12 ,9 ,13	,3 	,33 ,0 ,0 ,0	,26 ,27 ,28 ,15 ,0 ,3 	,3	,3],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,3 	,3 	,3	,0 	,0	,15	,15 ,15 ,15	,0 	,3	,3	,3],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,3 	,3	,3 	,3 	,0	,15	,0 	,0 	,0 	,3 	,3 	,3	,3],
-				[4  ,4	,4	,4 	,1 	,1 ,1 	,1 	,3 	,3 	,3 	,0	,15	,0 	,0 	,0 	,3 	,3 	,3	,3],
-				[4  ,4	,4	,4 	,3 ,3 ,3 	,3 	,3 	,3 	,3 	,0	,15	,15	,15 ,15	,3 	,3 	,3	,3],
-				[4  ,4	,5	,6 	,7 	,8 ,13 	,3 ,3	,3  ,3 	,3	,0	,2 	,15 ,15	,2 	,3 	,3	,3],
-				[4	,4	,10	,11 ,3 ,3 ,3 	,3 	,3 	,3 	,3	,3	,3	,43	,15	,15 ,43	,43	,43	,3],
-				[4 ,4	,4	,4 	,3 ,3 ,3 	,3 	,3 	,3 	,3	,3	,3 	,46	,45 ,48	,45	,46	,47	,3],
-				[4 ,4	,4	,4 	,3 	,3 ,3   ,3 	,3 	,3 	,0	,0	,0 	,46	,46	,45	,45	,47	,0	,3],
-				[4 ,4	,4	,4 	,3 ,3 ,3 	,3 	,3 	,0 	,0	,0	,3 	,48 ,46 ,46	,48	,48	,48	,3],
-				[4 ,4	,4	,4 	,3 	,3 ,3 	,3 	,3 	,0 	,0	,3	,3 	,3 	,3 	,3 	,3 	,3 	,3	,3],
+				[76  ,76	,76  ,76 ,76 ,76 ,76	,76 ,76	,76 ,76 ,76	,76 ,76 ,76 ,76 ,76 ,76 ,76	,76],
+				[76  ,76	,76	,76 ,76 ,76 ,76 ,76 ,76	,76	,76 ,76	,76 ,76	,76 ,76	,76 ,76	,76	,76],
+				[76  ,76	,76	,76 ,76 ,76 ,76 ,76 ,76	,76 ,76 ,76	,76 ,76 ,76 ,76	,76 ,76 ,76	,76],
+				[76  ,76	,76	,76 ,76 ,76 ,76 ,76 ,76	,76	,76 ,76	,76 ,76 ,76 ,76  ,76 ,76 ,76,76],
+				[76  ,76	,76	,76 ,76 ,76 ,76 ,76 ,76 ,76 ,76 ,76	,76 ,76  ,76 ,76 ,76 ,76 ,76,76],
+				[76  ,76	,76	,76 ,76	,81 ,77 ,77 ,77	,77 ,77 ,77	,77 ,77 ,77 ,77 ,77 ,79 ,76,76],
+				[76	,76	,76	,76 ,76 ,75 ,73 ,73 ,73 ,73	,73 ,73	,73	,73	,73	,73 ,73 ,78 ,76,76],
+				[76  ,76	,76	,76 ,76 ,75 ,73 ,73 ,73	,73	,73	,73	,73 ,73	,73	,73 ,73 ,78,76 ,76],
+				[76  ,76	,76	,76	,76 ,75 ,73 ,73 ,73,73	,73	,73	,73	,73	,73 ,73 ,73, 78 ,76	,76],
+				[76  ,76	,76	,76	,76 ,75 ,73	,73 ,73 ,73 ,73 ,73	,73 ,73 ,73 ,73 ,73 ,78 ,76	,76],
+				[76  ,76	,76	,76	,76 ,75 ,73 ,73 ,73 ,73	,73 ,73	,73	,73 ,73 ,73	,73	,78	,76,76],
+				[76  ,76	,76	,76	,76 ,75 ,73 ,73 ,73	,73 ,73 ,73	,73	,73 ,73 ,73	,73 ,78 ,76,76],
+				[76 ,76,76	,76	,76	,75 ,73 ,73 ,73 ,73 ,73 ,73	,73	,73 ,73 ,73 ,73 ,78 ,76	,76],
+				[76  ,76	,76	,76	,76 ,80 ,74 ,74 ,74	,74 ,74 ,74	,74	,74	,74 ,74	,74	,82 ,76	,76],
+				[76 ,76	,76	,76 ,76 ,76 ,76 ,76 ,76	,76 ,76 ,76	,76	,76 ,76 ,76	,76 ,76 ,76	,76],
+				[76	,76	,76	,76 ,76 ,76 ,76 ,76 ,76 ,76 ,76	,76	,76	,76	,76	,76 ,76	,76	,76	,76],
+				[4 ,4	,4	,4 	,3 ,3 ,3 	,3 	,3 	,3 	,3	,3	,3 	,46	,45 ,48	,45	,46	,47	,76],
+				[4 ,4	,4	,4 	,3 	,3 ,3   ,3 	,3 	,3 	,0	,0	,0 	,46	,46	,45	,45	,47	,0	,76],
+				[4 ,4	,4	,4 	,3 ,3 ,3 	,3 	,3 	,0 	,0	,0	,3 	,48 ,46 ,46	,48	,48	,48	,76],
+				[4 ,4	,4	,4 	,3 	,3 ,3 	,3 	,3 	,0 	,0	,3	,3 	,3 	,3 	,3 	,3 	,3 	,3	,76],
 
-		
 					];
 	
 		
-		this.player_x=330;
-		this.player_y=-10;
+		this.player_x=456;
+		this.player_y=713;
+
+		this.monster1_x=828;
+		this.monster1_y=359;
+
+		this.monster2_x=828;
+		this.monster2_y=359;
+
+		this.monster3_x=828;
+		this.monster3_y=359;
+
+		this.monster4_x=828;
+		this.monster4_y=359;
+
+		this.monster5_x=817;
+		this.monster5_y=359;
+
+		this.monster6_x=815;
+		this.monster6_y=359;
+
+		this.monster7_x=820;
+		this.monster7_y=359;
+
+		this.monster8_x=827;
+		this.monster8_y=359;
+
+		this.monster9_x=811;
+		this.monster9_y=359;
+
+		this.monster10_x=810;
+		this.monster10_y=359;
 
 
         this.npc1_x=1086;
         this.npc1_y=101;
-		this.npc1Text="Здарова, бандиты";
-		this.npc1wasDialogText="Хэх";
-		this.npc1_directioin="down";
-		this.npc1_is_chest=true;
+		this.npc1Text="Лодочник: <br> А тебя не так уж и просто победить, валенок. Я видел, как ты расшибил головы тем несчастным эльфам из-за чертового лука. Не буду тебя утруждать...";
+		this.npc1wasDialogText="Мертвое тело лодочника";
+		this.npc1_directioin="left";
+		this.npc1_is_chest=false;
 
         }
         
@@ -465,7 +495,17 @@
 			{j:11,i:3,walk: false}, // 69 берег низ-право
 			{j:10,i:4,walk: false}, // 70 берег низ-лево
 			{j:10,i:5,walk: false}, // 71 берег верх-лево 
-			{j:10,i:0,walk: true} // 72 дырка
+			{j:10,i:0,walk: true}, // 72 дырка
+			{j:0,i:7,walk: true}, //73 темная земля
+			{j:1,i:7,walk: false},//74 лавовый берег-верх
+			{j:2,i:7,walk: false}, //75 лавовый берег-право
+			{j:0,i:8,walk: false}, // 76 лава
+			{j:1,i:8,walk: false}, //77 лавовый берег-низ
+			{j:2,i:8,walk: false}, //78 лавовый берег-лево
+			{j:3,i:7,walk: false}, //79 угол левый низ
+			{j:4,i:7,walk: false}, //80 угол правый верх
+			{j:3,i:8,walk: false}, //81 угол правый низ
+			{j:4,i:8,walk: false}, //82 угол левый верх
 		];
 
 		this.arrows = [];
@@ -630,7 +670,7 @@ this.chest.j*64,this.chest.i*64,64,64,
 			{
 				this.npc1.x=746;
 				this.npc1.y=1062;
-				this.npc1.npcText="Лодочник: <br> Да ты просто мясник. Жители этой деревни будут благодарны тебе! Держи в благодарность модный лук.";
+				this.npc1.npcText="Лодочник: <br> Да ты просто мясник. Жители этой деревни будут благодарны! У меня к тебе еще одно дельце. Глубже в лесу, у меня за спиной, живут эльфы. Пойди и забери у них лук, который они нагло украли у меня.";
 			}
 
 
@@ -642,9 +682,6 @@ this.chest.j*64,this.chest.i*64,64,64,
 			this.monster10.dead==true &&
 			this.monster2.dead==true &&
 			this.monster3.dead==true) {
-				this.ctx.drawImage(this.imgs['title'],
-				0,0,640,640,
-				0,0,640,640);
 					 this.new_level="level 2";
 					 
 				 	return 'level 2';
@@ -655,9 +692,10 @@ this.chest.j*64,this.chest.i*64,64,64,
 			 
 		}
 
+
 		if(this.new_level=="level 2"){
-			if(this.player.x ==0 && 
-				this.player.y==743){
+			if(this.player.x<10 && 
+				this.player.y<746){
 					this.new_level="level 3";
 					return 'level 3';
 				}
@@ -665,7 +703,29 @@ this.chest.j*64,this.chest.i*64,64,64,
 				}
 
          if(this.new_level=="level 3"){
-             return "level 3";
+             if(this.monster1.dead==true &&
+				this.monster8.dead==true &&
+				this.monster9.dead==true &&
+				this.monster10.dead==true &&
+				this.monster2.dead==true &&
+				this.monster3.dead==true &&
+				this.monster4.dead==true&&
+				this.monster5.dead==true &&
+				this.monster6.dead==true&&
+				this.monster7.dead==true){
+				this.npc1.x=800;
+				this.npc1.y=533;
+				if(this.npc1.wasDialog==true){
+					setTimeout(()=>{
+						this.npc1.set_action("down","dead");
+						document.getElementsByClassName("dialog")[0].style.visibility="hidden";
+				},2000);
+				}	
+				if(this.npc1.dead==true){
+					setTimeout(()=>{return 'win'},1000);
+				}
+				}
+				return 'level 3';
          }
             
 
@@ -1502,7 +1562,7 @@ if((pos_x > this.scene.monster1.x) &&
 			if(player_exp >= need_to_levelup && this.scene.player.hp > 0){
 
 				this.level++;
-				this.scene.player.damage *= 1.1;
+				this.scene.player.damage += 2;
 				
 				this.scene.player.hp = this.scene.player.maxhp;
                 newHp = this.scene.player.hp;
