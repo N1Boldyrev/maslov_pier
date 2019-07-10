@@ -220,14 +220,18 @@
 		
 		this.player_x=330;
 		this.player_y=-10;
-
+		this.monster3_x=330;
+		this.monster3_y=10;
+		this.monster2_x=330;
+		this.monster2_y=10;
         this.npc1_x=1086;
         this.npc1_y=101;
-		this.npc1Text="Здарова, бандиты";
-		this.npc1wasDialogText="Хэх";
+		this.npc1Text="В сундуке вы нашли лук.";
+		this.npc1wasDialogText="Сундук пуст.";
 		this.npc1_directioin="down";
 		this.npc1_is_chest=true;
 
+		
         }
         
         if(this.level=="level 3")
@@ -541,7 +545,6 @@ this.chest.j*64,this.chest.i*64,64,64,
 
 		this.render_bg(time);
 		this.render_sprites(time);
-		console.log(this.monster1.dead);
 		if(this.new_level=="level 1"){
 		if(this.monster1.dead==true &&
 			this.monster8.dead==true &&
@@ -553,9 +556,7 @@ this.chest.j*64,this.chest.i*64,64,64,
 				this.npc1.x=582;
 				this.npc1.y=1134;
 				this.npc1.npcText="Лодочник: <br> Да ты просто мясник. Жители этой деревни будут благодарны тебе! Держи в благодарность модный лук.";
-				if(this.npc1.wasDialog){
-					bow = 1;
-				}
+				
 			}
 
 
@@ -576,10 +577,14 @@ this.chest.j*64,this.chest.i*64,64,64,
 			 } else {
 					return 'level 2';
 			 }
+			
 			 
 		}
 
 		if(this.new_level=="level 2"){
+			if(this.npc1.wasDialog){
+				bow = 1;
+			}
                         return 'level 2';
                  }
 
@@ -1106,7 +1111,7 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.move_left = function () {
 		this.set_action("left","walking");
 
-		if(this.is_walkable(this.x - this.speed,this.y)) {
+		if(this.is_walkable(this.x - this.speed - 5,this.y)) {
 			
 			if(this.type=="player"){
 				this.x = this.x - this.speed;
@@ -1120,7 +1125,7 @@ if((pos_x > this.scene.monster1.x) &&
 
 	Player.prototype.move_right = function () {
 		this.set_action("right","walking");
-		if(this.is_walkable(this.x + this.speed,this.y)) {
+		if(this.is_walkable(this.x + this.speed + 5,this.y)) {
 
 			if(this.type=="player"){
 				this.x = this.x + this.speed;
@@ -1149,7 +1154,7 @@ if((pos_x > this.scene.monster1.x) &&
 
 	Player.prototype.move_down = function () {
 		this.set_action("down","walking");
-		if(this.is_walkable(this.x,this.y + this.speed)) {
+		if(this.is_walkable(this.x,this.y + this.speed + 5)) {
 
 			if(this.type=="player"){
 				this.y = this.y + this.speed;
@@ -1172,7 +1177,6 @@ if((pos_x > this.scene.monster1.x) &&
 			this.set_action(this.direction,"attack");
 		}
 		if(this.type == "player"){
-			console.log('exp ='+player_exp,'score'+ score,'level'+ this.scene.player.level, 'hp ' + this.scene.player.hp, 'max hp ' + this.scene.player.maxhp);
 			
 			this.set_action(this.direction,"attack_sword");
 			
@@ -1291,18 +1295,16 @@ if((pos_x > this.scene.monster1.x) &&
 
 	Player.prototype.update = function (time) {
 			this.animate();
-			console.log(this.scene.player.x);
-			console.log(this.scene.player.y);
 			var need_to_levelup = (this.level + 1) * this.level / 2 ;
 			innterTextExp.innerText = player_exp * 100 +' / '+ need_to_levelup * 100;
 			innerFrontProg.style.width = 100 / need_to_levelup * player_exp  + 'px';
-			console.log(player_exp)
-			if(player_exp >= need_to_levelup){
+			
+			if(player_exp >= need_to_levelup && this.scene.player.hp > 0){
 				this.level++;
 				this.scene.player.damage *= 1.1;
 				
 				this.scene.player.hp = this.scene.player.maxhp;
-				console.log(this.maxhp)
+				
                 newHp = this.scene.player.hp;
                 this.show_levelup=true;
 				if(newHp >= 0){
@@ -1324,12 +1326,14 @@ if((pos_x > this.scene.monster1.x) &&
 			}
     
 			if(this.status == "dead") {
-				player_exp += this.exp;
-				innerExp.innerText = this.scene.player.level;
-				// this.scene.player.exp += this.exp;
-				score += this.exp * 100;
-				this.exp = 0;
-				innerScore.innerText = score;
+				if(this.scene.player.hp > 0){
+					player_exp += this.exp;
+					innerExp.innerText = this.scene.player.level;
+					// this.scene.player.exp += this.exp;
+					score += this.exp * 100;
+					this.exp = 0;
+					innerScore.innerText = score;
+				}
 				return true;
 			}
 
