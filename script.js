@@ -14,6 +14,19 @@
 	var innterTextExp = document.getElementById('progres__text');
 	var innerFrontProg = document.getElementById('progres__front');
 	innerExp.innerText = '1';
+	// registratin
+	
+	var userName = document.getElementById('registration__name');
+	var regButton = document.getElementById('registration__button');
+	var showReg = document.getElementById('registration')
+  	var name;
+	regButton.addEventListener("click",function(e){
+		e.preventDefault();
+		name = userName.value;
+		localStorage.setItem(name,0)
+		showReg.style.display = "none";
+
+	})
 
 	function Scene(screen, controls) {
 		this.canvas = screen.canvas;
@@ -401,7 +414,7 @@
 	Game.prototype.render_bg = function (time) {
 		var start_col = Math.floor(this.camera.x / 64);
 		var start_row = Math.floor(this.camera.y / 64);
-		showHeader.style.display = "flex";
+		showHeader.style.display = 'flex';
 		for(var i = start_row; i < (start_row + 11); i++) {
 			for(var j = start_col; j < (start_col + 11); j++) {
 				if(( j < 20) && (i < 20)) {
@@ -1226,18 +1239,18 @@ if((pos_x > this.scene.monster1.x) &&
 
 	Player.prototype.update = function (time) {
 			this.animate();
-			console.log(this.scene.player.x);
-			console.log(this.scene.player.y);
+			// console.log(this.scene.player.x);
+			// console.log(this.scene.player.y);
 			var need_to_levelup = (this.level + 1) * this.level / 2 ;
 			innterTextExp.innerText = player_exp * 100 +' / '+ need_to_levelup * 100;
 			innerFrontProg.style.width = 100 / need_to_levelup * player_exp  + 'px';
-			console.log(player_exp)
+			// console.log(player_exp)
 			if(player_exp >= need_to_levelup){
 				this.level++;
 				this.damage *= 2;
 				
 				this.hp = this.maxhp;
-				console.log(this.maxhp)
+				// console.log(this.maxhp)
                 newHp = this.scene.player.hp;
                 this.show_levelup=true;
 				if(newHp >= 0){
@@ -1245,6 +1258,13 @@ if((pos_x > this.scene.monster1.x) &&
                     innerHp.style.width = (200 - ((100 - newHp) * 2)) + 'px';
                 }
 			}
+			if(this.scene.player.dead == true) {
+				localStorage.user = JSON.stringify({
+					name:name,
+					score:score
+				})
+			}
+			
 			if(this.status == "start") {
 				this.start();
 				return true;
@@ -1374,6 +1394,7 @@ if((pos_x > this.scene.monster1.x) &&
 			
 			if(this.scene.player.hp<0){
 				this.scene.player.set_action("down","dead");
+				
 			   }
 			   
 			   return true;
@@ -1386,6 +1407,8 @@ if((pos_x > this.scene.monster1.x) &&
 					this.hp -= this.scene.player.damage;
 					if(this.hp <= 0){
 						this.set_action("down", "dead");
+						
+						
 					}
 			}
 		}
