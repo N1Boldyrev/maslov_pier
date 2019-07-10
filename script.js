@@ -8,6 +8,9 @@
 	var score = 0;
 	var innerScore = document.getElementById('score__content')
 	innerScore.innerText = "0";
+
+	//can use bow
+	var bow = 0;
 	//exp
 	var player_exp = 0;
 	var innerExp = document.getElementById('exp__status');
@@ -43,9 +46,10 @@
 			{name: 'orc', path: 'assets/orc.png'},
 			{name: 'player', path: 'assets/player_mace.png'},
             {name: 'sceleton', path: 'assets/sceleton.png'},
-            {name: 'npc1', path: 'assets/npc1.png'},
+			{name: 'npc1', path: 'assets/npc1.png'},
+			{name: 'npc_chest', path: 'assets/npc_chest.png'},
 			{name: 'bg', path: 'assets/tiles.png'},
-			{name: 'title', path: 'assets/title.jpg'},
+			{name: 'title', path: 'assets/title.png'},
 			{name: 'tile',path:'tile.png'}
 		];
 
@@ -128,11 +132,12 @@
 	this.ctx.drawImage(this.imgs['title'],
 				0,0,640,640,
 				0,0,640,640);
-
-			this.ctx.fillStyle = '#FFFFFF';
-			this.ctx.font="20px PressStart2P";
-			this.ctx.fillText("Нажмите пробел",190,500);
+				this.ctx.font="30px PressStart2P";
+				this.ctx.fillStyle = '#C70800';
+			this.ctx.fillText("MASLOVA PRISTAN'", 100,200);
+			this.ctx.fillText("Нажмите пробел",115,500);
 		if(this.controls.states['fire']) {
+			
 			return "level 1";
 		} else {
 			return "menu";
@@ -169,7 +174,7 @@
 		];
 	
 		
-		this.player_x=150;
+		this.player_x=200;
 		this.player_y=300;
 
 		this.monster10_x=894;
@@ -192,65 +197,54 @@
 		this.monster3_y=1058;
 
 		this.npc1_x=150;
-        this.npc1_y=300;
+		this.npc1_y=300;
 		this.npc1Text="Здарова, бандиты";
 		this.npc1wasDialogText="Хэх";
-		
+		this.npc1_directioin="right";
+		this.npc1_is_chest=false;
 		}
 
 		if(this.level=="level 2"){
 			this.map=[
-				[4  ,4	,4	,4 	,12 ,9 ,13	,2 	,17	,18 ,19 ,34	,34 ,34 ,34 ,33 ,3 	,3 	,3	,3],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,2 	,20	,21	,22 ,38	,37 ,38	,37 ,35	,0 	,0	,0	,3],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,2 	,23	,24 ,25 ,39	,38 ,39 ,38 ,0	,0 	,0 	,0	,3],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,2 	,26	,27	,28 ,38	,37 ,29 ,29 ,32  ,0 ,0 	,0	,3],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,2 	,0 	,15 ,15 ,15	,15 ,16  ,15 ,15 ,15 ,15 ,15,3],
-				[4  ,4	,5	,6 	,7 	,8 ,13 	,14 ,15	,15 ,2 	,3	,3 	,3 	,3 	,3  ,1 ,1 	,15	,3],
-				[4	,4	,10	,11 ,12 ,9 ,13  ,2 	,42 ,34	,34 ,31	,17	,18	,19	,3  ,1 ,1 	,15	,3],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,3 	,36	,39	,38	,35	,20 ,21	,22	,3 	,3 ,0	,15 ,3],
-				[4  ,4	,4	,4 	,12 ,41 ,1  ,3 	,36	,38	,37	,35	,23	,24	,25 ,15 ,15,15 ,15	,3],
-				[4  ,4	,4	,4 	,12 ,9 ,13	,3 	,33 ,0 ,0 ,0	,26 ,27 ,28 ,15 ,0 ,3 	,3	,3],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,3 	,3 	,3	,0 	,0	,15	,15 ,15 ,15	,0 	,3	,3	,3],
-				[4  ,4	,4	,4 	,12 ,9 ,13 	,3 	,3	,3 	,3 	,0	,15	,0 	,0 	,0 	,3 	,3 	,3	,3],
-				[4  ,4	,4	,4 	,1 	,1 ,1 	,1 	,3 	,3 	,3 	,0	,15	,0 	,0 	,0 	,3 	,3 	,3	,3],
-				[4  ,4	,4	,4 	,3 ,3 ,3 	,3 	,3 	,3 	,3 	,0	,15	,15	,15 ,15	,3 	,3 	,3	,3],
-				[4  ,4	,5	,6 	,7 	,8 ,13 	,3 ,3	,3  ,3 	,3	,0	,2 	,15 ,15	,2 	,3 	,3	,3],
-				[4	,4	,10	,11 ,12 ,16 ,3 	,3 	,3 	,3 	,3	,3	,3	,43	,15	,15 ,43	,43	,43	,3],
-				[4 ,4	,4	,4 	,12 ,9 ,3 	,3 	,3 	,3 	,3	,3	,3 	,46	,45 ,48	,45	,46	,47	,3],
-				[4 ,4	,4	,4 	,1 	,1 ,3   ,3 	,3 	,3 	,0	,0	,0 	,46	,46	,45	,45	,47	,0	,3],
-				[4 ,4	,4	,4 	,12 ,9 ,3 	,3 	,3 	,0 	,0	,0	,3 	,48 ,46 ,46	,48	,48	,48	,3],
-				[4 ,4	,4	,4 	,1 	,1 ,3 	,3 	,3 	,1 	,3	,3	,3 	,3 	,3 	,3 	,3 	,3 	,3	,3],
-			
-		];
+				[3  ,64	,4	,4 	,65 ,0 ,3	,2 	,2	,2  ,3 	,1	,64 ,65  ,3  ,3 ,3 ,3 ,3,3],
+				[3  ,64	,4	,4 	,65 ,0 ,3 	,2 	,2	,2	,3  ,0	,64 ,65 ,0 ,0,57 ,0,59	,3],
+				[3  ,64	,49	,50	,65 ,0 ,3 	,2 	,2	,2  ,3  ,0	,64 ,65 ,0 ,0,58 ,62,60	,3],
+				[3  ,64	,51	,52 ,65 ,0 ,3 	,3 	,3	,3	,3  ,0	,64 ,65 ,0 ,0,0  ,0 ,0	,3],
+				[3  ,64	,49	,50	,65 ,0 ,3 	,3 	,3 	,3  ,3  ,0	,64 ,65 ,0 ,0 ,0 ,0 ,0 ,3],
+				[3  ,64	,51	,52 ,65 ,0 ,0 	,0  ,0	,0  ,0  ,0	,64	,65 ,0 ,0 ,0 ,0 ,0 ,3],
+				[3	,64	,49	,50 ,68 ,66,66 ,66 ,66,66   ,0  ,66 ,71	,68	,66	,66 ,66,66 ,0 ,66],
+				[3  ,64	,51	,52 ,4 	,4 	,4 	,55  ,4	,61	,54	,4	,4 ,4	,4	,4 	,4  ,4	,0  ,4],
+				[3  ,64	,4	,4 	,4 ,69 ,67  ,67 ,67	,67	,0	,67	,67	,67	,67 ,67 ,67 ,67 ,0,67],
+				[3  ,64	,4	,4 	,4,65 ,2	,2 	,0  ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 	,0	,3],
+				[3  ,64	,4	,4 	,4,65 ,2 	,2 	,2 	,2	,0 	,0	,0	,0 ,0 ,0 ,0 ,0	,0	,3],
+				[3  ,64	,4	,4 	,4,65 ,2 	,2 	,2	,2 	,2 	,0	,0	,0 ,0 ,0 ,0 ,0 	,3	,3],
+				[72  ,0	,0	,0 	,0,0 ,0 	,0 	,0 	,0 	,0 	,0	,0	,0 ,0 ,0 ,0 ,3 	,3	,3],
+				[3  ,64	,4	,4 	,65 ,0 ,2 	,2 	,2 	,2 	,2 	,0	,0	,3	,3 ,3	,3 	,3 	,3	,3],
+				[3  ,64	,4	,4 	,68 ,66 ,66 	,66,66,66 ,66 ,66	,66	,66 ,66 ,66	,66 ,66 ,66	,66],
+				[3	,64	,4	,4 ,4 ,4 ,4	,4 	,4 	,4 	,4	,4	,4	,4	,4	,4 ,4	,4	,4	,4],
+				[3 ,64	,4	,4 	,4 ,4 ,4 	,4 	,4 	,4 	,4	,4	,4 	,69	,67 ,67	,67	,67	,67	,67],
+				[3 ,64	,4	,4 	,4 ,4 ,4   ,4 	,4 	,4 	,4	,4	,4 	,65	,0	,0	,0	,0	,0	,0],
+				[3 ,64	,4	,4 	,4 ,4 ,4 	,4 	,4 	,4 	,4	,4	,4 	,65 ,0 ,0	,0	,0	,0	,0],
+				[3 ,64	,4	,4 	,4 ,4 ,4 	,4 	,4 	,4 	,4	,4	,4 	,65 ,0 	,0 	,0 	,0 	,0	,0],
+
+		
+					];
 	
 		
-		this.player_x=150;
-		this.player_y=300;
-
-		this.monster10_x=894;
-		this.monster10_y=48;
-		
-		this.monster9_x=894;
-		this.monster9_y=138;
-
-		this.monster8_x=624;
-		this.monster8_y=486;
-
-		this.monster1_x=1134;
-		this.monster1_y=1068;
-
-		this.monster2_x=1124;
-		this.monster2_y=1058;
+		this.player_x=330;
+		this.player_y=-10;
+		this.monster3_x=330;
+		this.monster3_y=10;
+		this.monster2_x=330;
+		this.monster2_y=10;
+        this.npc1_x=1086;
+        this.npc1_y=101;
+		this.npc1Text="В сундуке вы нашли лук.";
+		this.npc1wasDialogText="Сундук пуст.";
+		this.npc1_directioin="down";
+		this.npc1_is_chest=true;
 
 		
-		this.monster3_x=1124;
-		this.monster3_y=1058;
-
-        this.npc1_x=150;
-        this.npc1_y=300;
-		this.npc1Text="Здарова, бандиты";
-		this.npc1wasDialogText="Хэх";
-
         }
         
         if(this.level=="level 3")
@@ -343,10 +337,20 @@
         this.npc1 = new Player(this.current_level.npc1_x,this.current_level.npc1_y,this,20,10,this.current_level.npc1Text,this.current_level.npc1wasDialogText);
 		this.npc1.type = "npc";
 		this.npc1.status = "standing";
+		this.npc1.direction=this.current_level.npc1_directioin;
+		this.npc1.is_chest=this.current_level.npc1_is_chest;
+
+		this.chest = new Player(this.current_level.chest_x,this.current_level.chest_y,this,20,10,this.current_level.chestText,this.current_level.chestwasDialogText);
+		this.chest.type = "npc";
+		this.chest.status = "standing";
 
 		this.sounds = {};
 		this.sounds['arrow'] = new Sound('assets/arrow.wav');
 		this.sounds['sword'] = new Sound('assets/sword.wav');
+		this.sounds['falling'] = new Sound('assets/falling.wav');
+		this.sounds['open_chest']=new Sound('assets/open_chest.wav');
+		this.sounds['start_game']=new Sound('assets/start_game.wav');
+		
 		
 		this.map=this.current_level.map;
 		
@@ -401,7 +405,30 @@
 			{j:4,i:3,walk: true}, // 46 надгробия 2
 			{j:5,i:3,walk: true}, // 47 надгробия 3
 			{j:6,i:3,walk: true}, // 48 надгробия 4
-
+			{j:3,i:5,walk: false}, // 49 камыш верх-лево
+			{j:4,i:5,walk: false}, //50 камыш верх-право
+			{j:3,i:6,walk: false}, //51 камыш низ-лево
+			{j:4,i:6,walk: false}, //52 камыш низ-право
+			{j:5,i:5,walk: false}, //53 островок с травой
+			{j:5,i:6,walk: true}, //54 лужи
+			{j:6,i:5,walk: false}, //55 кувшинки 1
+			{j:6,i:6,walk: false}, //56 кувшинки 2
+			{j:7,i:5,walk: false}, //57 колонна 1-верх
+			{j:7,i:6,walk: false}, //58 колонна 1-низ
+			{j:8,i:5,walk: false}, //59 колонна 2-верх
+			{j:8,i:6,walk: false}, // 60 колонна 2-низ
+			{j:9,i:5,walk: false}, // 61 вода+листья
+			{j:9,i:6,walk: true}, //62 рзвалины пол
+			{j:10,i:6,walk: false}, //63 развалины чаша
+			{j:9,i:2,walk: false}, //64 берег лево
+			{j:9,i:3,walk: false}, //65 берег право
+			{j:9,i:4,walk: false}, //66 берег верх
+			{j:10,i:3,walk: false}, //67 берег низ
+			{j:10,i:2,walk: false}, //68 берег верх-право
+			{j:11,i:3,walk: false}, // 69 берег низ-право
+			{j:10,i:4,walk: false}, // 70 берег низ-лево
+			{j:10,i:5,walk: false}, // 71 берег верх-лево 
+			{j:10,i:0,walk: true} // 72 дырка
 		];
 
 		this.arrows = [];
@@ -442,8 +469,10 @@
 		this.monster7.update(time);
 		this.monster8.update(time);
 		this.monster9.update(time);
-        this.monster10.update(time);
-        this.npc1.update(time);
+		this.monster10.update(time);
+		
+		this.npc1.update(time);
+		
         this.camera.update(time);
         
 
@@ -491,9 +520,13 @@ this.ctx.drawImage(this.imgs['orc'],
                                                   ( this.monster10.x )-this.camera.x,(this.monster10.y) - this.camera.y ,64,64);		
                                                   
 
-this.ctx.drawImage(this.imgs['npc1'],
+this.ctx.drawImage(this.imgs['npc_chest'],
  									 this.npc1.j*64,this.npc1.i*64,64,64,
- 												 ( this.npc1.x )-this.camera.x,(this.npc1.y) - this.camera.y ,64,64);	
+												  ( this.npc1.x )-this.camera.x,(this.npc1.y) - this.camera.y ,64,64);	
+												  
+this.ctx.drawImage(this.imgs['npc_chest'],
+this.chest.j*64,this.chest.i*64,64,64,
+			( this.chest.x )-this.camera.x,(this.chest.y) - this.camera.y ,64,64);	
 
 		//render player
 		this.ctx.drawImage(this.imgs['player'],
@@ -525,7 +558,6 @@ this.ctx.drawImage(this.imgs['npc1'],
 
 		this.render_bg(time);
 		this.render_sprites(time);
-		console.log(this.monster1.dead);
 		if(this.new_level=="level 1"){
 		if(this.monster1.dead==true &&
 			this.monster8.dead==true &&
@@ -536,7 +568,8 @@ this.ctx.drawImage(this.imgs['npc1'],
 			{
 				this.npc1.x=582;
 				this.npc1.y=1134;
-				this.npc1.npcText="Лодочник: <br> Да ты просто мясник. Жители этой деревни будут благодарны тебе!";
+				this.npc1.npcText="Лодочник: <br> Да ты просто мясник. Жители этой деревни будут благодарны тебе! Держи в благодарность модный лук.";
+				
 			}
 
 
@@ -551,14 +584,20 @@ this.ctx.drawImage(this.imgs['npc1'],
 				this.ctx.drawImage(this.imgs['title'],
 				0,0,640,640,
 				0,0,640,640);
-                     this.new_level="level 2";
+					 this.new_level="level 2";
+					 
 				 	return 'level 2';
 			 } else {
-					return 'level 1';
+					return 'level 2';
 			 }
+			
+			 
 		}
 
 		if(this.new_level=="level 2"){
+			if(this.npc1.wasDialog){
+				bow = 1;
+			}
                         return 'level 2';
                  }
 
@@ -802,7 +841,7 @@ if((pos_x > this.scene.monster1.x) &&
 		this.y = y;
 		this.i = 0;
 		this.j = 0;
-		this.bow = 1;
+		
 		this.type = "player";
 		this.scene = scene;
 		this.dead = false;
@@ -820,7 +859,8 @@ if((pos_x > this.scene.monster1.x) &&
         this.level = 1;
         this.npcText=npcText;
         this.wasDialog=false;
-        this.wasDialogText=wasDialogText;
+		this.wasDialogText=wasDialogText;
+		this.is_chest=false;
 		
 		this.exp = 1;
 
@@ -893,45 +933,84 @@ if((pos_x > this.scene.monster1.x) &&
 			},
 			attack: {
 				right: {
-					total: 20,
-					frames: [[0,15],[1,15],[2,15],[3,15],[4,15],[5,15],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3]]
+					total: 30,
+					frames: [[0,15],[1,15],[2,15],[3,15],[4,15],[5,15],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3],[0,3]]
 				},
 				left: {
-					total: 20,
-					frames: [[0,13],[1,13],[2,13],[3,13],[4,13],[5,13],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1]]
+					total: 30,
+					frames: [[0,13],[1,13],[2,13],[3,13],[4,13],[5,13],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1]]
 				},
 				up: {
-					total: 20,
-					frames: [[0,12],[1,12],[2,12],[3,12],[4,12],[5,12],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]
+					total: 30,
+					frames: [[0,12],[1,12],[2,12],[3,12],[4,12],[5,12],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]]
 				},
 				down: {
-					total: 20,
-					frames: [[0,14],[1,14],[2,14],[3,14],[4,14],[5,14],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2]]
+					total: 30,
+					frames: [[0,14],[1,14],[2,14],[3,14],[4,14],[5,14],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2],[0,2]]
 				}
 			},
 
 			attack_sword:{
 				right:
 				{	
-					total: 20,
-					frames:[[1,31],[4,31],[7,31],[10,31],[13,31],[16,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31]]
+					total: 30,
+					frames:[[1,31],[4,31],[7,31],[10,31],[13,31],[16,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31],[1,31]]
 				},
 
 				left:{
-					total:20,
-					frames:[[1,25],[4,25],[7,25],[10,25],[13,25],[16,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25]]
+					total:30,
+					frames:[[1,25],[4,25],[7,25],[10,25],[13,25],[16,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25],[1,25]]
 				},
 
 				up:{
-					total:20,
-					frames:[[1,22],[4,22],[7,22],[10,22],[13,22],[16,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22]]
+					total:30,
+					frames:[[1,22],[4,22],[7,22],[10,22],[13,22],[16,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22],[1,22]]
 				},
 
 				down:{
-					total:20,
-					frames:[[1,28],[4,28],[7,28],[10,28],[13,28],[16,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28]]
+					total:30,
+					frames:[[1,28],[4,28],[7,28],[10,28],[13,28],[16,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28],[1,28]]
 				}
 
+			},
+
+			open_chest_anim:{
+				right: {
+					total: 1,
+					frames: [[0,3]]
+				},
+				left: {
+					total: 1,
+					frames: [[0,1]]
+				},
+				up: {
+					total: 1,
+					frames: [[0,0]]
+				},
+				down: {
+					total: 8,
+					frames: [[0,2],[1,2],[1,2],[1,2],[2,2],[2,2],[2,2],[2,2]]
+				}
+			},
+
+			chest_opened:{
+
+				right: {
+					total: 1,
+					frames: [[0,3]]
+				},
+				left: {
+					total: 1,
+					frames: [[0,1]]
+				},
+				up: {
+					total: 1,
+					frames: [[0,0]]
+				},
+				down: {
+					total: 1,
+					frames: [[2,2]]
+				}
 			}
 
 		};
@@ -951,11 +1030,11 @@ if((pos_x > this.scene.monster1.x) &&
 			if(frame.total > 1) {
 				this.current_animation_frame++;
 				if( (this.current_animation_frame + 1) == frame.total ) {
-					if((this.status == "start") || (this.status == "walking") || (this.status == "attack")||(this.status == "attack_sword")) {
+					if((this.status == "start") || (this.status == "walking") || (this.status == "attack")||(this.status=="chest_opened")) {
 						this.current_animation_frame = 0;
 					}
-
-					if(this.status=="attack"){
+					if(this.status=="attack"||this.status == "attack_sword"){
+						this.current_animation_frame = 0;
 						this.scene.sounds['sword'].play();
 					}
 
@@ -1015,12 +1094,12 @@ if((pos_x > this.scene.monster1.x) &&
 		var x1 = x;
 		var x2 = x + 64;
 		var y1 = y;
-		var y2 = y+63;
+		var y2 = y+64;
 
-		x1 = x1 + 10;
-		x2 = x2 - 1;
-		y1 = y1 +20;
-		y2 = y2 -10;
+		x1 = x1 + 32;
+		x2 = x2 - 32;
+		y1 = y1 +32;
+		y2 = y2 -5;
 
 		var j1 = Math.floor((x1) / 64);
 		var j2 = Math.floor((x2) / 64);
@@ -1045,7 +1124,7 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.move_left = function () {
 		this.set_action("left","walking");
 
-		if(this.is_walkable(this.x - this.speed,this.y)) {
+		if(this.is_walkable(this.x - this.speed - 5,this.y)) {
 			
 			if(this.type=="player"){
 				this.x = this.x - this.speed;
@@ -1059,7 +1138,7 @@ if((pos_x > this.scene.monster1.x) &&
 
 	Player.prototype.move_right = function () {
 		this.set_action("right","walking");
-		if(this.is_walkable(this.x + this.speed,this.y)) {
+		if(this.is_walkable(this.x + this.speed + 5,this.y)) {
 
 			if(this.type=="player"){
 				this.x = this.x + this.speed;
@@ -1088,7 +1167,7 @@ if((pos_x > this.scene.monster1.x) &&
 
 	Player.prototype.move_down = function () {
 		this.set_action("down","walking");
-		if(this.is_walkable(this.x,this.y + this.speed)) {
+		if(this.is_walkable(this.x,this.y + this.speed + 5)) {
 
 			if(this.type=="player"){
 				this.y = this.y + this.speed;
@@ -1111,17 +1190,7 @@ if((pos_x > this.scene.monster1.x) &&
 			this.set_action(this.direction,"attack");
 		}
 		if(this.type == "player"){
-			console.log('exp ='+player_exp,'score'+ score,'level'+ this.scene.player.level, 'hp ' + this.scene.player.hp, 'max hp ' + this.scene.player.maxhp);
 			
-			this.scene.assets=[
-				{name: 'orc', path: 'assets/orc.png'},
-				{name: 'player', path: 'assets/player_mace.png'},
-				{name: 'sceleton', path: 'assets/sceleton.png'},
-				{name: 'npc1', path: 'assets/npc1.png'},
-				{name: 'bg', path: 'assets/tiles.png'},
-				{name: 'title', path: 'assets/title.jpg'},
-				{name: 'tile',path:'tile.png'}
-			];
 			this.set_action(this.direction,"attack_sword");
 			
 			if(Math.sqrt(
@@ -1239,18 +1308,18 @@ if((pos_x > this.scene.monster1.x) &&
 
 	Player.prototype.update = function (time) {
 			this.animate();
-			// console.log(this.scene.player.x);
-			// console.log(this.scene.player.y);
+
 			var need_to_levelup = (this.level + 1) * this.level / 2 ;
 			innterTextExp.innerText = player_exp * 100 +' / '+ need_to_levelup * 100;
 			innerFrontProg.style.width = 100 / need_to_levelup * player_exp  + 'px';
-			// console.log(player_exp)
-			if(player_exp >= need_to_levelup){
+			
+			if(player_exp >= need_to_levelup && this.scene.player.hp > 0){
+
 				this.level++;
-				this.damage *= 2;
+				this.scene.player.damage *= 1.1;
 				
-				this.hp = this.maxhp;
-				// console.log(this.maxhp)
+				this.scene.player.hp = this.scene.player.maxhp;
+				
                 newHp = this.scene.player.hp;
                 this.show_levelup=true;
 				if(newHp >= 0){
@@ -1271,15 +1340,6 @@ if((pos_x > this.scene.monster1.x) &&
 			}
 
 			if(this.status == "fire") {
-				this.scene.assets=[
-					{name: 'orc', path: 'assets/orc.png'},
-					{name: 'player', path: 'assets/player_bow.png'},
-					{name: 'sceleton', path: 'assets/sceleton.png'},
-					{name: 'npc1', path: 'assets/npc1.png'},
-					{name: 'bg', path: 'assets/tiles.png'},
-					{name: 'title', path: 'assets/title.jpg'},
-					{name: 'tile',path:'tile.png'}
-				];
 				return true;
 			}
 
@@ -1288,12 +1348,14 @@ if((pos_x > this.scene.monster1.x) &&
 			}
     
 			if(this.status == "dead") {
-				player_exp += this.exp;
-				innerExp.innerText = this.scene.player.level;
-				// this.scene.player.exp += this.exp;
-				score += this.exp * 100;
-				this.exp = 0;
-				innerScore.innerText = score;
+				if(this.scene.player.hp > 0){
+					player_exp += this.exp;
+					innerExp.innerText = this.scene.player.level;
+					// this.scene.player.exp += this.exp;
+					score += this.exp * 100;
+					this.exp = 0;
+					innerScore.innerText = score;
+				}
 				return true;
 			}
 
@@ -1306,7 +1368,7 @@ if((pos_x > this.scene.monster1.x) &&
             }
 
 			if(this.scene.controls.states['fire']) {
-				if(this.scene.player.bow){
+				if(bow){
 					this.fire();
 				}
 				return true;
@@ -1436,6 +1498,11 @@ if((pos_x > this.scene.monster1.x) &&
                 this.scene.ctx.font="20px PressStart2P";
                 this.scene.ctx.fillText("F",this.x+25-this.scene.camera.x,this.y+10-this.scene.camera.y);
                 if(this.scene.controls.states['interaction']){
+					if(this.is_chest==true){
+					this.set_action("down","open_chest_anim");
+					this.scene.sounds['open_chest'].play();
+					setTimeout(()=>{this.set_action("down","chest_opened");},200)
+				}
                     document.getElementsByClassName("dialog")[0].style.visibility="visible";
                     this.wasDialog=true;
                 }
