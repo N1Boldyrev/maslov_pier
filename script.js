@@ -17,6 +17,19 @@
 	var innterTextExp = document.getElementById('progres__text');
 	var innerFrontProg = document.getElementById('progres__front');
 	innerExp.innerText = '1';
+	// registratin
+	
+	var userName = document.getElementById('registration__name');
+	var regButton = document.getElementById('registration__button');
+	var showReg = document.getElementById('registration')
+  	var name;
+	regButton.addEventListener("click",function(e){
+		e.preventDefault();
+		name = userName.value;
+		localStorage.setItem(name,0)
+		showReg.style.display = "none";
+
+	})
 
 	function Scene(screen, controls) {
 		this.canvas = screen.canvas;
@@ -158,7 +171,7 @@
 				[4 ,4	,4	,4 	,3 ,3 ,3 	,3 	,3 	,3 	,3	,3	,3 	,46	,45 ,48	,45	,46	,47	,3],
 				[4 ,4	,4	,4 	,3 	,3 ,3   ,3 	,3 	,3 	,0	,0	,0 	,46	,46	,45	,45	,47	,0	,3],
 				[4 ,4	,4	,4 	,3 ,3 ,3 	,3 	,3 	,0 	,0	,0	,3 	,48 ,46 ,46	,48	,48	,48	,3],
-				[4 ,4	,4	,4 	,3 	,3 ,3 	,3 	,3 	,0 	,0	,3	,3 	,3 	,3 	,3 	,3 	,3 	,3	,3],
+				[4 ,4	,4	,4 	,3 	,3 ,3 	,3 	,3 	,3 	,1	,3	,3 	,3 	,3 	,3 	,3 	,3 	,3	,3],
 			
 		];
 	
@@ -240,11 +253,12 @@
 
         this.npc1_x=1086;
         this.npc1_y=101;
-		this.npc1Text="Здарова, бандиты";
-		this.npc1wasDialogText="Хэх";
+		this.npc1Text="В сундуке вы нашли лук.";
+		this.npc1wasDialogText="Сундук пуст.";
 		this.npc1_directioin="down";
 		this.npc1_is_chest=true;
 
+		
         }
         
         if(this.level=="level 3"){
@@ -464,7 +478,7 @@
 	Game.prototype.render_bg = function (time) {
 		var start_col = Math.floor(this.camera.x / 64);
 		var start_row = Math.floor(this.camera.y / 64);
-		showHeader.style.display = "flex";
+		showHeader.style.display = 'flex';
 		for(var i = start_row; i < (start_row + 11); i++) {
 			for(var j = start_col; j < (start_col + 11); j++) {
 				if(( j < 20) && (i < 20)) {
@@ -614,14 +628,14 @@ this.chest.j*64,this.chest.i*64,64,64,
 			this.monster2.dead==true &&
 			this.monster3.dead==true)
 			{
-				this.npc1.x=582;
-				this.npc1.y=1134;
+				this.npc1.x=746;
+				this.npc1.y=1062;
 				this.npc1.npcText="Лодочник: <br> Да ты просто мясник. Жители этой деревни будут благодарны тебе! Держи в благодарность модный лук.";
 			}
 
 
-		if(this.player.x > 590 && this.player.x<620 && 
-			this.player.y>1162 &&
+		if(this.player.x < 746 && this.player.x<620 && 
+			this.player.y>1120 &&
 			this.monster1.dead==true &&
 			this.monster8.dead==true &&
 			this.monster9.dead==true &&
@@ -637,6 +651,7 @@ this.chest.j*64,this.chest.i*64,64,64,
 			 } else {
 					return 'level 1';
 			 }
+			
 			 
 		}
 
@@ -1238,7 +1253,7 @@ if((pos_x > this.scene.monster1.x) &&
 	Player.prototype.move_left = function () {
 		this.set_action("left","walking");
 
-		if(this.is_walkable(this.x - this.speed,this.y)) {
+		if(this.is_walkable(this.x - this.speed - 5,this.y)) {
 			
 			if(this.type=="player"){
 				this.x = this.x - this.speed;
@@ -1252,7 +1267,7 @@ if((pos_x > this.scene.monster1.x) &&
 
 	Player.prototype.move_right = function () {
 		this.set_action("right","walking");
-		if(this.is_walkable(this.x + this.speed,this.y)) {
+		if(this.is_walkable(this.x + this.speed + 5,this.y)) {
 
 			if(this.type=="player"){
 				this.x = this.x + this.speed;
@@ -1281,7 +1296,7 @@ if((pos_x > this.scene.monster1.x) &&
 
 	Player.prototype.move_down = function () {
 		this.set_action("down","walking");
-		if(this.is_walkable(this.x,this.y + this.speed)) {
+		if(this.is_walkable(this.x,this.y + this.speed + 5)) {
 
 			if(this.type=="player"){
 				this.y = this.y + this.speed;
@@ -1477,11 +1492,15 @@ if((pos_x > this.scene.monster1.x) &&
 
 	Player.prototype.update = function (time) {
 			this.animate();
-			
+
+			console.log(this.scene.player.x);
+			console.log(this.scene.player.y);
 			var need_to_levelup = (this.level + 1) * this.level / 2 ;
 			innterTextExp.innerText = player_exp * 100 +' / '+ need_to_levelup * 100;
 			innerFrontProg.style.width = 100 / need_to_levelup * player_exp  + 'px';
-			if(player_exp >= need_to_levelup){
+			
+			if(player_exp >= need_to_levelup && this.scene.player.hp > 0){
+
 				this.level++;
 				this.scene.player.damage *= 1.1;
 				
@@ -1493,6 +1512,13 @@ if((pos_x > this.scene.monster1.x) &&
                     innerHp.style.width = (200 - ((100 - newHp) * 2)) + 'px';
                 }
 			}
+			if(this.scene.player.dead == true) {
+				localStorage.user = JSON.stringify({
+					name:name,
+					score:score
+				})
+			}
+			
 			if(this.status == "start") {
 				this.start();
 				return true;
@@ -1507,12 +1533,14 @@ if((pos_x > this.scene.monster1.x) &&
 			}
     
 			if(this.status == "dead") {
-				player_exp += this.exp;
-				innerExp.innerText = this.scene.player.level;
-				// this.scene.player.exp += this.exp;
-				score += this.exp * 100;
-				this.exp = 0;
-				innerScore.innerText = score;
+				if(this.scene.player.hp > 0){
+					player_exp += this.exp;
+					innerExp.innerText = this.scene.player.level;
+					// this.scene.player.exp += this.exp;
+					score += this.exp * 100;
+					this.exp = 0;
+					innerScore.innerText = score;
+				}
 				return true;
 			}
 
@@ -1613,6 +1641,7 @@ if((pos_x > this.scene.monster1.x) &&
 			
 			if(this.scene.player.hp<0){
 				this.scene.player.set_action("down","dead");
+				
 			   }
 			   
 			   return true;
@@ -1625,6 +1654,8 @@ if((pos_x > this.scene.monster1.x) &&
 					this.hp -= this.scene.player.damage;
 					if(this.hp <= 0){
 						this.set_action("down", "dead");
+						
+						
 					}
 			}
 		}
