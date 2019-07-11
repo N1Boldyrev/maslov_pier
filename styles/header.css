@@ -1,5 +1,5 @@
 @font-face{
-    font-family: 'Press Start 2P';
+    font-family: "PressStart2P";
     src: url("PressStart2P-Regular.ttf") format("truetype");
     font-style: normal;
     font-weight: normal;
@@ -14,14 +14,16 @@
 .container{
     display: flex;
     flex-direction: column;
+    position: relative;
 }
-.header{
-    display: flex;
+#header{
+    display: none;
     height: 20px;
     justify-content: space-around;
     margin-top: 10px;
     margin-bottom:-70px;
     z-index: 1;
+    transition: 2s;
 }
 .hp, .score,.exp {
     display: flex;
@@ -61,7 +63,7 @@
     align-items: center;
     font-size: 15px;
     padding-top: 3px;
-    font-family: 'Press Start 2P';
+    font-family: 'PressStart2P';
 }
 
 /* score */
@@ -79,7 +81,7 @@
     color: #151515;
     justify-content: center;
     padding-top: 3px;
-    font-family: 'Press Start 2P', cursive;
+    font-family: 'PressStart2P', cursive;
 
 }
 
@@ -96,21 +98,62 @@
     background-color: #5e66cbd9;
     justify-content: center;
     align-items: center;
-    font-family: 'Press Start 2P', cursive;
-
+    font-family: 'PressStart2P', cursive;
+    margin-right: 5px;
 }
 
-.exp__progres, .progres__back,.progres__front {
+.exp__progres, .progres__back, #progres__front,#progres__text {
     display: flex;
     width: 100px;
     height: 20px;
     position: relative;
-    background-color: #151515;
-    border-radius: 10px;
-}
-.progres__front{
-    display: flex;
-    background-color: red;
-    z-index: 1;
     
+    border-radius: 10px;
+    
+}
+.progres__back{
+    background-color: #7074c58c;
+}
+#progres__front{
+    background-color: #7073c5;
+    z-index: 20;
+    position: absolute;
+    
+    
+}
+#progres__text{
+    position: absolute;
+    z-index: 30;
+    justify-content: center;  
+}
+
+
+/* diLOG */
+
+.dialog{
+    display: flex;
+    height: 200px;
+    margin-top: -205px;
+    z-index: 1;
+    opacity: 1;
+    visibility: hidden;
+}
+
+.dialog_background{
+    background: #151515;
+    opacity: 0.5;
+    position: absolute;
+    height: 200px;
+    width: 700px;
+}
+
+.dialog_text{
+    padding-left: 20px;
+    padding-top: 20px;
+    max-width: 600px;
+    font-family: "PressStart2P";
+    font-size: 20px;
+    opacity: 1;
+    color: white;
+    z-index: 1;
 }
