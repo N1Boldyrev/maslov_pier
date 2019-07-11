@@ -1,3 +1,4 @@
+ var flg1=false; //флаг конца игры  
   var hp  = document.getElementById('hp');
 	var innerHp = document.getElementById('hp__front');
 	var innerHpText = document.getElementById('hp__text');
@@ -201,7 +202,7 @@
 
 		this.npc1_x=150;
 		this.npc1_y=300;
-		this.npc1Text="Лодочник: <br> Вот мы и приплыли,'герой', хах. Тебя наняли очистить деревню от всяких уродцев, так иди и делай свою работу.";
+		this.npc1Text="Лодочник: <br> Вот мы и приплыли,'герой'. Ты даже как бить не знаешь. Запомни, чтобы достать меч и атаковать, нажми <span style='color:#FFDB00;'>[E]</span>. Теперь отправляйся изгонять местную нечисть!";
 		this.npc1wasDialogText="Лодочник: <br> Чего уставился? Пока не закончишь-назад я тебя не повезу.";
 		this.npc1_directioin="right";
 		this.npc1_is_chest=false;
@@ -254,7 +255,7 @@
 
         this.npc1_x=1086;
         this.npc1_y=101;
-		this.npc1Text="В сундуке вы нашли великий эльфийский лук (Чтобы стрелять нажмите ПРОБЕЛ).";
+		this.npc1Text="В сундуке вы нашли великий эльфийский лук (Чтобы стрелять нажмите<span style='color:#FFDB00;'>[ПРОБЕЛ]</span>).";
 		this.npc1wasDialogText="Сундук пуст.";
 		this.npc1_directioin="down";
 		this.npc1_is_chest=true;
@@ -717,12 +718,14 @@ this.chest.j*64,this.chest.i*64,64,64,
 				this.npc1.y=533;
 				if(this.npc1.wasDialog==true){
 					setTimeout(()=>{
+						flg1=true;
 						this.npc1.set_action("down","dead");
 						document.getElementsByClassName("dialog")[0].style.visibility="hidden";
-				},2000);
+				},3000);
 				}	
-				if(this.npc1.dead==true){
-					setTimeout(()=>{return 'win'},1000);
+				if(flg1==true){
+					document.getElementsByClassName("end_game")[0].style.visibility="visible";
+					document.getElementsByClassName("end_game_text")[0].innerHTML=" Конец игры!<br><br>Ваш cчет: "+score;
 				}
 				}
 				return 'level 3';
@@ -1562,7 +1565,7 @@ if((pos_x > this.scene.monster1.x) &&
 			if(player_exp >= need_to_levelup && this.scene.player.hp > 0){
 
 				this.level++;
-				this.scene.player.damage += 2;
+				this.scene.player.damage += 1;
 				
 				this.scene.player.hp = this.scene.player.maxhp;
                 newHp = this.scene.player.hp;
@@ -1577,6 +1580,8 @@ if((pos_x > this.scene.monster1.x) &&
 					name:name,
 					score:score
 				})
+				document.getElementsByClassName("end_game")[0].style.visibility="visible";
+				document.getElementsByClassName("end_game_text")[0].innerHTML=" О нет, вы умерли!<br><br>Ваш cчет: "+score;
 			}
 			
 			if(this.status == "start") {
