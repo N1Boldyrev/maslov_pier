@@ -721,7 +721,7 @@ this.chest.j*64,this.chest.i*64,64,64,
 						flg1=true;
 						this.npc1.set_action("down","dead");
 						document.getElementsByClassName("dialog")[0].style.visibility="hidden";
-				},3000);
+				},5000);
 				}	
 				if(flg1==true){
 					document.getElementsByClassName("end_game")[0].style.visibility="visible";
