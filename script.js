@@ -20,17 +20,17 @@
 	innerExp.innerText = '1';
 	// registratin
 	
-	var userName = document.getElementById('registration__name');
-	var regButton = document.getElementById('registration__button');
-	var showReg = document.getElementById('registration')
-  	var name;
-	regButton.addEventListener("click",function(e){
-		e.preventDefault();
-		name = userName.value;
-		localStorage.setItem(name,0)
-		showReg.style.display = "none";
+	// var userName = document.getElementById('registration__name');
+	// var regButton = document.getElementById('registration__button');
+	// var showReg = document.getElementById('registration')
+  	// var name;
+	// regButton.addEventListener("click",function(e){
+	// 	e.preventDefault();
+	// 	name = userName.value;
+	// 	localStorage.setItem(name,0)
+	// 	showReg.style.display = "none";
 
-	})
+	// })
 
 	function Scene(screen, controls) {
 		this.canvas = screen.canvas;
@@ -1555,9 +1555,6 @@ if((pos_x > this.scene.monster1.x) &&
 
 	Player.prototype.update = function (time) {
 			this.animate();
-
-			console.log(this.scene.player.x);
-			console.log(this.scene.player.y);
 			var need_to_levelup = (this.level + 1) * this.level / 2 ;
 			innterTextExp.innerText = player_exp * 100 +' / '+ need_to_levelup * 100;
 			innerFrontProg.style.width = 100 / need_to_levelup * player_exp  + 'px';
